@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luxury Layout Studies</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap');
+*{box-sizing:border-box}body{margin:0;background:#bdb3a7;color:#332f2b;font-family:Inter,sans-serif;font-weight:300}
+.wrap{max-width:900px;margin:auto;padding:30px 16px 80px}.intro{text-align:center;padding:20px 0 45px}.intro h1{font:300 52px/1 'Cormorant Garamond';margin:0}.intro p{font-size:10px;letter-spacing:.28em;color:#756b62;text-transform:uppercase}
+.sheet{background:#e7e0d6;margin:30px auto;padding:38px;min-height:700px;position:relative;overflow:hidden}
+.num{font-size:9px;letter-spacing:.22em;color:#9a8469}.micro{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#8b8075}
+.fake{background:linear-gradient(135deg,#6e665f,#b9aa9b 48%,#514b47);position:relative;overflow:hidden}
+.fake:after{content:"TRISTIAN";position:absolute;bottom:14px;left:14px;color:#eee9e2;font:300 38px/1 'Cormorant Garamond';letter-spacing:.06em}
+h2{font:300 64px/.78 'Cormorant Garamond';margin:22px 0 5px;letter-spacing:.03em}.serif{font-family:'Cormorant Garamond'}
+.line{height:1px;background:#a98e6e;width:48px;margin:24px 0}
+.story{font-size:12px;line-height:1.9;color:#5c544d}.quote{font:italic 24px/1.2 'Cormorant Garamond';color:#6a5d51;border-left:1px solid #a98e6e;padding-left:18px;margin:25px 0}
+.label{font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:#8a7b6c}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;border-top:1px solid #b9aea1;border-bottom:1px solid #b9aea1;padding:18px 0;margin:25px 0}.meta b{font:400 18px 'Cormorant Garamond';display:block;margin-top:5px}
+
+/* 1 editorial */
+.editorial .top{display:flex;justify-content:space-between}.editorial .hero{width:68%;height:420px;margin:25px 0 0 7%}.editorial .side{position:absolute;right:7%;top:270px;writing-mode:vertical-rl;font:300 28px 'Cormorant Garamond';letter-spacing:.08em}.editorial .copy{width:62%;margin:28px 0 0 auto}
+
+/* 2 gallery */
+.gallery{text-align:center}.gallery .hero{width:68%;height:430px;margin:30px auto}.gallery .second{width:34%;height:150px;margin:-55px 12% 0 auto;border:10px solid #e7e0d6}.gallery .meta{text-align:left;margin-top:45px}.gallery .sign{font:300 28px 'Cormorant Garamond';letter-spacing:.2em;margin-top:35px}
+
+/* 3 asymmetric */
+.asym h2{width:45%;font-size:82px;margin-top:42px}.asym .hero{width:64%;height:450px;margin-left:28%;margin-top:-5px}.asym .sideword{position:absolute;left:7%;top:315px;writing-mode:vertical-rl;font:300 22px 'Cormorant Garamond';letter-spacing:.16em}.asym .copy{width:48%;margin:25px 0 0 4%}.asym .second{width:28%;height:145px;position:absolute;right:7%;bottom:130px}
+
+/* 4 typography */
+.typo{text-align:center}.typo .hero{height:390px;width:72%;margin:25px auto}.typo h2{font-size:72px;margin:-15px 0 0;position:relative}.typo .sub{font:italic 22px 'Cormorant Garamond';color:#75685d}.typo .quote{border:0;padding:0;max-width:430px;margin:35px auto}.typo .date{font-size:9px;letter-spacing:.3em}
+
+/* 5 contact */
+.contact .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:25px 0}.contact .fake{height:170px}.contact .fake:after{font-size:22px}.contact .main{grid-column:span 2;height:300px}.contact .title{display:flex;justify-content:space-between;align-items:end;margin-top:35px}.contact h2{font-size:48px}.contact .copy{width:70%;margin-left:auto}
+
+/* 6 poster */
+.poster{padding:0;min-height:760px;background:#6d655e;color:#eee9e2}.poster .hero{position:absolute;inset:0;height:100%;opacity:.58}.poster:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(35,30,27,.12),rgba(35,30,27,.72))}.poster>*:not(.hero){position:relative;z-index:2}.poster .top{padding:32px 38px;display:flex;justify-content:space-between}.poster .center{position:absolute;left:38px;right:38px;bottom:80px}.poster h2{font-size:92px;color:#f3eee7;margin:0}.poster .quote{color:#eee9e2;border-color:#c6a980;max-width:400px}.poster .foot{display:flex;justify-content:space-between}
+
+/* 7 collage */
+.collage .hero{width:67%;height:440px;margin:28px 0 0 5%}.collage .second{width:34%;height:190px;position:absolute;right:6%;top:285px;border:9px solid #e7e0d6}.collage .name{position:absolute;right:7%;top:105px;font:300 54px/.78 'Cormorant Garamond';text-align:right}.collage .copy{width:54%;margin:28px 0 0 5%}.collage .bottom{display:flex;justify-content:space-between;align-items:end;border-top:1px solid #b9aea1;margin-top:35px;padding-top:16px}
+
+@media(max-width:650px){.sheet{padding:25px;min-height:620px}.editorial .hero,.gallery .hero,.asym .hero,.typo .hero,.collage .hero{width:100%;margin-left:0}.editorial .side,.asym .sideword{display:none}.editorial .copy,.asym .copy,.contact .copy,.collage .copy{width:100%}.asym h2{width:100%;font-size:64px}.asym .second,.collage .second{position:static;width:45%;margin:12px 0 0 auto}.gallery .second{width:45%;margin:-35px 5% 0 auto}.meta{grid-template-columns:1fr 1fr}.contact .grid{grid-template-columns:1fr 1fr}.contact .main{grid-column:span 2}.poster h2{font-size:62px}.collage .name{position:static;margin-top:25px;text-align:left}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="intro"><p>Luxury Layout Studies · 01—07</p><h1>Seven Directions</h1><p>quiet luxury / editorial / private archive</p></div>
+
+<section class="sheet editorial">
+<div class="top"><span class="micro">Private Archive</span><span class="num">01 / 07</span></div>
+<h2>TRISTIAN</h2><div class="serif" style="font-style:italic;color:#756b62">Sidney Kennedy</div>
+<div class="fake hero"></div><div class="side">SIDNEY KENNEDY</div>
+<div class="copy"><div class="line"></div><div class="label">Character / Private File</div><p class="story">A quiet editorial composition where the photograph carries most of the visual weight, while the text behaves like magazine copy.</p><div class="quote">“The wound is gone,<br>but the pain remembers.”</div></div>
+</section>
+
+<section class="sheet gallery">
+<div style="display:flex;justify-content:space-between"><span class="micro">Private Collection</span><span class="num">02 / 07</span></div>
+<div class="fake hero"></div><div class="fake second"></div>
+<div class="meta"><div><span class="label">Name</span><b>Tristian</b></div><div><span class="label">Date</span><b>28 · 08 · 90</b></div><div><span class="label">Status</span><b>Online</b></div></div>
+<div class="story">The gallery approach removes the feeling of a conventional profile and treats the character like a piece in a private collection.</div><div class="sign">T · S · K</div>
+</section>
+
+<section class="sheet asym">
+<div style="display:flex;justify-content:space-between"><span class="micro">Personal Archive</span><span class="num">03 / 07</span></div>
+<h2>TRIS<br>TIAN</h2><div class="sideword">PRIVATE CHARACTER</div><div class="fake hero"></div><div class="fake second"></div>
+<div class="copy"><div class="label">Sidney Kennedy / 001</div><div class="line"></div><p class="story">Asymmetric placement creates the editorial-fashion feeling: nothing is perfectly centered and the empty space becomes part of the design.</p></div>
+</section>
+
+<section class="sheet typo">
+<div class="top" style="display:flex;justify-content:space-between"><span class="micro">Character Study</span><span class="num">04 / 07</span></div>
+<div class="fake hero"></div><h2>TRISTIAN</h2><div class="sub">Sidney Kennedy</div><div class="quote">“The wound is gone,<br>but the pain remembers.”</div><div class="date">28 · 08 · 1990 &nbsp; / &nbsp; PRIVATE</div>
+</section>
+
+<section class="sheet contact">
+<div style="display:flex;justify-content:space-between"><span class="micro">Contact Sheet</span><span class="num">05 / 07</span></div>
+<div class="grid"><div class="fake main"></div><div class="fake"></div><div class="fake"></div></div>
+<div class="title"><div><div class="label">Private Archive</div><h2>TRISTIAN<br>SIDNEY</h2></div><div class="num">001</div></div>
+<div class="copy story">A photographic archive direction. The second image can be optional, or the smaller frames can become metadata, notes, objects, or tiny details.</div>
+</section>
+
+<section class="sheet poster">
+<div class="fake hero"></div><div class="top"><span class="micro" style="color:#ddd">Private Archive</span><span class="num" style="color:#d5bea0">06 / 07</span></div>
+<div class="center"><div class="label" style="color:#d5bea0">Character / 001</div><h2>TRISTIAN</h2><div class="serif" style="font-size:28px;font-style:italic">Sidney Kennedy</div><div class="quote">“The wound is gone, but the pain remembers.”</div><div class="foot"><span class="micro" style="color:#ddd">28 · 08 · 90</span><span class="micro" style="color:#ddd">T · S · K</span></div></div>
+</section>
+
+<section class="sheet collage">
+<div style="display:flex;justify-content:space-between"><span class="micro">Editorial Collage</span><span class="num">07 / 07</span></div>
+<div class="name">TRISTIAN<br><span style="font-size:31px">SIDNEY KENNEDY</span></div>
+<div class="fake hero"></div><div class="fake second"></div>
+<div class="copy"><div class="label">Private File / 001</div><div class="line"></div><p class="story">This direction combines the strongest parts: oversized typography, asymmetric photography, a floating second image, and restrained archive details.</p><div class="quote">The wound is gone,<br>but the pain remembers.</div></div>
+<div class="bottom"><span class="micro">Character Archive</span><span class="serif" style="font-size:22px">T · S · K</span></div>
+</section>
+</div>
+</body></html>
