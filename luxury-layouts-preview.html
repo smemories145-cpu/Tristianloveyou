@@ -19,7 +19,7 @@ h2{font:300 64px/.78 'Cormorant Garamond';margin:22px 0 5px;letter-spacing:.03em
 .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;border-top:1px solid #b9aea1;border-bottom:1px solid #b9aea1;padding:18px 0;margin:25px 0}.meta b{font:400 18px 'Cormorant Garamond';display:block;margin-top:5px}
 
 /* 1 editorial */
-.editorial .top{display:flex;justify-content:space-between}.editorial .hero{width:68%;height:420px;margin:25px 0 0 7%}.editorial .side{position:absolute;right:7%;top:270px;writing-mode:vertical-rl;font:300 28px 'Cormorant Garamond';letter-spacing:.08em}.editorial .copy{width:62%;margin:28px 0 0 auto}
+.editorial .top{display:flex;justify-content:space-between}.editorial .hero{width:68%;height:420px;margin:25px 0 0 7%}.editorial .side{position:absolute;right:7%;top:235px;width:105px;height:105px;border:1px solid rgba(160,135,105,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font:400 9px/1.5 Inter;letter-spacing:.2em;color:#927c63;text-transform:uppercase;transform:rotate(-12deg)}.editorial .side:before{content:"";position:absolute;inset:8px;border:1px solid rgba(160,135,105,.22);border-radius:50%}.editorial .side:after{content:"✦";position:absolute;right:-8px;bottom:7px;font-size:14px;color:#a98e6e}.editorial .copy{width:62%;margin:30px 0 0 auto}.editorial .rp{position:relative;margin-top:26px;padding:20px 22px 22px;border-top:1px solid #b9aea1;border-bottom:1px solid #b9aea1}.editorial .rp:before{content:"";position:absolute;left:0;top:-1px;width:58px;height:1px;background:#a98e6e}.editorial .rp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.editorial .rp-no{font:300 25px 'Cormorant Garamond';color:#9a8469}.editorial .rp-body{font:12px/1.95 Inter;color:#5c544d;max-width:92%}.editorial .rp-mark{position:absolute;right:18px;bottom:14px;font:300 32px 'Cormorant Garamond';color:rgba(155,129,95,.2)}.editorial .note{display:grid;grid-template-columns:48px 1fr;gap:14px;margin-top:25px;align-items:start}.editorial .note-no{font:300 27px 'Cormorant Garamond';color:#a98e6e}.editorial .note-text{font:11px/1.8 Inter;color:#756b62;border-left:1px solid #c1b6aa;padding-left:14px}.editorial .quote{margin:20px 0 0}
 
 /* 2 gallery */
 .gallery{text-align:center}.gallery .hero{width:68%;height:430px;margin:30px auto}.gallery .second{width:34%;height:150px;margin:-55px 12% 0 auto;border:10px solid #e7e0d6}.gallery .meta{text-align:left;margin-top:45px}.gallery .sign{font:300 28px 'Cormorant Garamond';letter-spacing:.2em;margin-top:35px}
@@ -39,7 +39,7 @@ h2{font:300 64px/.78 'Cormorant Garamond';margin:22px 0 5px;letter-spacing:.03em
 /* 7 collage */
 .collage .hero{width:67%;height:440px;margin:28px 0 0 5%}.collage .second{width:34%;height:190px;position:absolute;right:6%;top:285px;border:9px solid #e7e0d6}.collage .name{position:absolute;right:7%;top:105px;font:300 54px/.78 'Cormorant Garamond';text-align:right}.collage .copy{width:54%;margin:28px 0 0 5%}.collage .bottom{display:flex;justify-content:space-between;align-items:end;border-top:1px solid #b9aea1;margin-top:35px;padding-top:16px}
 
-@media(max-width:650px){.sheet{padding:25px;min-height:620px}.editorial .hero,.gallery .hero,.asym .hero,.typo .hero,.collage .hero{width:100%;margin-left:0}.editorial .side,.asym .sideword{display:none}.editorial .copy,.asym .copy,.contact .copy,.collage .copy{width:100%}.asym h2{width:100%;font-size:64px}.asym .second,.collage .second{position:static;width:45%;margin:12px 0 0 auto}.gallery .second{width:45%;margin:-35px 5% 0 auto}.meta{grid-template-columns:1fr 1fr}.contact .grid{grid-template-columns:1fr 1fr}.contact .main{grid-column:span 2}.poster h2{font-size:62px}.collage .name{position:static;margin-top:25px;text-align:left}}
+@media(max-width:650px){.sheet{padding:25px;min-height:620px}.editorial .hero,.gallery .hero,.asym .hero,.typo .hero,.collage .hero{width:100%;margin-left:0}.editorial .side,.asym .sideword{display:none}.editorial .copy,.asym .copy,.contact .copy,.collage .copy{width:100%}.editorial .rp-body{max-width:100%}.editorial .note{grid-template-columns:38px 1fr}.asym h2{width:100%;font-size:64px}.asym .second,.collage .second{position:static;width:45%;margin:12px 0 0 auto}.gallery .second{width:45%;margin:-35px 5% 0 auto}.meta{grid-template-columns:1fr 1fr}.contact .grid{grid-template-columns:1fr 1fr}.contact .main{grid-column:span 2}.poster h2{font-size:62px}.collage .name{position:static;margin-top:25px;text-align:left}}
 </style>
 </head>
 <body>
@@ -49,8 +49,11 @@ h2{font:300 64px/.78 'Cormorant Garamond';margin:22px 0 5px;letter-spacing:.03em
 <section class="sheet editorial">
 <div class="top"><span class="micro">Private Archive</span><span class="num">01 / 07</span></div>
 <h2>TRISTIAN</h2><div class="serif" style="font-style:italic;color:#756b62">Sidney Kennedy</div>
-<div class="fake hero"></div><div class="side">SIDNEY KENNEDY</div>
-<div class="copy"><div class="line"></div><div class="label">Character / Private File</div><p class="story">A quiet editorial composition where the photograph carries most of the visual weight, while the text behaves like magazine copy.</p><div class="quote">“The wound is gone,<br>but the pain remembers.”</div></div>
+<div class="fake hero"></div><div class="side">Private<br>Archive<br>001</div>
+<div class="copy"><div class="line"></div><div class="label">Character / Private File</div>
+<div class="rp"><div class="rp-head"><span class="label">Roleplay Record</span><span class="rp-no">01</span></div><div class="rp-body">ทริสเตียนยืนนิ่งอยู่ครู่หนึ่ง ก่อนจะทอดสายตามองออกไปด้านนอกหน้าต่าง ความเงียบรอบตัวทำให้เขาเผลอคิดถึงเรื่องบางอย่างที่ไม่ได้พูดออกมา เขาเพียงยิ้มบาง ๆ แล้วปล่อยให้ช่วงเวลานั้นผ่านไปอย่างช้า ๆ</div><div class="rp-mark">TSK</div></div>
+<div class="note"><div class="note-no">01</div><div class="note-text"><span class="label">Private Note</span><br>บางความทรงจำไม่จำเป็นต้องถูกเล่าออกมาทั้งหมด แค่ยังคงอยู่ก็เพียงพอแล้ว</div></div>
+<div class="quote">“The wound is gone,<br>but the pain remembers.”</div></div>
 </section>
 
 <section class="sheet gallery">
