@@ -33,11 +33,34 @@ function render(){
     '<div class="divider"></div><article class="rp">'+$('rp').innerHTML+'</article>'+
     '<section class="note"><b>NOTE</b><span>'+esc($('note').value)+'</span></section><div class="foot">'+esc($('name').value)+' / Personal Archive</div>';
 }
-function enc(v){return encodeURIComponent(String(v??''))}
 function generate(){
-  const u=new URL('https://smemories145-cpu.github.io/Tristianloveyou/rp-luxury.html');
-  ids.forEach(id=>{const v=id==='rp'?$('rp').innerHTML:$(id).value;if(v!=='')u.searchParams.set(id==='rp'?'rpHtml':id,v)});
-  $('code').textContent='<iframe src="'+u.href+'" style="width:100%;height:820px;border:0;display:block;background:transparent" loading="lazy"></iframe>';
+  const theme=$('theme').value;
+  const vars=[
+    '--name-size:'+$('nameSize').value+'px',
+    '--sur-size:'+$('surSize').value+'px',
+    '--rp-size:'+$('rpSize').value+'px',
+    '--note-size:'+$('noteSize').value+'px',
+    '--photo1-h:'+$('photo1H').value+'px',
+    '--photo2-h:'+$('photo2H').value+'px',
+    '--photo2-top:'+$('photo2Top').value+'px',
+    '--img-zoom:'+$('imgZoom').value,
+    '--img2-zoom:'+$('img2Zoom').value,
+    '--img-x:'+$('imgX').value+'%',
+    '--img-y:'+$('imgY').value+'%',
+    '--img2-x:'+$('img2X').value+'%',
+    '--img2-y:'+$('img2Y').value+'%'
+  ].join(';');
+  const p=esc($('p').value||'https://i.pinimg.com/1200x/d9/b2/a6/d9b2a6648292c95f31f5ad6242bd82a2.jpg');
+  const p2=esc($('p2').value||$('p').value||'https://i.pinimg.com/1200x/d9/b2/a6/d9b2a6648292c95f31f5ad6242bd82a2.jpg');
+  const html='<link rel="stylesheet" href="https://smemories145-cpu.github.io/Tristianloveyou/rp-luxury.css?v=1">'+
+    '<main class="archive '+theme+'" style="'+vars+'">'+
+    '<div class="top"><span>Private Archive / Character File</span><span>2026</span></div>'+
+    '<section class="identity"><div><div class="name">'+esc($('name').value)+'</div><div class="surname">'+esc($('sur').value)+'</div></div><div class="motto">'+esc($('motto').value)+'</div></section>'+
+    '<section class="photos"><div class="photo"><img src="'+p+'"></div><div class="photo second"><img src="'+p2+'"></div></section>'+
+    '<div class="divider"></div><article class="rp">'+$('rp').innerHTML+'</article>'+
+    '<section class="note"><b>NOTE</b><span>'+esc($('note').value)+'</span></section>'+
+    '<div class="foot">'+esc($('name').value)+' / Personal Archive</div></main>';
+  $('code').textContent=html;
 }
 function copyCode(){
   if($('code').textContent.startsWith('กด '))generate();
