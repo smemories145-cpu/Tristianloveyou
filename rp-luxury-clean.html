@@ -19,9 +19,11 @@ body{margin:0;background:#b8aea2;color:#302d29;font-family:"Noto Sans Thai","DM 
 .photo{height:330px;background:#aaa095;overflow:hidden;position:relative}
 .photo img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.84) contrast(.96)}
 .photo-tag{position:absolute;left:-24px;bottom:18px;background:#e8e0d5;padding:9px 15px;font-size:8px;letter-spacing:.2em;color:#756b61}
-.profile-strip{width:50%;margin:-34px 6% 0 auto;position:relative;background:#ddd3c6;padding:15px 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;box-shadow:0 7px 20px rgba(60,48,38,.08)}
-.profile-strip span{display:block;font-size:7px;letter-spacing:.16em;text-transform:uppercase;color:#897e73;margin-bottom:5px}
-.profile-strip b{font:500 17px "Cormorant Garamond",serif;color:#433d37}
+.profile-strip{width:100%;margin:24px 0 0;padding:13px 2px;border-top:1px solid #b9afa3;border-bottom:1px solid #b9afa3;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;position:relative}
+.profile-strip>div{padding:2px 22px;position:relative}
+.profile-strip>div+div:before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:1px;background:#c7bcb0}
+.profile-strip span{display:block;font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:#897e73;margin-bottom:3px}
+.profile-strip b{font:500 18px "Cormorant Garamond",serif;color:#433d37}
 .rp{margin-top:32px;background:linear-gradient(135deg,#ddd4c8,#e1d9ce 52%,#d8cec1);padding:24px 28px 22px;font:400 13px/2 "Noto Sans Thai","DM Sans",sans-serif;color:#4b453f;box-shadow:inset 0 1px rgba(255,255,255,.45),0 8px 22px rgba(60,48,38,.06);border-left:1px solid rgba(155,128,95,.35);border-right:1px solid rgba(155,128,95,.15)}
 .rp p{margin:0 0 17px}.rp p:last-child{margin-bottom:0}
 .rp em{font-family:"Cormorant Garamond",serif;font-size:21px;color:#66594e}
@@ -35,7 +37,7 @@ body{margin:0;background:#b8aea2;color:#302d29;font-family:"Noto Sans Thai","DM 
 .archive{padding:24px 22px 28px}
 .identity{grid-template-columns:1fr;gap:18px}.motto{margin:0}
 .photo-wrap{width:92%;margin-left:0}.photo{height:290px}
-.profile-strip{width:76%;margin:-30px 0 0 auto;grid-template-columns:1fr 1fr}
+.profile-strip{width:100%;margin:20px 0 0;grid-template-columns:1fr 1fr 1fr}.profile-strip>div{padding:2px 10px}.profile-strip>div+div:before{top:3px;bottom:3px}
 .rp{padding:21px 19px}
 .note-row{gap:13px}.note-label{width:66px;flex-basis:66px}.note{padding-left:12px}
 .name{font-size:58px}
