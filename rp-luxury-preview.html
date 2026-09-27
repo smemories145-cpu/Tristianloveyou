@@ -8,39 +8,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap');
 *{box-sizing:border-box}
 body{margin:0;background:#b8aea2;color:#302d29;font-family:"DM Sans",sans-serif}
-.archive{width:min(900px,94vw);margin:35px auto;background:#e8e0d5;min-height:980px;padding:34px 48px 40px;position:relative;overflow:hidden;box-shadow:0 12px 45px rgba(38,31,25,.16)}
-.archive:before{content:"";position:absolute;right:-90px;top:190px;width:300px;height:300px;border:1px solid rgba(139,112,82,.18);border-radius:50%}
-.archive:after{content:"";position:absolute;right:-20px;top:260px;width:170px;height:170px;border:1px solid rgba(139,112,82,.12);border-radius:50%}
+.archive{width:min(760px,92vw);margin:35px auto;background:#e8e0d5;min-height:860px;padding:28px 38px 32px;position:relative;overflow:hidden;box-shadow:0 12px 45px rgba(38,31,25,.16)}
+.archive:before{content:"TSK";position:absolute;right:-90px;top:170px;width:300px;height:300px;display:flex;align-items:center;justify-content:center;font:500 72px "Cormorant Garamond";letter-spacing:.18em;color:rgba(120,98,75,.045);border:1px solid rgba(139,112,82,.18);border:1px solid rgba(139,112,82,.18);border-radius:50%}
+.archive:after{content:"✦";position:absolute;right:37px;top:292px;font-size:13px;color:#a98e6e;border:1px solid rgba(139,112,82,.12);border-radius:50%}
 .top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #b9afa3;padding-bottom:13px;position:relative;z-index:2}
 .micro{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#756b61;font-weight:600}
 .index{font-size:10px;color:#9b805f;letter-spacing:.18em}
-.identity{display:grid;grid-template-columns:1fr 250px;gap:35px;align-items:end;padding:30px 0 34px;position:relative;z-index:2}
-.name{font:500 clamp(62px,9vw,94px)/.72 "Cormorant Garamond",serif;letter-spacing:-.025em;color:#35312d}
+.identity{display:grid;grid-template-columns:1fr 205px;gap:28px;align-items:end;padding:25px 0 28px;position:relative;z-index:2}
+.name{font:500 clamp(54px,7vw,76px)/.72 "Cormorant Garamond",serif;letter-spacing:-.025em;color:#35312d}
 .surname{font:500 27px/1 "Cormorant Garamond",serif;color:#776b60;margin-top:14px}
 .motto{font-size:10px;line-height:1.7;color:#776e66;max-width:230px;margin-left:auto}
-.photo-wrap{position:relative;z-index:3;margin-left:5%;width:70%}
-.photo{height:440px;background:#aaa095;overflow:hidden;position:relative}
+.photo-wrap{position:relative;z-index:3;margin-left:4%;width:64%}
+.photo{height:330px;background:#aaa095;overflow:hidden;position:relative}
 .photo img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.84) contrast(.96)}
 .photo-tag{position:absolute;left:-24px;bottom:18px;background:#e8e0d5;padding:9px 15px;font-size:8px;letter-spacing:.2em;color:#756b61}
 .photo-number{position:absolute;right:14px;top:14px;color:#eee9e2;font:500 18px "Cormorant Garamond",serif}
-.profile-strip{width:46%;margin:-45px 7% 0 auto;position:relative;z-index:4;background:#ddd3c6;padding:16px 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;box-shadow:0 7px 20px rgba(60,48,38,.08)}
+.profile-strip{width:50%;margin:-34px 6% 0 auto;position:relative;z-index:4;background:#ddd3c6;padding:16px 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;box-shadow:0 7px 20px rgba(60,48,38,.08)}
 .profile-strip span{display:block;font-size:7px;letter-spacing:.16em;text-transform:uppercase;color:#897e73;margin-bottom:5px}
 .profile-strip b{font:500 17px "Cormorant Garamond",serif;color:#433d37}
-.rp-head{display:flex;align-items:end;justify-content:space-between;margin:52px 0 12px;border-bottom:1px solid #b9afa3;padding-bottom:11px;position:relative;z-index:2}
+.ornament{display:flex;align-items:center;gap:10px;margin:0 0 16px;color:#9b805f;font-size:12px;letter-spacing:.1em}.ornament:before,.ornament:after{content:"";height:1px;background:#c2b7aa;flex:1}.ornament span{font:500 18px "Cormorant Garamond"}
+.rp-head{display:flex;align-items:end;justify-content:space-between;margin:34px 0 12px;border-bottom:1px solid #b9afa3;padding-bottom:11px;position:relative;z-index:2}
 .rp-title{font:500 32px "Cormorant Garamond",serif;letter-spacing:.02em}
 .rp-title small{font:600 8px "DM Sans";letter-spacing:.2em;color:#9b805f;text-transform:uppercase;margin-left:10px}
 .rp-count{font-size:9px;letter-spacing:.16em;color:#8b8177}
-.rp{position:relative;z-index:2;width:88%;margin-left:6%;font-size:14px;line-height:2;color:#4b453f}
-.rp p{margin:0 0 19px}
+.rp{position:relative;z-index:2;width:90%;margin-left:5%;font-size:13px;line-height:2;color:#4b453f}
+.rp p{margin:0 0 17px}.scene-mark{float:right;margin:0 0 8px 15px;width:58px;height:58px;border:1px solid #b6a18a;display:flex;align-items:center;justify-content:center;font:500 20px "Cormorant Garamond";color:#8d7457;transform:rotate(45deg)}.scene-mark span{transform:rotate(-45deg)}
 .rp p:first-child:first-letter{font:500 48px/.75 "Cormorant Garamond";float:left;padding:7px 8px 0 0;color:#9b805f}
 .rp em{font-family:"Cormorant Garamond";font-size:22px;color:#66594e}
 .note-row{display:grid;grid-template-columns:90px 1fr;gap:25px;margin:34px 6% 0;padding-top:17px;border-top:1px solid #b9afa3;position:relative;z-index:2}
 .note-no{font:500 29px "Cormorant Garamond";color:#9b805f}
 .note{font-size:11px;line-height:1.8;color:#776d64}
-.footer{display:flex;justify-content:space-between;align-items:end;margin-top:42px;padding-top:14px;border-top:1px solid #b9afa3;position:relative;z-index:2}
+.footer{display:flex;justify-content:space-between;align-items:end;margin-top:28px;padding-top:14px;border-top:1px solid #b9afa3;position:relative;z-index:2}
 .signature{font:500 24px "Cormorant Garamond";letter-spacing:.16em;color:#665a50}
 @media(max-width:650px){
-.archive{padding:25px 22px 30px}.identity{grid-template-columns:1fr;gap:18px}.motto{margin:0}.photo-wrap{width:92%;margin-left:0}.photo{height:360px}.profile-strip{width:72%;margin:-35px 0 0 auto;grid-template-columns:1fr 1fr}.rp{width:100%;margin-left:0}.note-row{grid-template-columns:55px 1fr;margin-left:0;margin-right:0}.name{font-size:65px}
+.archive{padding:25px 22px 30px}.identity{grid-template-columns:1fr;gap:18px}.motto{margin:0}.photo-wrap{width:92%;margin-left:0}.photo{height:300px}.profile-strip{width:72%;margin:-35px 0 0 auto;grid-template-columns:1fr 1fr}.rp{width:100%;margin-left:0}.note-row{grid-template-columns:55px 1fr;margin-left:0;margin-right:0}.name{font-size:58px}
 }
 </style>
 </head>
@@ -70,12 +71,12 @@ body{margin:0;background:#b8aea2;color:#302d29;font-family:"DM Sans",sans-serif}
     <div><span>File</span><b>Private</b></div>
   </div>
 
-  <div class="rp-head">
+  <div class="ornament"><span>✦</span></div><div class="rp-head">
     <div class="rp-title">Roleplay <small>Scene / 01</small></div>
     <div class="rp-count">TRIS · 001</div>
   </div>
 
-  <article class="rp">
+  <div class="scene-mark"><span>01</span></div><article class="rp">
     <p>ทริสเตียนยืนนิ่งอยู่ครู่หนึ่ง ปล่อยให้ความเงียบรอบตัวค่อย ๆ จางลงไปพร้อมกับเสียงผู้คนที่อยู่ไกลออกไป เขาไม่ได้รีบร้อนจะพูดอะไร เพียงทอดสายตามองตรงไปข้างหน้า ก่อนจะยกมือขึ้นจัดปลายแขนเสื้อของตัวเองอย่างเคยชิน</p>
     <p>“วันนี้เงียบดีนะครับ” <em>เสียงทุ้มเอ่ยขึ้นเบา ๆ พร้อมรอยยิ้มบาง ๆ ที่แทบจะมองไม่เห็น</em></p>
     <p>จากนั้นทริสเตียนจึงหันกลับมา ราวกับเพิ่งนึกขึ้นได้ว่ามีใครอีกคนยืนอยู่ตรงนั้น และครั้งนี้เขาไม่ได้หลบสายตาเหมือนก่อนหน้า</p>
