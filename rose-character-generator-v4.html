@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rose Character Generator</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Kanit:wght@300;400;500;600&family=Noto+Sans+Thai:wght@400;500;600&family=Prompt:wght@300;400;500;600&family=Sarabun:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');600&family=Noto+Sans+Thai:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Kanit:wght@300;400;500;600&family=Noto+Sans+Thai:wght@400;500;600&family=Prompt:wght@300;400;500;600&family=Sarabun:wght@400;500;600&display=swap');
 *{box-sizing:border-box}body{margin:0;background:#171313;color:#eee;font-family:"Noto Sans Thai",sans-serif}
 .generator{width:min(1180px,96%);margin:22px auto;display:grid;grid-template-columns:350px 1fr;gap:18px}
 .panel,.preview{border:1px solid #ffffff18;background:#211b1b;border-radius:14px}.panel{padding:18px;max-height:calc(100vh - 44px);overflow:auto;scrollbar-width:none}.panel::-webkit-scrollbar{display:none}
@@ -59,7 +59,19 @@ function countWords(s){return (s||'').trim().split(/\s+/).filter(Boolean).length
 function update(){
 $('pTopLeft').textContent=val('topLeft');$('pTopRight').textContent=val('topRight');$('pFrame').textContent=val('frame');
 $('pLabel').textContent=val('label');$('pName').textContent=val('name');$('pSur').textContent=val('sur');$('pMotto').textContent=val('motto');$('pFoot').textContent=val('footLeft');$('pBirthday').textContent=val('birthday');$('pNote').textContent=val('note');
-$('pRp').innerHTML=$('rp').innerHTML;$('rosePreview').style.setProperty('--rose-bg','url("'+val('bg').replace(/"/g,'')+'")');$('rosePreview').style.setProperty('--thai-font','"'+val('thaiFont')+'"');$('rosePreview').style.setProperty('--rp-size',val('rpSize')+'px');$('rosePreview').style.setProperty('--note-size',val('noteSize')+'px');$('pHero').style.height=val('photoH')+'px';$('pName').style.fontSize=val('nameSize')+'px';$('pRp').style.fontFamily='var(--thai-font),sans-serif';$('pRp').style.fontSize=val('rpSize')+'px';$('pNote').style.fontFamily='var(--thai-font),sans-serif';$('pNote').style.fontSize=val('noteSize')+'px';
+$('pRp').innerHTML=$('rp').innerHTML;
+$('rosePreview').style.setProperty('--rose-bg','url("'+val('bg').replace(/"/g,'')+'")');
+var selectedFont=val('thaiFont');
+$('rosePreview').style.setProperty('--thai-font','"'+selectedFont+'"');
+$('rosePreview').style.setProperty('--rp-size',val('rpSize')+'px');
+$('rosePreview').style.setProperty('--note-size',val('noteSize')+'px');
+$('pHero').style.height=val('photoH')+'px';
+$('pName').style.fontSize=val('nameSize')+'px';
+$('rosePreview').style.fontFamily='"'+selectedFont+'",sans-serif';
+$('pRp').style.fontFamily='"'+selectedFont+'",sans-serif';
+$('pRp').style.fontSize=val('rpSize')+'px';
+$('pNote').style.fontFamily='"'+selectedFont+'",sans-serif';
+$('pNote').style.fontSize=val('noteSize')+'px';
 var img=val('photo');$('pPhoto').src=img||'https://placehold.co/900x600/241919/eee?text=CHARACTER';$('count').textContent=countWords($('rp').innerText)+' คำ';$('photoHV').textContent=val('photoH')+'px';$('nameSizeV').textContent=val('nameSize')+'px';$('rpSizeV').textContent=val('rpSize')+'px';$('noteSizeV').textContent=val('noteSize')+'px'
 }
 document.querySelectorAll('.panel input,.panel textarea').forEach(function(el){el.addEventListener('input',update);el.addEventListener('change',update)});
