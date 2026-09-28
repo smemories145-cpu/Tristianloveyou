@@ -74,7 +74,7 @@ $('pNote').style.fontFamily='"'+selectedFont+'",sans-serif';
 $('pNote').style.fontSize=val('noteSize')+'px';
 var img=val('photo');$('pPhoto').src=img||'https://placehold.co/900x600/241919/eee?text=CHARACTER';$('count').textContent=countWords($('rp').innerText)+' คำ';$('photoHV').textContent=val('photoH')+'px';$('nameSizeV').textContent=val('nameSize')+'px';$('rpSizeV').textContent=val('rpSize')+'px';$('noteSizeV').textContent=val('noteSize')+'px'
 }
-document.querySelectorAll('.panel input,.panel textarea').forEach(function(el){el.addEventListener('input',update);el.addEventListener('change',update)});
+document.querySelectorAll('.panel input,.panel textarea,.panel select').forEach(function(el){el.addEventListener('input',update);el.addEventListener('change',update)});
 document.querySelectorAll('.toolbar button').forEach(function(b){b.addEventListener('click',function(){document.execCommand(b.dataset.cmd,false,null);$('rp').focus();update()})});
 $('generate').addEventListener('click',function(){
 var d={bg:val('bg'),photo:val('photo'),name:val('name'),sur:val('sur'),label:val('label'),motto:val('motto'),topLeft:val('topLeft'),topRight:val('topRight'),footLeft:val('footLeft'),birthday:val('birthday'),frame:val('frame'),rp:$('rp').innerHTML,note:val('note'),photoH:val('photoH'),nameSize:val('nameSize'),thaiFont:val('thaiFont'),rpSize:val('rpSize'),noteSize:val('noteSize')};
