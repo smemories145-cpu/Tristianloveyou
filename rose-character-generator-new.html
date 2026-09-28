@@ -174,7 +174,7 @@ $('photoHV').textContent=d.photoH+'px';$('nameSizeV2').textContent=d.nameSize+'p
 }
 function generated(){
 const d=data();
-const css=document.querySelector('style').textContent.split('/* preview */')[1].replace(/<\\/style>/g,'');
+const css=document.querySelector('style').textContent.split('/* preview */')[1].replace(/<\/style>/g,'');
 return `<style>/* Rose Character — generated */\n${css}</style>
 <div class="rose-ui" style="--rose-bg:url("${esc(d.bg)}")">
 <div class="rose-top"><div class="left">${esc(d.topLeft)}</div><div class="center"></div><div class="right">${esc(d.topRight)}</div></div>
