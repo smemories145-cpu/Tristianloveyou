@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Noto+Serif+Thai:wght@400;500;600&display=swap');
+
+*{box-sizing:border-box}
+.heiress{--gold:#b9a07a;--cream:#e8dfd3;--muted:#a79b8d;position:relative;width:min(760px,100%);margin:20px auto;padding:28px 28px 34px;overflow:hidden;color:var(--cream);background:#080808 center/cover no-repeat;font-family:'Noto Serif Thai',serif;box-shadow:0 28px 70px #000b}
+.heiress:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#050505d9 0%,#080707b8 38%,#050505e8 100%),linear-gradient(90deg,#0008,transparent 45%,#0008);z-index:0}
+.heiress:after{content:"";position:absolute;inset:14px;border:1px solid #b9a07a66;z-index:0;pointer-events:none}
+.heiress>*{position:relative;z-index:1}
+.h-corner{position:absolute!important;width:34px;height:34px;border-color:var(--gold);border-style:solid;z-index:2!important;opacity:.9}
+.h-c1{left:18px;top:18px;border-width:1px 0 0 1px}.h-c2{right:18px;top:18px;border-width:1px 1px 0 0}.h-c3{left:18px;bottom:18px;border-width:0 0 1px 1px}.h-c4{right:18px;bottom:18px;border-width:0 1px 1px 0}
+.h-top{display:flex;justify-content:space-between;align-items:center;margin:2px 8px 42px;font:9px 'DM Mono';letter-spacing:.18em;color:#c6b8a5;text-transform:uppercase}
+.h-top i{font:20px 'Cormorant Garamond';color:var(--gold);font-style:normal}
+.h-identity{max-width:620px;margin:0 auto 34px;text-align:left}
+.h-kicker{font:italic 17px 'Cormorant Garamond';color:#d0bda5;margin-bottom:3px}
+.h-name{font:600 76px/.78 'Cormorant Garamond';letter-spacing:.01em;color:#eee3d6;text-shadow:0 3px 22px #000}
+.h-surname{margin-top:15px;font:500 20px 'Cormorant Garamond';letter-spacing:.28em;color:#b9a07a}
+.h-motto{margin-top:18px;font:italic 14px/1.8 'Cormorant Garamond';color:#c7bbb0;max-width:360px}
+.h-rule{display:flex;align-items:center;gap:12px;margin-top:20px;color:var(--gold)}
+.h-rule:before,.h-rule:after{content:"";height:1px;background:#b9a07a55;flex:1}
+.h-rule span{font-size:12px}
+.h-scene{max-width:620px;margin:0 auto;background:#070707d9;border:1px solid #b9a07a55;padding:26px 30px 24px;box-shadow:0 20px 45px #0009,inset 0 0 35px #fff003;border-radius:2px}
+.h-scene-head{display:flex;justify-content:space-between;margin-bottom:22px;font:9px 'DM Mono';letter-spacing:.18em;color:#b9a07a}
+.h-scene-text{font-size:16px;line-height:2.08;color:#ddd4c9;text-align:justify}
+.h-scene-text p{margin:0 0 16px}.h-scene-text p:last-child{margin-bottom:0}
+.h-scene-text b{color:#e0c6a0;font-weight:600}
+.h-note{margin-top:22px;padding-top:13px;border-top:1px solid #b9a07a44;display:flex;align-items:baseline;gap:15px;color:#a99d90;font-size:10px;line-height:1.8}
+.h-note b{font:9px 'DM Mono';letter-spacing:.16em;color:#c1a477;white-space:nowrap}
+.h-footer{max-width:620px;margin:28px auto 0;display:flex;justify-content:space-between;align-items:center;font:8px 'DM Mono';letter-spacing:.18em;color:#766b60}
+.h-footer:before,.h-footer:after{content:"";height:1px;width:90px;background:#b9a07a33}
+@media(max-width:600px){.heiress{padding:23px 18px 28px}.h-name{font-size:56px}.h-surname{font-size:16px;letter-spacing:.2em}.h-scene{padding:22px 18px}.h-scene-text{font-size:15px}.h-footer:before,.h-footer:after{width:35px}}
