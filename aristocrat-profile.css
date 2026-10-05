@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Noto+Serif+Thai:wght@400;500&display=swap');
+*{box-sizing:border-box}
+.aristocrat{--gold:#b79a6c;--gold2:#d8c19a;--cream:#eee5d9;--muted:#95897b;position:relative;width:min(700px,100%);min-height:780px;margin:18px auto;padding:26px;overflow:hidden;color:var(--cream);background:linear-gradient(180deg,#03030338 0%,#05050570 45%,#050505ef 100%),url('https://i.pinimg.com/1200x/d7/fd/34/d7fd342a0f362b8878cfae808790895d.jpg') center/cover no-repeat;font-family:"Noto Serif Thai",serif;box-shadow:0 30px 70px #000d}
+.aristocrat:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;background-image:radial-gradient(#fff .5px,transparent .5px);background-size:4px 4px;animation:ar-grain .18s steps(2) infinite}
+.aristocrat:after{content:"";position:absolute;inset:12px;border:1px solid #b79a6c72;pointer-events:none;animation:ar-frame 1.5s ease both}
+@keyframes ar-grain{0%{transform:translate(0)}25%{transform:translate(1%,-1%)}50%{transform:translate(-1%,1%)}75%{transform:translate(1%,1%)}100%{transform:translate(-1%,-1%)}}
+@keyframes ar-frame{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.aristocrat>*{position:relative;z-index:2}
+.aristocrat .dust{position:absolute;z-index:3;width:3px;height:3px;border-radius:50%;background:#dbc69e;box-shadow:0 0 9px #d8c19a;opacity:.45;pointer-events:none}
+.aristocrat .d1{left:14%;top:30%;animation:ar-f1 7s ease-in-out infinite}
+.aristocrat .d2{right:17%;top:42%;animation:ar-f2 9s ease-in-out infinite}
+.aristocrat .d3{left:25%;bottom:28%;animation:ar-f2 8s ease-in-out infinite}
+.aristocrat .d4{right:11%;bottom:23%;animation:ar-f1 10s ease-in-out infinite}
+@keyframes ar-f1{0%,100%{transform:translate(0);opacity:.2}50%{transform:translate(10px,-18px);opacity:.7}}
+@keyframes ar-f2{0%,100%{transform:translate(0);opacity:.25}50%{transform:translate(-12px,-25px);opacity:.65}}
+.aristocrat-head{display:flex;align-items:center;justify-content:space-between;padding:0 5px 13px;border-bottom:1px solid #b79a6c35;font:7px "DM Mono";letter-spacing:.22em;color:#9e9182}
+.aristocrat-head i{font:18px "Cormorant Garamond";color:var(--gold2);font-style:normal;animation:ar-glow 4s ease-in-out infinite}
+@keyframes ar-glow{0%,100%{text-shadow:0 0 0 transparent;opacity:.65}50%{text-shadow:0 0 15px #d8c19a88;opacity:1}}
+.aristocrat-number{position:absolute;right:7%;top:170px;font:10px "DM Mono";letter-spacing:.25em;color:#b79a6c70;writing-mode:vertical-rl}
+.aristocrat-photo{position:relative;width:70%;height:445px;margin:30px auto 0;padding:6px;background:#070605;border:1px solid #b79a6c9c;box-shadow:0 25px 50px #000c,0 0 0 1px #b79a6c20;overflow:hidden}
+.aristocrat-photo:before{content:"";position:absolute;inset:10px;border:1px solid #b79a6c50;z-index:2;pointer-events:none}
+.aristocrat-photo:after{content:"";position:absolute;top:-20%;left:-70%;width:35%;height:140%;transform:rotate(18deg);background:linear-gradient(90deg,transparent,#fff5df20,#d8c19a40,transparent);animation:ar-shine 7s ease-in-out infinite;z-index:3;pointer-events:none}
+@keyframes ar-shine{0%,55%{left:-70%}78%{left:130%}100%{left:130%}}
+.aristocrat-photo img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;filter:saturate(.78) contrast(1.08);transition:transform 1.2s ease,filter 1.2s ease}
+.aristocrat-photo:hover img{transform:scale(1.035);filter:saturate(.92) contrast(1.08)}
+.aristocrat-name{text-align:center;margin-top:-2px}
+.aristocrat-kicker{margin-top:22px;font:italic 18px "Cormorant Garamond";color:#c7b7a4;opacity:0;animation:ar-rise .9s .5s ease forwards}
+.aristocrat-name h1{position:relative;display:inline-block;margin:3px 0 0;font:600 82px/.8 "Cormorant Garamond";letter-spacing:.015em;color:#eee5d9;text-shadow:0 5px 25px #000;opacity:0;animation:ar-rise 1s .7s ease forwards}
+.aristocrat-name h1:after{content:"";position:absolute;left:0;bottom:-7px;width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transform-origin:center;animation:ar-line 1.2s 1.4s ease forwards}
+@keyframes ar-rise{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ar-line{to{transform:scaleX(1)}}
+.aristocrat-name h1:hover{color:#fff;text-shadow:0 0 8px #fff8,0 0 25px #d8c19a55;transition:.5s}
+.aristocrat-surname{margin-top:17px;font:500 17px "Cormorant Garamond";letter-spacing:.34em;color:var(--gold2);opacity:0;animation:ar-rise 1s 1s ease forwards}
+.aristocrat-motto{max-width:430px;margin:15px auto 0;font:italic 16px/1.7 "Cormorant Garamond";color:#b7aca0;opacity:0;animation:ar-rise 1s 1.25s ease forwards}
+.aristocrat-divider{display:flex;align-items:center;gap:12px;width:65%;margin:23px auto 0;opacity:0;animation:ar-rise 1s 1.45s ease forwards}
+.aristocrat-divider:before,.aristocrat-divider:after{content:"";height:1px;flex:1;background:#b79a6c38}
+.aristocrat-divider span{color:var(--gold);font-size:10px;animation:ar-spin 8s linear infinite}
+@keyframes ar-spin{to{transform:rotate(360deg)}}
+.aristocrat-meta{display:flex;justify-content:center;margin:21px auto 0;width:72%;border-top:1px solid #b79a6c25;border-bottom:1px solid #b79a6c25;opacity:0;animation:ar-rise 1s 1.6s ease forwards}
+.aristocrat-meta div{flex:1;padding:10px 4px;text-align:center}
+.aristocrat-meta div+div{border-left:1px solid #b79a6c22}
+.aristocrat-meta b{display:block;margin-bottom:4px;font:7px "DM Mono";letter-spacing:.15em;color:var(--gold)}
+.aristocrat-meta span{font:10px "DM Mono";color:#c8beb2}
+.aristocrat-footer{margin-top:24px;text-align:center;font:7px "DM Mono";letter-spacing:.25em;color:#665e56;opacity:.8}
+@media(max-width:560px){.aristocrat{min-height:700px;padding:20px}.aristocrat-photo{width:86%;height:365px}.aristocrat-number{display:none}.aristocrat-name h1{font-size:59px}.aristocrat-surname{font-size:13px;letter-spacing:.2em}.aristocrat-meta{width:88%}}
