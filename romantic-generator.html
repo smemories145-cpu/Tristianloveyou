@@ -1,1 +1,159 @@
-<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Romantic Archive Generator</title><link rel="stylesheet" href="romantic-role.css"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Noto+Serif+Thai:wght@400;500&display=swap" rel="stylesheet"><style>*{box-sizing:border-box}body{margin:0;background:#110f11;color:#eee4d7;font:13px 'Noto Serif Thai',serif}header{text-align:center;padding:25px;border-bottom:1px solid #65503c}h1{font:600 40px 'Cormorant Garamond',serif;margin:0}.layout{max-width:1100px;margin:auto;padding:16px;display:grid;grid-template-columns:minmax(280px,400px) minmax(280px,1fr);gap:18px}.panel{background:#1b181a;border:1px solid #67503a;border-radius:8px;padding:18px}h2{font:600 26px 'Cormorant Garamond',serif;color:#d7b68e}label{display:block;margin:12px 0 4px;color:#d7b68e}input,textarea,select{width:100%;background:#100f11;color:#f5e9dc;border:1px solid #67503a;border-radius:5px;padding:9px;font:13px 'Noto Serif Thai',serif}textarea{min-height:130px;resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}button{margin:12px 8px 0 0;background:#c4a078;color:#171113;border:0;border-radius:5px;padding:10px 14px;cursor:pointer}.preview{display:flex;justify-content:center}.preview .rr-card{margin:0}#code{font:11px monospace;height:105px}@media(max-width:800px){.layout{grid-template-columns:1fr}}</style></head><body><header><h1>Romantic Archive</h1>ROLEPLAY GENERATOR · ปรับแต่งและคัดลอกโค้ด</header><main class="layout"><section class="panel"><h2>01 / Customize</h2><label>ภาพพื้นหลัง</label><input id="bg" value="https://i.pinimg.com/1200x/d7/fd/34/d7fd342a0f362b8878cfae808790895d.jpg"><label>ภาพตัวละคร</label><input id="photo" value="https://i.pinimg.com/1200x/dd/7a/57/dd7a5777e4b27cc7f79064316e58e067.jpg"><div class="two"><div><label>ตำแหน่งแนวนอน</label><input id="x" type="range" min="0" max="100" value="50"></div><div><label>ตำแหน่งแนวตั้ง</label><input id="y" type="range" min="0" max="100" value="50"></div><div><label>สีภาพ</label><select id="gray"><option value="0">สีปกติ</option><option value="1">ขาวดำ</option></select></div><div><label>ขนาดข้อความ</label><select id="size"><option>13</option><option selected>14</option><option>15</option><option>16</option></select></div><div><label>Scene</label><input id="scene" value="07"></div><div><label>Take</label><input id="take" value="01"></div><div><label>ชื่อ</label><input id="name" value="TRISTIAN"></div><div><label>นามสกุล</label><input id="sub" value="SIDNEY KENNEDY"></div></div><label>ข้อความเหนือชื่อ</label><input id="eyebrow" value="The story of"><label>คำโปรย</label><input id="quote" value="A gentleman in a world that never stops."><label>ข้อความโรล</label><textarea id="story">นานมาแล้วที่ไม่ได้เก็บสมุน</textarea><label>หมายเหตุ</label><textarea id="note" style="min-height:60px">หมายเหตุ fishing ✧</textarea><label>ข้อความท้ายกรอบ</label><input id="footer" value="A PRIVATE ARCHIVE · TSK"><div><button id="copy">คัดลอก HTML</button><button id="download">บันทึก HTML</button></div><p id="status"></p><label>โค้ดสำหรับเว็บบอร์ด (บรรทัดเดียว)</label><textarea id="code" readonly></textarea></section><section class="panel"><h2>02 / Live Preview</h2><div class="preview" id="preview"></div></section></main><script>const CSS='https://smemories145-cpu.github.io/Tristianloveyou/romantic-role.css';const ids=['bg','photo','x','y','gray','size','scene','take','name','sub','eyebrow','quote','story','note','footer'];const el=id=>document.getElementById(id),v=id=>el(id).value,e=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'),url=s=>/^https:\/\//.test(s)?s.replace(/['"()\\]/g,''):'';function build(){return '<div class="rr-card" style="--rr-bg:url('+url(v('bg'))+');--rr-x:'+Number(v('x'))+'%;--rr-y:'+Number(v('y'))+'%;--rr-gray:'+Number(v('gray'))+'"><div class="rr-inner"><div class="rr-top"><span>MY BABY</span><span class="rr-rule"></span>✦<span class="rr-rule"></span><span>SCENE '+e(v('scene'))+' / TAKE '+e(v('take'))+'</span></div><div class="rr-head"><div class="rr-heading"><div class="rr-eyebrow">'+e(v('eyebrow'))+'</div><div class="rr-name">'+e(v('name'))+'</div><div class="rr-sub">'+e(v('sub'))+'</div><div class="rr-quote">'+e(v('quote'))+'</div></div><div class="rr-photo"><img src="'+e(url(v('photo')))+'"><div class="rr-photo-label">NO. 007 / TSK</div></div></div><div class="rr-story"><div class="rr-meta"><span>DAY X</span><span>TAKE '+e(v('take'))+'</span></div><div class="rr-sep"></div><div class="rr-text" style="font-size:'+Number(v('size'))+'px">'+e(v('story'))+'</div><div class="rr-sep"></div><div class="rr-note">NOTE / '+e(v('note'))+'</div></div><div class="rr-footer">'+e(v('footer'))+'</div></div></div>'}function render(){let h=build();el('preview').innerHTML=h;el('code').value='<link rel="stylesheet" href="'+CSS+'">'+h.replace(/\n/g,'&#10;')}ids.forEach(id=>el(id).addEventListener('input',render));el('copy').onclick=async()=>{try{await navigator.clipboard.writeText(el('code').value);el('status').textContent='คัดลอกแล้ว ✓'}catch{el('code').select();el('status').textContent='เลือกโค้ดแล้ว กด Ctrl+C'}};el('download').onclick=()=>{let b=new Blob(['<!doctype html><meta charset="utf-8">'+el('code').value],{type:'text/html'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='romantic-role.html';a.click()};render();</script></body></html>
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Romantic Archive · Roleplay Generator</title>
+<link rel="stylesheet" href="romantic-role.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+Thai:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#100d11;color:#eae0d5;font:13px 'Noto Serif Thai',serif}
+header{text-align:center;padding:22px 16px;border-bottom:1px solid #65503c;background:linear-gradient(100deg,#171015,#21191c,#171015)}
+h1{font:600 42px 'Cormorant Garamond',serif;letter-spacing:1px;margin:0;color:#e4c9a5}header small{font:10px Georgia,serif;letter-spacing:2px;color:#b39b82}
+.layout{max-width:1330px;margin:auto;padding:18px;display:grid;grid-template-columns:minmax(330px,410px) minmax(0,1fr);gap:18px;align-items:start}
+.panel{background:#1c171b;border:1px solid #67503a;border-radius:9px;padding:17px;min-width:0}
+.panel h2{font:600 27px 'Cormorant Garamond',serif;color:#dfbf94;margin:0 0 10px}
+.controls{max-height:calc(100vh - 147px);min-height:390px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#9f7858 #211a20;padding-right:9px}
+.controls::-webkit-scrollbar,.editor::-webkit-scrollbar{width:9px}.controls::-webkit-scrollbar-thumb,.editor::-webkit-scrollbar-thumb{background:#866c54;border-radius:8px}
+label{display:block;margin:14px 0 6px;color:#cfad85;font-size:12px}
+input,select,textarea{width:100%;background:#100e12;color:#f5e9dc;border:1px solid #70563f;border-radius:5px;padding:9px;font:13px 'Noto Serif Thai',serif}
+input:focus,textarea:focus,select:focus,.editor:focus{outline:1px solid #d7b58b;outline-offset:1px}
+input[type=range]{padding:0;accent-color:#cba47d}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{color:#b5a49a;font-size:11px;line-height:1.65;margin:6px 0}
+.tool-group{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:8px;background:#261e25;border:1px solid #796049;border-bottom:0;border-radius:6px 6px 0 0}
+.tool{min-width:31px;height:32px;padding:5px 8px;margin:0;display:inline-grid;place-items:center;background:#3b3038;color:#e8d4ba;border:1px solid #705842;border-radius:4px;font:14px Georgia,serif;cursor:pointer}
+.tool:hover,.tool:focus{background:#674a43;outline-color:#d4aa80}.tool:active{background:#9a7555}
+.tool-select{width:auto;max-width:94px;font:12px Georgia,serif;padding:5px;height:32px}
+.color-wrap{display:inline-flex;align-items:center;gap:4px;color:#d8c4a7;font:11px Georgia,serif;border-left:1px solid #624d42;padding-left:7px}
+input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:pointer}
+.editor{height:245px;min-height:160px;max-height:500px;resize:vertical;overflow:auto;padding:13px;line-height:2;background:#100e12;border:1px solid #796049;border-radius:0 0 6px 6px;font:14px/2 'Noto Serif Thai',serif;white-space:pre-wrap;overflow-wrap:anywhere;scrollbar-width:thin}
+.editor p{margin:0 0 10px}.editor ul,.editor ol{padding-left:26px}.editor a{color:#d7ad75}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.primary,.secondary{border:1px solid #bb926b;border-radius:5px;padding:10px 14px;cursor:pointer;font:12px 'Noto Serif Thai',serif}.primary{background:#c4a078;color:#181113}.secondary{background:#292026;color:#e7d4bb}
+#status{min-height:20px;color:#d8b489}.code{font:11px/1.5 monospace;height:95px;resize:vertical}
+.preview-panel{min-height:570px}.preview{display:flex;align-items:flex-start;justify-content:center;padding:8px 0}.preview .rr-card{margin:0}
+@media(max-width:830px){.layout{grid-template-columns:1fr}.controls{max-height:70vh}.preview-panel{min-height:0}}@media(max-width:410px){.layout{padding:9px}.panel{padding:12px}}
+</style>
+</head>
+<body>
+<header><h1>Romantic Archive</h1><small>ROLEPLAY GENERATOR · THE PRIVATE EDITION</small></header>
+<main class="layout">
+<section class="panel" aria-label="แบบฟอร์มแก้ไข"><h2>01 / Customize <span style="font-size:13px;color:#ac9076">↕ เลื่อนฟอร์มได้</span></h2>
+<div class="controls">
+<div class="two">
+<div><label for="width">ความกว้างกรอบ</label><select id="width"><option value="480">480 px</option><option value="550" selected>550 px (แนะนำ)</option><option value="620">620 px</option><option value="680">680 px</option></select></div>
+<div><label for="size">ขนาดข้อความโรล</label><select id="size"><option value="14">14 px</option><option value="15">15 px</option><option value="16" selected>16 px</option><option value="17">17 px</option><option value="18">18 px</option></select></div>
+</div>
+<label for="bg">ภาพพื้นหลัง (URL)</label><input id="bg" value="https://i.pinimg.com/1200x/d7/fd/34/d7fd342a0f362b8878cfae808790895d.jpg">
+<label for="photo">ภาพตัวละคร (URL)</label><input id="photo" placeholder="https://...">
+<div class="two">
+<div><label for="x">จัดภาพซ้าย–ขวา</label><input id="x" type="range" min="0" max="100" value="50"></div>
+<div><label for="y">จัดภาพบน–ล่าง</label><input id="y" type="range" min="0" max="100" value="50"></div>
+<div><label for="gray">สีภาพ</label><select id="gray"><option value="0">สีปกติ</option><option value="1">ขาวดำ</option></select></div>
+<div><label for="scene">Scene</label><input id="scene" value="07"></div>
+<div><label for="take">Take</label><input id="take" value="01"></div>
+<div><label for="name">ชื่อ</label><input id="name" value="TRISTIAN"></div>
+</div>
+<label for="sub">นามสกุล</label><input id="sub" value="SIDNEY KENNEDY">
+<label for="eyebrow">ข้อความเหนือชื่อ</label><input id="eyebrow" value="The story of">
+<label for="quote">คำโปรย</label><input id="quote" value="A gentleman in a world that never stops.">
+<label for="editor">ข้อความโรลเพลย์</label>
+<p class="hint">เลือกข้อความแล้วกดปุ่มตัวหนา ตัวเอียง ขีดเส้นใต้ เปลี่ยนสี ไฮไลต์ หรือจัดย่อหน้าได้เลย ตัวแก้ไขมีแถบเลื่อนของตัวเอง</p>
+<div class="tool-group" id="toolbar" role="toolbar" aria-label="เครื่องมือจัดรูปแบบข้อความ">
+<button type="button" class="tool" data-cmd="bold" title="ตัวหนา (Ctrl+B)"><b>B</b></button>
+<button type="button" class="tool" data-cmd="italic" title="ตัวเอียง (Ctrl+I)"><i>I</i></button>
+<button type="button" class="tool" data-cmd="underline" title="ขีดเส้นใต้ (Ctrl+U)"><u>U</u></button>
+<button type="button" class="tool" data-cmd="strikeThrough" title="ขีดฆ่า"><s>S</s></button>
+<button type="button" class="tool" data-cmd="insertUnorderedList" title="รายการจุด">• ≡</button>
+<button type="button" class="tool" data-cmd="insertOrderedList" title="รายการตัวเลข">1. ≡</button>
+<button type="button" class="tool" data-cmd="justifyLeft" title="ชิดซ้าย">≡</button>
+<button type="button" class="tool" data-cmd="justifyCenter" title="กึ่งกลาง">☰</button>
+<button type="button" class="tool" data-cmd="justifyRight" title="ชิดขวา">≡›</button>
+<button type="button" class="tool" data-cmd="removeFormat" title="ล้างรูปแบบ">Tx</button>
+<select class="tool-select" id="inlineSize" title="ขนาดข้อความส่วนที่เลือก"><option value="">ขนาดตัวอักษร</option><option value="2">เล็ก</option><option value="3">ปกติ</option><option value="4">ใหญ่</option><option value="5">ใหญ่มาก</option></select>
+<label class="color-wrap" style="margin:0">สี<input id="textColor" type="color" value="#e8d4bb" title="สีตัวอักษร"></label>
+<label class="color-wrap" style="margin:0">ไฮไลต์<input id="highlight" type="color" value="#6d4d62" title="สีไฮไลต์"></label>
+<button type="button" class="tool" id="linkBtn" title="แทรกลิงก์">🔗</button>
+<button type="button" class="tool" data-cmd="undo" title="ย้อนกลับ">↶</button>
+<button type="button" class="tool" data-cmd="redo" title="ทำซ้ำ">↷</button>
+</div>
+<div id="editor" class="editor" contenteditable="true" role="textbox" aria-multiline="true" spellcheck="false"><p>เมื่อแสงจันทร์สาดส่องลงมา ทริสเตียนก็ค่อย ๆ เปิดหน้าหนังสือที่ค้างไว้...</p></div>
+<label for="note">หมายเหตุ</label><textarea id="note" style="min-height:65px">หมายเหตุ fishing ✧</textarea>
+<label for="footer">ข้อความท้ายกรอบ</label><input id="footer" value="A PRIVATE ARCHIVE · TSK">
+<div class="actions"><button type="button" class="primary" id="copy">คัดลอก HTML</button><button type="button" class="secondary" id="download">บันทึก HTML</button></div>
+<p id="status" aria-live="polite"></p>
+<label for="code">โค้ดเว็บบอร์ด (บรรทัดเดียว)</label><textarea id="code" class="code" readonly></textarea>
+</div></section>
+<section class="panel preview-panel"><h2>02 / Live Preview</h2><div class="preview" id="preview"></div><p class="hint" style="text-align:center">ตัวอย่างขนาดจริงในกรอบ · กดคัดลอก HTML เพื่อใช้บนเว็บบอร์ด</p></section>
+</main>
+<script>
+'use strict';
+const CSS='https://smemories145-cpu.github.io/Tristianloveyou/romantic-role.css';
+const ids=['width','size','bg','photo','x','y','gray','scene','take','name','sub','eyebrow','quote','note','footer'];
+const el=id=>document.getElementById(id),v=id=>el(id).value;
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const safeURL=s=>/^https:\/\//i.test(s.trim())?s.trim().replace(/['"()\\\s]/g,''):'';
+const editor=el('editor');let savedRange=null;
+function saveSelection(){const s=window.getSelection();if(s&&s.rangeCount&&editor.contains(s.anchorNode))savedRange=s.getRangeAt(0).cloneRange()}
+function restoreSelection(){editor.focus();if(savedRange){const s=window.getSelection();s.removeAllRanges();s.addRange(savedRange)}}
+function command(cmd,val){restoreSelection();document.execCommand(cmd,false,val||null);saveSelection();render()}
+editor.addEventListener('mouseup',saveSelection);editor.addEventListener('keyup',saveSelection);
+editor.addEventListener('input',()=>{saveSelection();render()});
+editor.addEventListener('paste',event=>{event.preventDefault();let plain=event.clipboardData.getData('text/plain');document.execCommand('insertText',false,plain)});
+document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedown',ev=>ev.preventDefault());b.addEventListener('click',()=>command(b.dataset.cmd))});
+el('inlineSize').addEventListener('change',e=>{if(e.target.value)command('fontSize',e.target.value);e.target.value=''});
+el('textColor').addEventListener('input',e=>command('foreColor',e.target.value));
+el('highlight').addEventListener('input',e=>command('hiliteColor',e.target.value));
+el('linkBtn').addEventListener('mousedown',ev=>ev.preventDefault());
+el('linkBtn').addEventListener('click',()=>{const url=prompt('วางลิงก์ https://');if(url&&/^https:\/\//i.test(url.trim()))command('createLink',url.trim())});
+function richHTML(){
+ const allowed=new Set(['B','STRONG','I','EM','U','S','STRIKE','DEL','BR','P','DIV','UL','OL','LI','BLOCKQUOTE','SPAN','FONT','A']);
+ function walk(node){
+ if(node.nodeType===3)return esc(node.nodeValue);
+ if(node.nodeType!==1)return '';
+ let tag=node.tagName;
+ if(['SCRIPT','STYLE','IFRAME','IMG','SVG','OBJECT'].includes(tag))return '';
+ const inner=Array.from(node.childNodes).map(walk).join('');
+ if(!allowed.has(tag))return inner;
+ if(tag==='BR')return '<br>';
+ if(tag==='FONT'){
+  let styles=[];
+  if(/^#[0-9a-f]{3,8}$/i.test(node.getAttribute('color')||''))styles.push('color:'+node.getAttribute('color'));
+  const sizes={'1':'11px','2':'13px','3':'16px','4':'19px','5':'23px','6':'27px','7':'31px'};
+  if(sizes[node.getAttribute('size')])styles.push('font-size:'+sizes[node.getAttribute('size')]);
+  return styles.length?'<span style="'+styles.join(';')+'">'+inner+'</span>':inner;
+ }
+ if(tag==='SPAN'||tag==='P'||tag==='DIV'){
+  let styles=[];const st=node.style;
+  if(/^#[0-9a-f]{3,8}$/i.test(st.color))styles.push('color:'+st.color);
+  else if(/^rgb\([\d, ]+\)$/.test(st.color))styles.push('color:'+st.color);
+  if(/^#[0-9a-f]{3,8}$/i.test(st.backgroundColor)||/^rgb\([\d, ]+\)$/.test(st.backgroundColor))styles.push('background-color:'+st.backgroundColor);
+  if(/^\d{1,2}px$/.test(st.fontSize))styles.push('font-size:'+st.fontSize);
+  if(['left','center','right','justify'].includes(st.textAlign))styles.push('text-align:'+st.textAlign);
+  const outTag=tag==='DIV'?'p':tag.toLowerCase();
+  return '<'+outTag+(styles.length?' style="'+esc(styles.join(';'))+'"':'')+'>'+inner+'</'+outTag+'>';
+ }
+ if(tag==='A'){const href=node.getAttribute('href')||'';return /^https:\/\//i.test(href)?'<a href="'+esc(href)+'">'+inner+'</a>':inner}
+ const t=tag==='STRIKE'||tag==='DEL'?'s':tag.toLowerCase();
+ return '<'+t+'>'+inner+'</'+t+'>';
+ }
+ return Array.from(editor.childNodes).map(walk).join('');
+}
+function build(){
+ const photo=safeURL(v('photo'));const bg=safeURL(v('bg'));
+ const width=Math.max(480,Math.min(680,Number(v('width'))||550));const size=Math.max(14,Math.min(18,Number(v('size'))||16));
+ let s='<div class="rr-card" style="--rr-width:'+width+'px;--rr-font-size:'+size+'px;--rr-bg:url('+bg+');--rr-x:'+Number(v('x'))+'%;--rr-y:'+Number(v('y'))+'%;--rr-gray:'+Number(v('gray'))+'"><div class="rr-inner">';
+ s+='<div class="rr-top"><span>MY BABY</span><span class="rr-rule"></span>✦<span class="rr-rule"></span><span>SCENE '+esc(v('scene'))+' / TAKE '+esc(v('take'))+'</span></div>';
+ s+='<div class="rr-head"><div class="rr-heading"><div class="rr-eyebrow">'+esc(v('eyebrow'))+'</div><div class="rr-name">'+esc(v('name'))+'</div><div class="rr-sub">'+esc(v('sub'))+'</div><div class="rr-quote">'+esc(v('quote'))+'</div></div>';
+ s+='<div class="rr-photo"><img alt="" src="'+esc(photo)+'"><div class="rr-photo-label">NO. 007 / TSK</div></div></div>';
+ s+='<div class="rr-story"><div class="rr-meta"><span>DAY X</span><span>TAKE '+esc(v('take'))+'</span></div><div class="rr-sep"></div><div class="rr-text">'+richHTML()+'</div><div class="rr-sep"></div><div class="rr-note">NOTE / '+esc(v('note'))+'</div></div><div class="rr-footer">'+esc(v('footer'))+'</div></div></div>';
+ return s;
+}
+function render(){
+ const markup=build();el('preview').innerHTML=markup;
+ el('code').value='<link rel="stylesheet" href="'+CSS+'">'+markup.replace(/\r?\n/g,'&#10;');
+}
+ids.forEach(id=>el(id).addEventListener('input',render));
+el('copy').onclick=async()=>{try{await navigator.clipboard.writeText(el('code').value);el('status').textContent='✓ คัดลอกโค้ดบรรทัดเดียวแล้ว'}catch(e){el('code').focus();el('code').select();el('status').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
+el('download').onclick=()=>{const b=new Blob(['<!doctype html><meta charset="utf-8">'+el('code').value],{type:'text/html'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='romantic-role.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+render();
+</script></body></html>
