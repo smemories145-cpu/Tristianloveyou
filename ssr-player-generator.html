@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sugar Sugar Rune · Player RP Generator</title>
+<link rel="stylesheet" href="https://midsummer-reverie.github.io/rpth-code/sugarrune2/ssr2-playerrp.css">
+<style>
+*{box-sizing:border-box}body{margin:0;color:#503f63;background:linear-gradient(145deg,#f9f5ff,#f2eaf7);font-family:Tahoma,'Noto Sans Thai',sans-serif;font-size:13px}
+header{text-align:center;padding:22px 12px 15px}header h1{font:600 30px Georgia,serif;letter-spacing:1px;color:#765a97;margin:0 0 5px}header p{margin:0;color:#8b789a}
+main{max-width:1160px;margin:auto;display:grid;grid-template-columns:minmax(300px,400px) minmax(0,1fr);gap:18px;padding:13px 18px 35px}
+.card{min-width:0;background:#fffdfa;border:1px solid #dfcde9;box-shadow:0 6px 25px #9d7bae18;border-radius:15px;padding:17px}
+h2{margin:0 0 10px;font:600 21px Georgia,serif;color:#785b95}
+label{font-weight:bold;color:#755c8c;display:block;margin:12px 0 5px}
+input:not([type=range]),textarea,select{width:100%;border:1px solid #d6c5e4;border-radius:7px;padding:9px;background:#fff;color:#584b60;font:13px/1.65 Tahoma,sans-serif}
+textarea{resize:vertical;min-height:125px}
+input:focus,textarea:focus,select:focus{outline:2px solid #bb9bd0;outline-offset:1px}
+input[type=range]{width:100%;accent-color:#a081c3}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-scroll{max-height:calc(100vh - 154px);overflow-y:auto;padding-right:9px;scrollbar-width:thin;scrollbar-color:#b89bc8 #f7f2f8}
+#rp{min-height:260px;font-family:Tahoma,sans-serif;line-height:1.9}
+.hint{font-size:11px;color:#86768f;line-height:1.7;margin:7px 0}
+.toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:8px;border-radius:7px 7px 0 0;background:#f4ecf8;border:1px solid #d7c5e2;border-bottom:0}
+.toolbar button{border:1px solid #cbb7dd;background:#fff;border-radius:5px;color:#71548d;min-width:30px;padding:6px 9px;cursor:pointer}
+.toolbar button:hover{background:#eee0f6}
+.toolbar+textarea{border-radius:0 0 7px 7px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.actions button{border:0;padding:11px 15px;border-radius:9px;background:#9070af;color:white;font-weight:bold;cursor:pointer}
+.actions button.secondary{background:#efe5f4;color:#70538c}
+#feedback{min-height:20px;color:#71548d}
+#code{min-height:110px;font:11px/1.5 Consolas,monospace;white-space:pre-wrap}
+.preview-stage{overflow:auto;padding:14px 8px 22px;min-height:320px;max-height:calc(100vh - 150px);scrollbar-width:thin}
+.preview-stage .ssr-py-container{margin-left:auto!important;margin-right:auto!important}
+@media(max-width:800px){main{grid-template-columns:1fr}.form-scroll{max-height:65vh}.preview-stage{max-height:750px}}
+</style>
+</head>
+<body>
+<header><h1>✦ Sugar Sugar Rune ✦</h1><p>Player Roleplay · Simple Generator (แยกจาก Romantic Archive)</p></header>
+<main>
+<section class="card"><h2>01 · กรอกข้อมูล</h2><div class="form-scroll">
+<label for="photo">ลิงก์รูปตัวละคร</label><input id="photo" type="url" value="https://i.postimg.cc/qMm7rDt8/ff4162ec-3304-47b6-b14e-6798ccfd2a0b.png">
+<div class="grid">
+<div><label for="zoom">ซูมรูป <span id="zoomLabel">190%</span></label><input id="zoom" type="range" min="100" max="350" step="5" value="190"></div>
+<div><label for="posX">ตำแหน่งแนวนอน <span id="posXLabel">50%</span></label><input id="posX" type="range" min="0" max="100" value="50"></div>
+<div><label for="posY">ตำแหน่งแนวตั้ง <span id="posYLabel">50%</span></label><input id="posY" type="range" min="0" max="100" value="50"></div>
+<div><label for="theme">ธีม</label><select id="theme"><option value="lightpurple">Light Purple</option></select></div>
+<div><label for="lastname">นามสกุล</label><input id="lastname" value="Aster"></div>
+<div><label for="name">ชื่อ</label><input id="name" value="Lucien"></div>
+<div><label for="className">ห้องเรียน</label><input id="className" value="Class 2-A"></div>
+<div><label for="school">โรงเรียน</label><input id="school" value="Moegi School"></div>
+</div>
+<label for="rp">ข้อความโรลเพลย์</label>
+<div class="toolbar" aria-label="เครื่องมือ BBCode">
+<button type="button" data-wrap="b" title="ตัวหนา"><b>B</b></button>
+<button type="button" data-wrap="i" title="ตัวเอียง"><i>I</i></button>
+<button type="button" data-wrap="u" title="ขีดเส้นใต้"><u>U</u></button>
+<button type="button" data-wrap="s" title="ขีดฆ่า"><s>S</s></button>
+<button type="button" id="colorButton" title="ใส่สี">สี</button>
+<button type="button" id="centerButton" title="จัดกลาง">≡</button>
+</div>
+<textarea id="rp" spellcheck="false">แอสเตอร์ชะงักมือที่กำลังเลือกหนังสือทันที ก่อนจะหันมองเจ้าของเสียงคุ้นเคย นัยน์ตาสีม่วงอมเทาฉายแววประหลาดใจเล็กน้อย [i]นี่จำเขาไม่ได้จริง ๆ หรือ?[/i] แม้จะขัดใจกับถ้อยคำห้วน ๆ ไร้หางเสียงของอีกฝ่ายอยู่บ้าง แต่ก็ไม่ได้คิดถือสา ชายหนุ่มเพียงถอนหายใจแผ่วเบา ก่อนจะเอื้อมมือหยิบหนังสือจากชั้นด้านบนลงมายื่นให้
+
+[b]"...นี่ครับ"[/b] แม้จะไม่ค่อยเข้าใจสถานการณ์สักเท่าไหร่แต่เขาก็หยิบหนังสือให้ ก่อนจะนึกอะไรขึ้นได้ [b]"เหมือนเมื่อวันก่อนคุณจะลืมผ้าพันคอของคุณ เอากลับไปด้วยครับ"[/b]</textarea>
+<p class="hint">ใช้ BBCode แบบเดิม เช่น [b]ตัวหนา[/b] และ [i]ตัวเอียง[/i] · เลือกข้อความก่อนกดปุ่มจัดรูปแบบ</p>
+<label for="note">โน้ตด้านล่าง</label><input id="note" value="≽^• ˕ • ྀི≼">
+<details><summary style="margin-top:15px;cursor:pointer;color:#785b95">✧ ตัวเลือกเพิ่มเติม (ไม่จำเป็น)</summary>
+<label for="locket">URL Locket (ถ้ามี)</label><input id="locket" placeholder="https://...">
+<label for="wand">URL Wand (ถ้ามี)</label><input id="wand" placeholder="https://...">
+</details>
+<div class="actions"><button id="copy" type="button">คัดลอกโค้ด</button><button id="download" type="button" class="secondary">บันทึกเป็น .txt</button></div>
+<p id="feedback" aria-live="polite"></p>
+<label for="code">โค้ดสำหรับเว็บบอร์ด (บรรทัดเดียว)</label><textarea id="code" readonly></textarea>
+</div></section>
+<section class="card"><h2>02 · ตัวอย่างจริง</h2><p class="hint">พรีวิวใช้ stylesheet เดิมจากผู้สร้าง หาก CSS ต้นทางโหลดไม่สำเร็จ ตัวอย่างอาจแสดงผลไม่ครบ</p>
+<div class="preview-stage" id="preview"></div></section>
+</main>
+<script>
+'use strict';
+const cssURL='https://midsummer-reverie.github.io/rpth-code/sugarrune2/ssr2-playerrp.css';
+const $=id=>document.getElementById(id),val=id=>$(id).value;
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const safeURL=s=>/^https:\/\//i.test(s.trim())?s.trim().replace(/['"()\\\s<>]/g,''):'';
+const inputs=['photo','zoom','posX','posY','theme','lastname','name','className','school','rp','note','locket','wand'];
+function renderBBCode(source){
+ const escaped=esc(source);
+ const out=escaped.replace(/\[b\]([\s\S]*?)\[\/b\]/gi,'<strong>$1</strong>')
+ .replace(/\[i\]([\s\S]*?)\[\/i\]/gi,'<em>$1</em>')
+ .replace(/\[u\]([\s\S]*?)\[\/u\]/gi,'<u>$1</u>')
+ .replace(/\[s\]([\s\S]*?)\[\/s\]/gi,'<s>$1</s>')
+ .replace(/\[center\]([\s\S]*?)\[\/center\]/gi,'<span style="display:block;text-align:center">$1</span>')
+ .replace(/\[color=(#[0-9a-f]{3,6})\]([\s\S]*?)\[\/color\]/gi,'<span style="color:$1">$2</span>');
+ return out;
+}
+function generate(){
+ const image=safeURL(val('photo')),locket=safeURL(val('locket')),wand=safeURL(val('wand'));
+ const posX=Number(val('posX')),posY=Number(val('posY')),zoom=Number(val('zoom'));
+ const style='--p-pic: url(\''+image+'\') '+posX+'% '+posY+'% / '+zoom+'%; --p-locket: '+(locket?'url(\''+locket+'\')':'')+'; --p-wand: '+(wand?'url(\''+wand+'\')':'')+';';
+ const rp=esc(val('rp')).replace(/\r\n?/g,'\n');
+ return '<div id="'+esc(val('theme'))+'" class="ssr-py-container" style="'+esc(style)+'"><div class="ssr-py-hd"><div class="ssr-py-pic"></div><div class="ssr-py-hdde"><div class="ssr-py-lastname">'+esc(val('lastname'))+'</div><div class="ssr-py-name">'+esc(val('name'))+'</div><div class="ssr-py-add"><div class="ssr-py-addc">'+esc(val('className'))+'</div><div class="ssr-py-addc">'+esc(val('school'))+'</div></div></div></div><div class="ssr-py-content"><div class="ssr-py-ovl"></div><div class="ssr-py-grad"></div><div class="ssr-py-text">'+rp+'</div></div><div class="ssr-py-note">'+esc(val('note'))+'</div><div class="ssr-py-locket"></div><div class="ssr-py-wand"></div><div class="ssr-py-ssr"></div><div class="ssr-py-sp"></div></div>';
+}
+function previewMarkup(){
+ const safe=generate();
+ const box=document.createElement('div');
+ box.innerHTML=safe;
+ const area=box.querySelector('.ssr-py-text');
+ area.innerHTML=renderBBCode(val('rp')).replace(/\n/g,'<br>');
+ return box.innerHTML;
+}
+function render(){
+ $('zoomLabel').textContent=val('zoom')+'%';
+ $('posXLabel').textContent=val('posX')+'%';
+ $('posYLabel').textContent=val('posY')+'%';
+ const body=generate();
+ $('code').value='<link href="'+cssURL+'" rel="stylesheet">'+body.replace(/\r?\n/g,'&#10;');
+ $('preview').innerHTML=previewMarkup();
+}
+inputs.forEach(id=>$(id).addEventListener('input',render));
+function wrap(open,close){
+ const t=$('rp'),a=t.selectionStart,b=t.selectionEnd,txt=t.value.slice(a,b);
+ t.setRangeText(open+txt+close,a,b,'select');
+ t.focus();t.setSelectionRange(a+open.length,a+open.length+txt.length);render();
+}
+document.querySelectorAll('[data-wrap]').forEach(btn=>btn.addEventListener('click',()=>{const tag=btn.dataset.wrap;wrap('['+tag+']','[/'+tag+']')}));
+$('colorButton').onclick=()=>{const color=prompt('รหัสสี เช่น #a47ac0','#a47ac0');if(color&&/^#[0-9a-f]{3,6}$/i.test(color))wrap('[color='+color+']','[/color]')};
+$('centerButton').onclick=()=>wrap('[center]','[/center]');
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText($('code').value);$('feedback').textContent='คัดลอกแล้ว ✓'}catch(e){$('code').focus();$('code').select();$('feedback').textContent='เลือกโค้ดแล้ว กด Ctrl+C'}};
+$('download').onclick=()=>{const b=new Blob([$('code').value],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='sugarrune-player-rp.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+render();
+</script>
+</body></html>
