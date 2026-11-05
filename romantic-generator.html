@@ -30,7 +30,7 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 .editor p{margin:0 0 10px}.editor ul,.editor ol{padding-left:26px}.editor a{color:#d7ad75}
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.primary,.secondary{border:1px solid #bb926b;border-radius:5px;padding:10px 14px;cursor:pointer;font:12px 'Noto Serif Thai',serif}.primary{background:#c4a078;color:#181113}.secondary{background:#292026;color:#e7d4bb}
 #status{min-height:20px;color:#d8b489}.code{font:11px/1.5 monospace;height:95px;resize:vertical}
-.preview-panel{min-height:570px}.preview{display:flex;align-items:flex-start;justify-content:center;padding:8px 0}.preview .rr-card{margin:0}
+.preview-panel{min-height:570px}.preview{display:block;overflow-x:auto;padding:8px 0;scrollbar-width:thin;scrollbar-color:#9f7858 #211a20}.preview .rr-card{margin:0 auto;flex-shrink:0}.preview .rr-card[style*="750px"],.preview .rr-card[style*="850px"],.preview .rr-card[style*="950px"],.preview .rr-card[style*="1100px"]{width:var(--rr-width);max-width:none}
 @media(max-width:830px){.layout{grid-template-columns:1fr}.controls{max-height:70vh}.preview-panel{min-height:0}}@media(max-width:410px){.layout{padding:9px}.panel{padding:12px}}
 </style>
 </head>
@@ -40,7 +40,7 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <section class="panel" aria-label="แบบฟอร์มแก้ไข"><h2>01 / Customize <span style="font-size:13px;color:#ac9076">↕ เลื่อนฟอร์มได้</span></h2>
 <div class="controls">
 <div class="two">
-<div><label for="width">ความกว้างกรอบ</label><select id="width"><option value="480">480 px</option><option value="550" selected>550 px (แนะนำ)</option><option value="620">620 px</option><option value="680">680 px</option></select></div>
+<div><label for="width">ความกว้างกรอบ</label><select id="width"><option value="480">480 px</option><option value="550" selected>550 px (แนะนำ)</option><option value="620">620 px</option><option value="680">680 px</option><option value="750">750 px</option><option value="850">850 px</option><option value="950">950 px</option><option value="1100">1100 px</option></select></div>
 <div><label for="size">ขนาดข้อความโรล</label><select id="size"><option value="14">14 px</option><option value="15">15 px</option><option value="16" selected>16 px</option><option value="17">17 px</option><option value="18">18 px</option></select></div>
 </div>
 <label for="bg">ภาพพื้นหลัง (URL)</label><input id="bg" value="https://i.pinimg.com/1200x/d7/fd/34/d7fd342a0f362b8878cfae808790895d.jpg">
@@ -140,7 +140,7 @@ function richHTML(){
 }
 function build(){
  const photo=safeURL(v('photo'));const bg=safeURL(v('bg'));
- const width=Math.max(480,Math.min(680,Number(v('width'))||550));const size=Math.max(14,Math.min(18,Number(v('size'))||16));
+ const width=Math.max(480,Math.min(1100,Number(v('width'))||550));const size=Math.max(14,Math.min(18,Number(v('size'))||16));
  let s='<div class="rr-card" style="--rr-width:'+width+'px;--rr-font-size:'+size+'px;--rr-bg:url('+bg+');--rr-x:'+Number(v('x'))+'%;--rr-y:'+Number(v('y'))+'%;--rr-gray:'+Number(v('gray'))+'"><div class="rr-inner">';
  s+='<div class="rr-top"><span>MY BABY</span><span class="rr-rule"></span>✦<span class="rr-rule"></span><span>SCENE '+esc(v('scene'))+' / TAKE '+esc(v('take'))+'</span></div>';
  s+='<div class="rr-head"><div class="rr-heading"><div class="rr-eyebrow">'+esc(v('eyebrow'))+'</div><div class="rr-name">'+esc(v('name'))+'</div><div class="rr-sub">'+esc(v('sub'))+'</div><div class="rr-quote">'+esc(v('quote'))+'</div></div>';
