@@ -44,6 +44,7 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <div><label for="width">ความกว้างกรอบ</label><select id="width"><option value="480">480 px</option><option value="550" selected>550 px (แนะนำ)</option><option value="620">620 px</option><option value="680">680 px</option><option value="750">750 px</option><option value="850">850 px</option><option value="950">950 px</option><option value="1100">1100 px</option></select></div>
 <div><label for="size">ขนาดข้อความโรล</label><select id="size"><option value="14">14 px</option><option value="15">15 px</option><option value="16" selected>16 px</option><option value="17">17 px</option><option value="18">18 px</option></select></div>
 </div>
+<label for="paragraphGap">ระยะห่างระหว่างย่อหน้า <span id="paragraphGapValue">7px</span></label><input id="paragraphGap" type="range" min="0" max="24" step="1" value="7"><p class="hint">ลดค่านี้ถ้าย่อหน้าห่างเกินไป · ไม่กระทบการขึ้นบรรทัดภายในย่อหน้า</p>
 <label for="alignMode">การจัดข้อความโรลเพลย์</label><select id="alignMode"><option value="left">ชิดซ้าย</option><option value="justify">Justify · ชิดสองขอบ</option><option value="center">กึ่งกลาง</option><option value="right">ชิดขวา</option></select>
 <label for="bg">ภาพพื้นหลัง (URL)</label><input id="bg" value="https://i.pinimg.com/1200x/d7/fd/34/d7fd342a0f362b8878cfae808790895d.jpg">
 <label for="photo">ภาพตัวละคร (URL)</label><input id="photo" placeholder="https://..."><label for="photoLabel">ข้อความใต้รูป (แก้ไขเองได้)</label><input id="photoLabel" value="NO. 007 / TSK" placeholder="ใส่ข้อความใต้รูป หรือปล่อยว่างเพื่อซ่อน">
@@ -95,7 +96,7 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <script>
 'use strict';
 const CSS='https://smemories145-cpu.github.io/Tristianloveyou/romantic-role.css';
-const ids=['width','size','alignMode','bg','photo','photoLabel','zoom','photoWidth','photoHeight','x','y','gray','scene','take','name','sub','eyebrow','quote','note','footer'];
+const ids=['width','size','paragraphGap','alignMode','bg','photo','photoLabel','zoom','photoWidth','photoHeight','x','y','gray','scene','take','name','sub','eyebrow','quote','note','footer'];
 const el=id=>document.getElementById(id),v=id=>el(id).value;
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const safeURL=s=>/^https:\/\//i.test(s.trim())?s.trim().replace(/['"()\\\s]/g,''):'';
@@ -122,6 +123,7 @@ function richHTML(){
  const inner=Array.from(node.childNodes).map(walk).join('');
  if(!allowed.has(tag))return inner;
  if(tag==='BR')return '<br>';
+ if((tag==='P'||tag==='DIV')&&!node.textContent.trim())return '';
  if(tag==='FONT'){
   let styles=[];
   if(/^#[0-9a-f]{3,8}$/i.test(node.getAttribute('color')||''))styles.push('color:'+node.getAttribute('color'));
@@ -148,7 +150,7 @@ function richHTML(){
 function build(){
  const photo=safeURL(v('photo'));const bg=safeURL(v('bg'));
  const width=Math.max(480,Math.min(1100,Number(v('width'))||550));const size=Math.max(14,Math.min(18,Number(v('size'))||16));
- let s='<div class="rr-card" style="--rr-width:'+width+'px;--rr-font-size:'+size+'px;--rr-bg:url('+bg+');--rr-zoom:'+(Number(v('zoom'))/100)+';--rr-photo-width:'+Math.max(100,Math.min(360,Number(v('photoWidth'))||140))+'px;--rr-photo-height:'+Math.max(130,Math.min(420,Number(v('photoHeight'))||180))+'px;--rr-x:'+Number(v('x'))+'%;--rr-y:'+Number(v('y'))+'%;--rr-gray:'+Number(v('gray'))+'"><div class="rr-inner">';
+ let s='<div class="rr-card" style="--rr-width:'+width+'px;--rr-font-size:'+size+'px;--rr-paragraph-gap:'+Math.max(0,Math.min(24,Number(v('paragraphGap'))||0))+'px;--rr-bg:url('+bg+');--rr-zoom:'+(Number(v('zoom'))/100)+';--rr-photo-width:'+Math.max(100,Math.min(360,Number(v('photoWidth'))||140))+'px;--rr-photo-height:'+Math.max(130,Math.min(420,Number(v('photoHeight'))||180))+'px;--rr-x:'+Number(v('x'))+'%;--rr-y:'+Number(v('y'))+'%;--rr-gray:'+Number(v('gray'))+'"><div class="rr-inner">';
  s+='<div class="rr-top"><span>MY BABY</span><span class="rr-rule"></span>✦<span class="rr-rule"></span><span>SCENE '+esc(v('scene'))+' / TAKE '+esc(v('take'))+'</span></div>';
  s+='<div class="rr-head"><div class="rr-heading"><div class="rr-eyebrow">'+esc(v('eyebrow'))+'</div><div class="rr-name">'+esc(v('name'))+'</div><div class="rr-sub">'+esc(v('sub'))+'</div><div class="rr-quote">'+esc(v('quote'))+'</div></div>';
  s+='<div class="rr-photo" style="width:min(100%,'+Math.max(100,Math.min(360,Number(v('photoWidth'))||140))+'px)"><div class="rr-photo-viewport" style="overflow:hidden;height:'+Math.max(130,Math.min(420,Number(v('photoHeight'))||180))+'px"><img alt="" style="display:block;width:100%;height:100%;object-fit:cover;object-position:'+Number(v('x'))+'% '+Number(v('y'))+'%;transform:scale('+(Number(v('zoom'))/100)+');transform-origin:center center;max-width:none" src="'+esc(photo)+'"></div><div class="rr-photo-label">'+esc(v('photoLabel'))+'</div></div></div>';
@@ -194,6 +196,7 @@ function render(){
  el('zoomValue').textContent=v('zoom')+'%';
  el('photoHeightValue').textContent=v('photoHeight')+'px';
  el('photoWidthValue').textContent=v('photoWidth')+'px';
+ el('paragraphGapValue').textContent=v('paragraphGap')+'px';
  countRoleplay();
  const markup=build();el('preview').innerHTML=markup;
  el('code').value='<link rel="stylesheet" href="'+CSS+'">'+markup.replace(/\r?\n/g,'&#10;');
