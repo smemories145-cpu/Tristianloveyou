@@ -86,7 +86,7 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <div class="word-count-bar" aria-live="polite" aria-atomic="true"><span>จำนวนคำ <strong id="wordCount">0</strong> คำ</span><span>อักขระ <strong id="charCount">0</strong></span><span id="countTip">นับเฉพาะเนื้อหา ไม่รวม HTML</span></div>
 <label for="note">หมายเหตุ</label><textarea id="note" style="min-height:65px">หมายเหตุ fishing ✧</textarea>
 <label for="footer">ข้อความท้ายกรอบ</label><input id="footer" value="A PRIVATE ARCHIVE · TSK">
-<div class="actions"><button type="button" class="primary" id="copy">คัดลอก HTML</button><button type="button" class="secondary" id="download">บันทึก HTML</button></div>
+<div class="actions"><button type="button" class="primary" id="copy">คัดลอก HTML</button><button type="button" class="secondary" id="download">บันทึก HTML</button><button type="button" class="secondary" id="resetDraft">ล้างข้อมูลที่บันทึก</button></div><p id="saveState" class="hint" aria-live="polite">กำลังเปิดระบบบันทึกอัตโนมัติ…</p>
 <p id="status" aria-live="polite"></p>
 <label for="code">โค้ดเว็บบอร์ด (บรรทัดเดียว)</label><textarea id="code" class="code" readonly></textarea>
 </div></section>
@@ -162,6 +162,34 @@ function countRoleplay(){
  el('wordCount').textContent=words.toLocaleString('th-TH');
  el('charCount').textContent=Array.from(text).length.toLocaleString('th-TH');
 }
+const DRAFT_KEY='tristian_romantic_generator_draft_v1';
+let saveTimer=null;let restoringDraft=false;let storageAvailable=true;
+function persistDraft(){
+ if(restoringDraft)return;
+ try{
+  const fields={};ids.forEach(id=>fields[id]=v(id));
+  localStorage.setItem(DRAFT_KEY,JSON.stringify({version:1,fields,roleHTML:editor.innerHTML,updatedAt:Date.now()}));
+  el('saveState').textContent='✓ บันทึกอัตโนมัติแล้ว · ข้อมูลอยู่ในเบราว์เซอร์นี้';
+ }catch(error){storageAvailable=false;el('saveState').textContent='ไม่สามารถบันทึกอัตโนมัติได้ (โปรดตรวจพื้นที่จัดเก็บ/โหมดส่วนตัว)';}
+}
+function scheduleSave(){
+ if(restoringDraft||!storageAvailable)return;
+ el('saveState').textContent='กำลังบันทึก…';
+ clearTimeout(saveTimer);saveTimer=setTimeout(persistDraft,350);
+}
+function loadDraft(){
+ try{
+  const raw=localStorage.getItem(DRAFT_KEY);
+  if(!raw){el('saveState').textContent='บันทึกอัตโนมัติเปิดอยู่ · เริ่มพิมพ์เพื่อบันทึก';return;}
+  const draft=JSON.parse(raw);
+  if(!draft||draft.version!==1||typeof draft.fields!=='object')return;
+  restoringDraft=true;
+  ids.forEach(id=>{if(Object.prototype.hasOwnProperty.call(draft.fields,id)&&typeof draft.fields[id]==='string')el(id).value=draft.fields[id]});
+  if(typeof draft.roleHTML==='string')editor.innerHTML=draft.roleHTML;
+  restoringDraft=false;
+  el('saveState').textContent='✓ กู้คืนงานที่บันทึกไว้แล้ว';
+ }catch(error){restoringDraft=false;storageAvailable=false;el('saveState').textContent='ไม่สามารถอ่านข้อมูลบันทึกในเบราว์เซอร์ได้';}
+}
 function render(){
  el('zoomValue').textContent=v('zoom')+'%';
  el('photoHeightValue').textContent=v('photoHeight')+'px';
@@ -169,9 +197,18 @@ function render(){
  countRoleplay();
  const markup=build();el('preview').innerHTML=markup;
  el('code').value='<link rel="stylesheet" href="'+CSS+'">'+markup.replace(/\r?\n/g,'&#10;');
+ scheduleSave();
 }
 ids.forEach(id=>el(id).addEventListener('input',render));
 el('copy').onclick=async()=>{try{await navigator.clipboard.writeText(el('code').value);el('status').textContent='✓ คัดลอกโค้ดบรรทัดเดียวแล้ว'}catch(e){el('code').focus();el('code').select();el('status').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
 el('download').onclick=()=>{const b=new Blob(['<!doctype html><meta charset="utf-8">'+el('code').value],{type:'text/html'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='romantic-role.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+el('resetDraft').onclick=()=>{
+ if(!confirm('ล้างข้อมูลที่บันทึกอัตโนมัติและเริ่มฟอร์มใหม่หรือไม่?'))return;
+ clearTimeout(saveTimer);
+ try{localStorage.removeItem(DRAFT_KEY)}catch(error){}
+ location.reload();
+};
+window.addEventListener('pagehide',()=>{if(saveTimer){clearTimeout(saveTimer);persistDraft()}});
+loadDraft();
 render();
 </script></body></html>
