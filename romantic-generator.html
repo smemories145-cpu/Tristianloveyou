@@ -20,12 +20,19 @@ input:focus,textarea:focus,select:focus,.editor:focus{outline:1px solid #d7b58b;
 input[type=range]{padding:0;accent-color:#cba47d}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .hint{color:#b5a49a;font-size:11px;line-height:1.65;margin:6px 0}
-.tool-group{display:flex;flex-wrap:wrap;gap:5px;align-items:center;padding:8px;background:#261e25;border:1px solid #796049;border-bottom:0;border-radius:6px 6px 0 0}
-.tool{min-width:31px;height:32px;padding:5px 8px;margin:0;display:inline-grid;place-items:center;background:#3b3038;color:#e8d4ba;border:1px solid #705842;border-radius:4px;font:14px Georgia,serif;cursor:pointer}
+.tool-group{display:flex;flex-direction:column;gap:0;padding:8px 10px;background:#261e25;border:1px solid #796049;border-bottom:0;border-radius:7px 7px 0 0}
+.tool-section{display:grid;grid-template-columns:100px minmax(0,1fr);align-items:start;gap:10px;padding:9px 0}
+.tool-section+.tool-section{border-top:1px solid #594452}
+.tool-section-label{color:#c9ad8d;font:11px/1.5 'Noto Serif Thai',serif;padding-top:8px;letter-spacing:.15px}
+.tool-section-controls{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;min-width:0}
+.tool{min-width:0;width:100%;height:35px;padding:4px 5px;margin:0;display:flex;align-items:center;justify-content:center;background:#382e36;color:#e8d4ba;border:1px solid #705842;border-radius:5px;font:13px Georgia,serif;white-space:nowrap;cursor:pointer}
 .tool:hover,.tool:focus{background:#674a43;outline-color:#d4aa80}.tool:active{background:#9a7555}
-.tool-select{width:auto;max-width:94px;font:12px Georgia,serif;padding:5px;height:32px}
-.color-wrap{display:inline-flex;align-items:center;gap:4px;color:#d8c4a7;font:11px Georgia,serif;border-left:1px solid #624d42;padding-left:7px}
-input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:pointer}
+#indentBtn,#outdentBtn{grid-column:span 2;font:11px 'Noto Serif Thai',serif}
+.tool-select{grid-column:span 2;min-width:0;width:100%;max-width:none;height:35px;padding:4px 6px;border:1px solid #705842;border-radius:5px;background:#382e36;color:#e8d4ba;font:11px 'Noto Serif Thai',serif}
+.color-wrap{grid-column:span 2;display:flex;align-items:center;justify-content:space-between;min-width:0;gap:5px;height:35px;padding:2px 7px;border:1px solid #705842;border-radius:5px;background:#382e36;color:#e8d4ba;font:11px 'Noto Serif Thai',serif}
+input[type=color]{width:29px;height:27px;padding:2px;border:0;border-radius:4px;background:transparent;cursor:pointer}
+@media(max-width:530px){.tool-section{grid-template-columns:1fr;gap:5px}.tool-section-label{padding:0}.tool-section-controls{grid-template-columns:repeat(5,minmax(0,1fr))}.tool{height:34px}.tool-group{padding:7px}}
+@media(max-width:370px){.tool-section-controls{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .editor{height:245px;min-height:160px;max-height:500px;resize:vertical;overflow:auto;padding:13px;line-height:2;background:#100e12;border:1px solid #796049;border-radius:0 0 6px 6px;font:14px/2 'Noto Serif Thai',serif;white-space:pre-wrap;overflow-wrap:anywhere;scrollbar-width:thin}
 .word-count-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:9px 11px;margin-top:7px;border:1px solid #70563a;border-radius:5px;background:#241d23;color:#e4c69d;font:12px 'Noto Serif Thai',serif}.word-count-bar strong{font:700 15px Georgia,serif;color:#f2dfbd}.word-count-bar #countTip{font-size:10px;color:#a9988b}
 .editor p{margin:0 0 10px}.editor ul,.editor ol{padding-left:26px}.editor a{color:#d7ad75}
@@ -65,10 +72,15 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <label for="editor">ข้อความโรลเพลย์</label>
 <p class="hint">เลือกย่อหน้าหรือวางเคอร์เซอร์แล้วกด ↳ ย่อหน้า เพื่อเยื้องเฉพาะจุดที่ต้องการ · Enter ขึ้นย่อหน้าใหม่, Shift+Enter ขึ้นบรรทัดใหม่ และกด ¶ หรือ ↵ ได้ด้วย</p>
 <div class="tool-group" id="toolbar" role="toolbar" aria-label="เครื่องมือจัดรูปแบบข้อความ">
+<div class="tool-section"><span class="tool-section-label">ตัวอักษร</span><div class="tool-section-controls">
 <button type="button" class="tool" data-cmd="bold" title="ตัวหนา (Ctrl+B)"><b>B</b></button>
 <button type="button" class="tool" data-cmd="italic" title="ตัวเอียง (Ctrl+I)"><i>I</i></button>
 <button type="button" class="tool" data-cmd="underline" title="ขีดเส้นใต้ (Ctrl+U)"><u>U</u></button>
 <button type="button" class="tool" data-cmd="strikeThrough" title="ขีดฆ่า"><s>S</s></button>
+<button type="button" class="tool" data-cmd="removeFormat" title="ล้างรูปแบบ">Tx</button>
+<select class="tool-select" id="inlineSize" title="ขนาดข้อความส่วนที่เลือก"><option value="">ขนาดตัวอักษร</option><option value="2">เล็ก</option><option value="3">ปกติ</option><option value="4">ใหญ่</option><option value="5">ใหญ่มาก</option></select>
+</div></div>
+<div class="tool-section"><span class="tool-section-label">ย่อหน้าและจัดวาง</span><div class="tool-section-controls">
 <button type="button" class="tool" data-cmd="insertUnorderedList" title="รายการจุด">• ≡</button>
 <button type="button" class="tool" data-cmd="insertOrderedList" title="รายการตัวเลข">1. ≡</button>
 <button type="button" class="tool" data-cmd="justifyLeft" title="ชิดซ้าย">≡</button>
@@ -79,13 +91,14 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <button type="button" class="tool" id="outdentBtn" title="ยกเลิกการเยื้องย่อหน้าที่เลือก">↰ ไม่เยื้อง</button>
 <button type="button" class="tool" id="newParagraphBtn" title="ขึ้นย่อหน้าใหม่ (Enter)">¶</button>
 <button type="button" class="tool" id="newLineBtn" title="ขึ้นบรรทัดใหม่ภายในย่อหน้า (Shift+Enter)">↵</button>
-<button type="button" class="tool" data-cmd="removeFormat" title="ล้างรูปแบบ">Tx</button>
-<select class="tool-select" id="inlineSize" title="ขนาดข้อความส่วนที่เลือก"><option value="">ขนาดตัวอักษร</option><option value="2">เล็ก</option><option value="3">ปกติ</option><option value="4">ใหญ่</option><option value="5">ใหญ่มาก</option></select>
+</div></div>
+<div class="tool-section"><span class="tool-section-label">สีและเครื่องมือ</span><div class="tool-section-controls">
 <label class="color-wrap" style="margin:0">สี<input id="textColor" type="color" value="#e8d4bb" title="สีตัวอักษร"></label>
 <label class="color-wrap" style="margin:0">ไฮไลต์<input id="highlight" type="color" value="#6d4d62" title="สีไฮไลต์"></label>
 <button type="button" class="tool" id="linkBtn" title="แทรกลิงก์">🔗</button>
 <button type="button" class="tool" data-cmd="undo" title="ย้อนกลับ">↶</button>
 <button type="button" class="tool" data-cmd="redo" title="ทำซ้ำ">↷</button>
+</div></div>
 </div>
 <div id="editor" class="editor" contenteditable="true" role="textbox" aria-multiline="true" spellcheck="false"><p>เมื่อแสงจันทร์สาดส่องลงมา ทริสเตียนก็ค่อย ๆ เปิดหน้าหนังสือที่ค้างไว้...</p></div>
 <div class="word-count-bar" aria-live="polite" aria-atomic="true"><span>จำนวนคำ <strong id="wordCount">0</strong> คำ</span><span>อักขระ <strong id="charCount">0</strong></span><span id="countTip">นับเฉพาะเนื้อหา ไม่รวม HTML</span></div>
