@@ -27,6 +27,7 @@ input[type=range]{padding:0;accent-color:#cba47d}
 .color-wrap{display:inline-flex;align-items:center;gap:4px;color:#d8c4a7;font:11px Georgia,serif;border-left:1px solid #624d42;padding-left:7px}
 input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:pointer}
 .editor{height:245px;min-height:160px;max-height:500px;resize:vertical;overflow:auto;padding:13px;line-height:2;background:#100e12;border:1px solid #796049;border-radius:0 0 6px 6px;font:14px/2 'Noto Serif Thai',serif;white-space:pre-wrap;overflow-wrap:anywhere;scrollbar-width:thin}
+.word-count-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:9px 11px;margin-top:7px;border:1px solid #70563a;border-radius:5px;background:#241d23;color:#e4c69d;font:12px 'Noto Serif Thai',serif}.word-count-bar strong{font:700 15px Georgia,serif;color:#f2dfbd}.word-count-bar #countTip{font-size:10px;color:#a9988b}
 .editor p{margin:0 0 10px}.editor ul,.editor ol{padding-left:26px}.editor a{color:#d7ad75}
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.primary,.secondary{border:1px solid #bb926b;border-radius:5px;padding:10px 14px;cursor:pointer;font:12px 'Noto Serif Thai',serif}.primary{background:#c4a078;color:#181113}.secondary{background:#292026;color:#e7d4bb}
 #status{min-height:20px;color:#d8b489}.code{font:11px/1.5 monospace;height:95px;resize:vertical}
@@ -78,6 +79,7 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <button type="button" class="tool" data-cmd="redo" title="ทำซ้ำ">↷</button>
 </div>
 <div id="editor" class="editor" contenteditable="true" role="textbox" aria-multiline="true" spellcheck="false"><p>เมื่อแสงจันทร์สาดส่องลงมา ทริสเตียนก็ค่อย ๆ เปิดหน้าหนังสือที่ค้างไว้...</p></div>
+<div class="word-count-bar" aria-live="polite" aria-atomic="true"><span>จำนวนคำ <strong id="wordCount">0</strong> คำ</span><span>อักขระ <strong id="charCount">0</strong></span><span id="countTip">นับเฉพาะเนื้อหา ไม่รวม HTML</span></div>
 <label for="note">หมายเหตุ</label><textarea id="note" style="min-height:65px">หมายเหตุ fishing ✧</textarea>
 <label for="footer">ข้อความท้ายกรอบ</label><input id="footer" value="A PRIVATE ARCHIVE · TSK">
 <div class="actions"><button type="button" class="primary" id="copy">คัดลอก HTML</button><button type="button" class="secondary" id="download">บันทึก HTML</button></div>
@@ -149,8 +151,16 @@ function build(){
  s+='<div class="rr-story"><div class="rr-meta"><span>DAY X</span><span>TAKE '+esc(v('take'))+'</span></div><div class="rr-sep"></div><div class="rr-text">'+richHTML()+'</div><div class="rr-sep"></div><div class="rr-note">NOTE / '+esc(v('note'))+'</div></div><div class="rr-footer">'+esc(v('footer'))+'</div></div></div>';
  return s;
 }
+const wordSegmenter=typeof Intl!=='undefined'&&typeof Intl.Segmenter==='function'?new Intl.Segmenter('th',{granularity:'word'}):null;
+function countRoleplay(){
+ const text=editor.innerText.replace(/\u00a0/g,' ').trim();
+ const words=wordSegmenter?Array.from(wordSegmenter.segment(text)).filter(part=>part.isWordLike).length:(text.match(/[\p{L}\p{N}]+/gu)||[]).length;
+ el('wordCount').textContent=words.toLocaleString('th-TH');
+ el('charCount').textContent=Array.from(text).length.toLocaleString('th-TH');
+}
 function render(){
  el('zoomValue').textContent=v('zoom')+'%';
+ countRoleplay();
  const markup=build();el('preview').innerHTML=markup;
  el('code').value='<link rel="stylesheet" href="'+CSS+'">'+markup.replace(/\r?\n/g,'&#10;');
 }
