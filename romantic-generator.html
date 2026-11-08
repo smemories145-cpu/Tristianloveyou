@@ -138,6 +138,7 @@ function indentSelected(enabled){
 function editorNewline(paragraph){
  restoreSelection();
  document.execCommand(paragraph?'insertParagraph':'insertLineBreak',false,null);
+ if(paragraph){const sel=window.getSelection();let node=sel&&sel.anchorNode;if(node&&node.nodeType===3)node=node.parentElement;while(node&&node!==editor&&node.parentElement!==editor)node=node.parentElement;if(node&&node!==editor)node.style.textIndent='0px'}
  saveSelection();render();
 }
 el('indentBtn').addEventListener('mousedown',e=>e.preventDefault());
