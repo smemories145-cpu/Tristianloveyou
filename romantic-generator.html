@@ -31,6 +31,7 @@ input[type=range]{padding:0;accent-color:#cba47d}
 .tool-select{grid-column:span 2;min-width:0;width:100%;max-width:none;height:35px;padding:4px 6px;border:1px solid #705842;border-radius:5px;background:#382e36;color:#e8d4ba;font:11px 'Noto Serif Thai',serif}
 .color-wrap{grid-column:span 2;display:flex;align-items:center;justify-content:space-between;min-width:0;gap:5px;height:35px;padding:2px 7px;border:1px solid #705842;border-radius:5px;background:#382e36;color:#e8d4ba;font:11px 'Noto Serif Thai',serif}
 input[type=color]{width:29px;height:27px;padding:2px;border:0;border-radius:4px;background:transparent;cursor:pointer}
+.reset-text-color{grid-column:span 2;gap:6px;font:11px 'Noto Serif Thai',serif}.original-color-dot{width:13px;height:13px;border:1px solid #947b65;border-radius:3px;background:#f1e8dc;flex-shrink:0}.default-color-code{grid-column:span 2;display:flex;align-items:center;color:#bba994;font:10px Georgia,serif;white-space:nowrap}
 @media(max-width:530px){.tool-section{grid-template-columns:1fr;gap:5px}.tool-section-label{padding:0}.tool-section-controls{grid-template-columns:repeat(5,minmax(0,1fr))}.tool{height:34px}.tool-group{padding:7px}}
 @media(max-width:370px){.tool-section-controls{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .editor{height:245px;min-height:160px;max-height:500px;resize:vertical;overflow:auto;padding:13px;line-height:2;background:#100e12;border:1px solid #796049;border-radius:0 0 6px 6px;font:14px/2 'Noto Serif Thai',serif;white-space:pre-wrap;overflow-wrap:anywhere;scrollbar-width:thin}
@@ -93,7 +94,9 @@ input[type=color]{width:29px;height:27px;padding:2px;border:0;border-radius:4px;
 <button type="button" class="tool" id="newLineBtn" title="ขึ้นบรรทัดใหม่ภายในย่อหน้า (Shift+Enter)">↵</button>
 </div></div>
 <div class="tool-section"><span class="tool-section-label">สีและเครื่องมือ</span><div class="tool-section-controls">
-<label class="color-wrap" style="margin:0">สี<input id="textColor" type="color" value="#e8d4bb" title="สีตัวอักษร"></label>
+<label class="color-wrap" style="margin:0">สี<input id="textColor" type="color" value="#f1e8dc" title="เลือกสีตัวอักษร"></label>
+<button type="button" class="tool reset-text-color" id="resetTextColor" title="คืนสีข้อความปกติ #F1E8DC"><span class="original-color-dot" aria-hidden="true"></span> สีเดิม</button>
+<span class="default-color-code" title="รหัสสีข้อความปกติ">สีปกติ #F1E8DC</span>
 <label class="color-wrap" style="margin:0">ไฮไลต์<input id="highlight" type="color" value="#6d4d62" title="สีไฮไลต์"></label>
 <button type="button" class="tool" id="linkBtn" title="แทรกลิงก์">🔗</button>
 <button type="button" class="tool" data-cmd="undo" title="ย้อนกลับ">↶</button>
@@ -170,7 +173,10 @@ editor.addEventListener('keydown',e=>{
 });
 document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedown',ev=>ev.preventDefault());b.addEventListener('click',()=>command(b.dataset.cmd))});
 el('inlineSize').addEventListener('change',e=>{if(e.target.value)command('fontSize',e.target.value);e.target.value=''});
+const DEFAULT_ROLE_TEXT_COLOR='#f1e8dc';
 el('textColor').addEventListener('input',e=>command('foreColor',e.target.value));
+el('resetTextColor').addEventListener('mousedown',e=>e.preventDefault());
+el('resetTextColor').addEventListener('click',()=>{el('textColor').value=DEFAULT_ROLE_TEXT_COLOR;command('foreColor',DEFAULT_ROLE_TEXT_COLOR)});
 el('highlight').addEventListener('input',e=>command('hiliteColor',e.target.value));
 el('linkBtn').addEventListener('mousedown',ev=>ev.preventDefault());
 el('linkBtn').addEventListener('click',()=>{const url=prompt('วางลิงก์ https://');if(url&&/^https:\/\//i.test(url.trim()))command('createLink',url.trim())});
