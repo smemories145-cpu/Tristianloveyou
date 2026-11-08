@@ -45,7 +45,6 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <div><label for="size">ขนาดข้อความโรล</label><select id="size"><option value="14">14 px</option><option value="15">15 px</option><option value="16" selected>16 px</option><option value="17">17 px</option><option value="18">18 px</option></select></div>
 </div>
 <label for="paragraphGap">ระยะห่างระหว่างย่อหน้า <span id="paragraphGapValue">7px</span></label><input id="paragraphGap" type="range" min="0" max="24" step="1" value="7"><p class="hint">ลดค่านี้ถ้าย่อหน้าห่างเกินไป · ไม่กระทบการขึ้นบรรทัดภายในย่อหน้า</p>
-<label for="firstIndent">เยื้องบรรทัดแรกของแต่ละย่อหน้า <span id="firstIndentValue">28px</span></label><input id="firstIndent" type="range" min="0" max="100" step="2" value="28"><p class="hint">ใช้ขึ้นย่อหน้าแบบนิยาย · ตั้ง 0px เพื่อไม่เยื้อง</p>
 <label for="alignMode">การจัดข้อความโรลเพลย์</label><select id="alignMode"><option value="left">ชิดซ้าย</option><option value="justify">Justify · ชิดสองขอบ</option><option value="center">กึ่งกลาง</option><option value="right">ชิดขวา</option></select>
 <label for="bg">ภาพพื้นหลัง (URL)</label><input id="bg" value="https://i.pinimg.com/1200x/d7/fd/34/d7fd342a0f362b8878cfae808790895d.jpg">
 <label for="photo">ภาพตัวละคร (URL)</label><input id="photo" placeholder="https://..."><label for="photoLabel">ข้อความใต้รูป (แก้ไขเองได้)</label><input id="photoLabel" value="NO. 007 / TSK" placeholder="ใส่ข้อความใต้รูป หรือปล่อยว่างเพื่อซ่อน">
@@ -64,7 +63,7 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <label for="eyebrow">ข้อความเหนือชื่อ</label><input id="eyebrow" value="The story of">
 <label for="quote">คำโปรย</label><input id="quote" value="A gentleman in a world that never stops.">
 <label for="editor">ข้อความโรลเพลย์</label>
-<p class="hint">เลือกข้อความแล้วกดปุ่มตัวหนา ตัวเอียง ขีดเส้นใต้ เปลี่ยนสี ไฮไลต์ หรือจัดย่อหน้าได้เลย ตัวแก้ไขมีแถบเลื่อนของตัวเอง</p>
+<p class="hint">เลือกย่อหน้าหรือวางเคอร์เซอร์แล้วกด ↳ ย่อหน้า เพื่อเยื้องเฉพาะจุดที่ต้องการ · Enter ขึ้นย่อหน้าใหม่, Shift+Enter ขึ้นบรรทัดใหม่ และกด ¶ หรือ ↵ ได้ด้วย</p>
 <div class="tool-group" id="toolbar" role="toolbar" aria-label="เครื่องมือจัดรูปแบบข้อความ">
 <button type="button" class="tool" data-cmd="bold" title="ตัวหนา (Ctrl+B)"><b>B</b></button>
 <button type="button" class="tool" data-cmd="italic" title="ตัวเอียง (Ctrl+I)"><i>I</i></button>
@@ -76,6 +75,10 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <button type="button" class="tool" data-cmd="justifyCenter" title="กึ่งกลาง">☰</button>
 <button type="button" class="tool" data-cmd="justifyRight" title="ชิดขวา">≡›</button>
 <button type="button" class="tool" data-cmd="justifyFull" title="Justify · ชิดสองขอบ">≡↔</button>
+<button type="button" class="tool" id="indentBtn" title="เยื้องบรรทัดแรกของย่อหน้าที่เลือกเท่านั้น">↳ ย่อหน้า</button>
+<button type="button" class="tool" id="outdentBtn" title="ยกเลิกการเยื้องย่อหน้าที่เลือก">↰ ไม่เยื้อง</button>
+<button type="button" class="tool" id="newParagraphBtn" title="ขึ้นย่อหน้าใหม่ (Enter)">¶</button>
+<button type="button" class="tool" id="newLineBtn" title="ขึ้นบรรทัดใหม่ภายในย่อหน้า (Shift+Enter)">↵</button>
 <button type="button" class="tool" data-cmd="removeFormat" title="ล้างรูปแบบ">Tx</button>
 <select class="tool-select" id="inlineSize" title="ขนาดข้อความส่วนที่เลือก"><option value="">ขนาดตัวอักษร</option><option value="2">เล็ก</option><option value="3">ปกติ</option><option value="4">ใหญ่</option><option value="5">ใหญ่มาก</option></select>
 <label class="color-wrap" style="margin:0">สี<input id="textColor" type="color" value="#e8d4bb" title="สีตัวอักษร"></label>
@@ -97,7 +100,7 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <script>
 'use strict';
 const CSS='https://smemories145-cpu.github.io/Tristianloveyou/romantic-role.css';
-const ids=['width','size','paragraphGap','firstIndent','alignMode','bg','photo','photoLabel','zoom','photoWidth','photoHeight','x','y','gray','scene','take','name','sub','eyebrow','quote','note','footer'];
+const ids=['width','size','paragraphGap','alignMode','bg','photo','photoLabel','zoom','photoWidth','photoHeight','x','y','gray','scene','take','name','sub','eyebrow','quote','note','footer'];
 const el=id=>document.getElementById(id),v=id=>el(id).value;
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const safeURL=s=>/^https:\/\//i.test(s.trim())?s.trim().replace(/['"()\\\s]/g,''):'';
@@ -108,6 +111,49 @@ function command(cmd,val){restoreSelection();document.execCommand(cmd,false,val|
 editor.addEventListener('mouseup',saveSelection);editor.addEventListener('keyup',saveSelection);
 editor.addEventListener('input',()=>{saveSelection();render()});
 editor.addEventListener('paste',event=>{event.preventDefault();let plain=event.clipboardData.getData('text/plain');document.execCommand('insertText',false,plain)});
+function selectedParagraphs(){
+ restoreSelection();
+ const sel=window.getSelection();
+ if(!sel||!sel.rangeCount)return [];
+ const range=sel.getRangeAt(0),found=[];
+ editor.querySelectorAll('p,div').forEach(node=>{
+  if(node!==editor && !node.querySelector('p,div') && range.intersectsNode(node))found.push(node);
+ });
+ let block=sel.anchorNode;
+ if(block&&block.nodeType===3)block=block.parentElement;
+ while(block&&block.parentElement!==editor&&block!==editor)block=block.parentElement;
+ if(block&&block!==editor&&!found.includes(block))found.push(block);
+ return found;
+}
+function indentSelected(enabled){
+ restoreSelection();
+ let blocks=selectedParagraphs();
+ if(!blocks.length){
+  document.execCommand('formatBlock',false,'p');
+  blocks=selectedParagraphs();
+ }
+ blocks.forEach(node=>{node.style.textIndent=enabled?'32px':'0px'});
+ saveSelection();render();
+}
+function editorNewline(paragraph){
+ restoreSelection();
+ document.execCommand(paragraph?'insertParagraph':'insertLineBreak',false,null);
+ saveSelection();render();
+}
+el('indentBtn').addEventListener('mousedown',e=>e.preventDefault());
+el('outdentBtn').addEventListener('mousedown',e=>e.preventDefault());
+el('newParagraphBtn').addEventListener('mousedown',e=>e.preventDefault());
+el('newLineBtn').addEventListener('mousedown',e=>e.preventDefault());
+el('indentBtn').onclick=()=>indentSelected(true);
+el('outdentBtn').onclick=()=>indentSelected(false);
+el('newParagraphBtn').onclick=()=>editorNewline(true);
+el('newLineBtn').onclick=()=>editorNewline(false);
+editor.addEventListener('keydown',e=>{
+ if(e.key==='Enter'){
+  e.preventDefault();
+  editorNewline(!e.shiftKey);
+ }
+});
 document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedown',ev=>ev.preventDefault());b.addEventListener('click',()=>command(b.dataset.cmd))});
 el('inlineSize').addEventListener('change',e=>{if(e.target.value)command('fontSize',e.target.value);e.target.value=''});
 el('textColor').addEventListener('input',e=>command('foreColor',e.target.value));
@@ -117,14 +163,13 @@ el('linkBtn').addEventListener('click',()=>{const url=prompt('วางลิง
 function richHTML(){
  const allowed=new Set(['B','STRONG','I','EM','U','S','STRIKE','DEL','BR','P','DIV','UL','OL','LI','BLOCKQUOTE','SPAN','FONT','A']);
  function walk(node){
- if(node.nodeType===3)return esc(node.nodeValue);
+ if(node.nodeType===3)return esc(node.nodeValue).replace(/\r?\n/g,'<br>');
  if(node.nodeType!==1)return '';
  let tag=node.tagName;
  if(['SCRIPT','STYLE','IFRAME','IMG','SVG','OBJECT'].includes(tag))return '';
  const inner=Array.from(node.childNodes).map(walk).join('');
  if(!allowed.has(tag))return inner;
  if(tag==='BR')return '<br>';
- if((tag==='P'||tag==='DIV')&&!node.textContent.trim())return '';
  if(tag==='FONT'){
   let styles=[];
   if(/^#[0-9a-f]{3,8}$/i.test(node.getAttribute('color')||''))styles.push('color:'+node.getAttribute('color'));
@@ -139,8 +184,9 @@ function richHTML(){
   if(/^#[0-9a-f]{3,8}$/i.test(st.backgroundColor)||/^rgb\([\d, ]+\)$/.test(st.backgroundColor))styles.push('background-color:'+st.backgroundColor);
   if(/^\d{1,2}px$/.test(st.fontSize))styles.push('font-size:'+st.fontSize);
   if(['left','center','right','justify'].includes(st.textAlign))styles.push('text-align:'+st.textAlign);
+  if(tag==='P'||tag==='DIV'){const indent=st.textIndent;if(/^\d{1,3}px$/.test(indent)&&parseInt(indent,10)<=150)styles.push('text-indent:'+indent)}
   const outTag=tag==='DIV'?'p':tag.toLowerCase();
-  return '<'+outTag+(styles.length?' style="'+esc(styles.join(';'))+'"':'')+'>'+inner+'</'+outTag+'>';
+  return '<'+outTag+(styles.length?' style="'+esc(styles.join(';'))+'"':'')+'>'+(inner||'<br>')+'</'+outTag+'>';
  }
  if(tag==='A'){const href=node.getAttribute('href')||'';return /^https:\/\//i.test(href)?'<a href="'+esc(href)+'">'+inner+'</a>':inner}
  const t=tag==='STRIKE'||tag==='DEL'?'s':tag.toLowerCase();
@@ -151,7 +197,7 @@ function richHTML(){
 function build(){
  const photo=safeURL(v('photo'));const bg=safeURL(v('bg'));
  const width=Math.max(480,Math.min(1100,Number(v('width'))||550));const size=Math.max(14,Math.min(18,Number(v('size'))||16));
- let s='<div class="rr-card" style="--rr-width:'+width+'px;--rr-font-size:'+size+'px;--rr-paragraph-gap:'+Math.max(0,Math.min(24,Number(v('paragraphGap'))||0))+'px;--rr-first-indent:'+Math.max(0,Math.min(100,Number(v('firstIndent'))||0))+'px;--rr-bg:url('+bg+');--rr-zoom:'+(Number(v('zoom'))/100)+';--rr-photo-width:'+Math.max(100,Math.min(360,Number(v('photoWidth'))||140))+'px;--rr-photo-height:'+Math.max(130,Math.min(420,Number(v('photoHeight'))||180))+'px;--rr-x:'+Number(v('x'))+'%;--rr-y:'+Number(v('y'))+'%;--rr-gray:'+Number(v('gray'))+'"><div class="rr-inner">';
+ let s='<div class="rr-card" style="--rr-width:'+width+'px;--rr-font-size:'+size+'px;--rr-paragraph-gap:'+Math.max(0,Math.min(24,Number(v('paragraphGap'))||0))+'px;--rr-bg:url('+bg+');--rr-zoom:'+(Number(v('zoom'))/100)+';--rr-photo-width:'+Math.max(100,Math.min(360,Number(v('photoWidth'))||140))+'px;--rr-photo-height:'+Math.max(130,Math.min(420,Number(v('photoHeight'))||180))+'px;--rr-x:'+Number(v('x'))+'%;--rr-y:'+Number(v('y'))+'%;--rr-gray:'+Number(v('gray'))+'"><div class="rr-inner">';
  s+='<div class="rr-top"><span>MY BABY</span><span class="rr-rule"></span>✦<span class="rr-rule"></span><span>SCENE '+esc(v('scene'))+' / TAKE '+esc(v('take'))+'</span></div>';
  s+='<div class="rr-head"><div class="rr-heading"><div class="rr-eyebrow">'+esc(v('eyebrow'))+'</div><div class="rr-name">'+esc(v('name'))+'</div><div class="rr-sub">'+esc(v('sub'))+'</div><div class="rr-quote">'+esc(v('quote'))+'</div></div>';
  s+='<div class="rr-photo" style="width:min(100%,'+Math.max(100,Math.min(360,Number(v('photoWidth'))||140))+'px)"><div class="rr-photo-viewport" style="overflow:hidden;height:'+Math.max(130,Math.min(420,Number(v('photoHeight'))||180))+'px"><img alt="" style="display:block;width:100%;height:100%;object-fit:cover;object-position:'+Number(v('x'))+'% '+Number(v('y'))+'%;transform:scale('+(Number(v('zoom'))/100)+');transform-origin:center center;max-width:none" src="'+esc(photo)+'"></div><div class="rr-photo-label">'+esc(v('photoLabel'))+'</div></div></div>';
@@ -198,7 +244,6 @@ function render(){
  el('photoHeightValue').textContent=v('photoHeight')+'px';
  el('photoWidthValue').textContent=v('photoWidth')+'px';
  el('paragraphGapValue').textContent=v('paragraphGap')+'px';
- el('firstIndentValue').textContent=v('firstIndent')+'px';
  countRoleplay();
  const markup=build();el('preview').innerHTML=markup;
  el('code').value='<link rel="stylesheet" href="'+CSS+'">'+markup.replace(/\r?\n/g,'&#10;');
