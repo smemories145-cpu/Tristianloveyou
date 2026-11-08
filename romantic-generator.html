@@ -46,6 +46,7 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <label for="bg">ภาพพื้นหลัง (URL)</label><input id="bg" value="https://i.pinimg.com/1200x/d7/fd/34/d7fd342a0f362b8878cfae808790895d.jpg">
 <label for="photo">ภาพตัวละคร (URL)</label><input id="photo" placeholder="https://...">
 <div class="two">
+<div><label for="zoom">ซูมรูป <span id="zoomValue">100%</span></label><input id="zoom" type="range" min="100" max="300" step="5" value="100"></div>
 <div><label for="x">จัดภาพซ้าย–ขวา</label><input id="x" type="range" min="0" max="100" value="50"></div>
 <div><label for="y">จัดภาพบน–ล่าง</label><input id="y" type="range" min="0" max="100" value="50"></div>
 <div><label for="gray">สีภาพ</label><select id="gray"><option value="0">สีปกติ</option><option value="1">ขาวดำ</option></select></div>
@@ -88,7 +89,7 @@ input[type=color]{width:31px;height:28px;padding:2px;border-radius:5px;cursor:po
 <script>
 'use strict';
 const CSS='https://smemories145-cpu.github.io/Tristianloveyou/romantic-role.css';
-const ids=['width','size','bg','photo','x','y','gray','scene','take','name','sub','eyebrow','quote','note','footer'];
+const ids=['width','size','bg','photo','zoom','x','y','gray','scene','take','name','sub','eyebrow','quote','note','footer'];
 const el=id=>document.getElementById(id),v=id=>el(id).value;
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const safeURL=s=>/^https:\/\//i.test(s.trim())?s.trim().replace(/['"()\\\s]/g,''):'';
@@ -141,14 +142,15 @@ function richHTML(){
 function build(){
  const photo=safeURL(v('photo'));const bg=safeURL(v('bg'));
  const width=Math.max(480,Math.min(1100,Number(v('width'))||550));const size=Math.max(14,Math.min(18,Number(v('size'))||16));
- let s='<div class="rr-card" style="--rr-width:'+width+'px;--rr-font-size:'+size+'px;--rr-bg:url('+bg+');--rr-x:'+Number(v('x'))+'%;--rr-y:'+Number(v('y'))+'%;--rr-gray:'+Number(v('gray'))+'"><div class="rr-inner">';
+ let s='<div class="rr-card" style="--rr-width:'+width+'px;--rr-font-size:'+size+'px;--rr-bg:url('+bg+');--rr-zoom:'+(Number(v('zoom'))/100)+';--rr-x:'+Number(v('x'))+'%;--rr-y:'+Number(v('y'))+'%;--rr-gray:'+Number(v('gray'))+'"><div class="rr-inner">';
  s+='<div class="rr-top"><span>MY BABY</span><span class="rr-rule"></span>✦<span class="rr-rule"></span><span>SCENE '+esc(v('scene'))+' / TAKE '+esc(v('take'))+'</span></div>';
  s+='<div class="rr-head"><div class="rr-heading"><div class="rr-eyebrow">'+esc(v('eyebrow'))+'</div><div class="rr-name">'+esc(v('name'))+'</div><div class="rr-sub">'+esc(v('sub'))+'</div><div class="rr-quote">'+esc(v('quote'))+'</div></div>';
- s+='<div class="rr-photo"><img alt="" src="'+esc(photo)+'"><div class="rr-photo-label">NO. 007 / TSK</div></div></div>';
+ s+='<div class="rr-photo"><div class="rr-photo-viewport"><img alt="" src="'+esc(photo)+'"></div><div class="rr-photo-label">NO. 007 / TSK</div></div></div>';
  s+='<div class="rr-story"><div class="rr-meta"><span>DAY X</span><span>TAKE '+esc(v('take'))+'</span></div><div class="rr-sep"></div><div class="rr-text">'+richHTML()+'</div><div class="rr-sep"></div><div class="rr-note">NOTE / '+esc(v('note'))+'</div></div><div class="rr-footer">'+esc(v('footer'))+'</div></div></div>';
  return s;
 }
 function render(){
+ el('zoomValue').textContent=v('zoom')+'%';
  const markup=build();el('preview').innerHTML=markup;
  el('code').value='<link rel="stylesheet" href="'+CSS+'">'+markup.replace(/\r?\n/g,'&#10;');
 }
