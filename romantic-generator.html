@@ -34,6 +34,20 @@ input[type=color]{width:29px;height:27px;padding:2px;border:0;border-radius:4px;
 .reset-text-color{grid-column:span 2;gap:6px;font:11px 'Noto Serif Thai',serif}.original-color-dot{width:13px;height:13px;border:1px solid #947b65;border-radius:3px;background:#f1e8dc;flex-shrink:0}.default-color-code{grid-column:span 2;display:flex;align-items:center;color:#bba994;font:10px Georgia,serif;white-space:nowrap}
 @media(max-width:530px){.tool-section{grid-template-columns:1fr;gap:5px}.tool-section-label{padding:0}.tool-section-controls{grid-template-columns:repeat(5,minmax(0,1fr))}.tool{height:34px}.tool-group{padding:7px}}
 @media(max-width:370px){.tool-section-controls{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.favorite-color-section{padding:10px 4px 5px;border-top:1px solid #594452}
+.favorite-color-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px;color:#dec29f;font:12px 'Noto Serif Thai',serif}
+.favorite-color-note{font:10px/1.5 'Noto Serif Thai',serif;color:#b7a49a}
+.favorite-color-add{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.favorite-color-add input{width:118px;flex:0 1 118px;text-transform:uppercase;height:34px;font:12px Georgia,serif}
+.favorite-color-add button{min-height:34px;padding:5px 9px;border:1px solid #705842;background:#382e36;color:#ead5b9;border-radius:5px;cursor:pointer;font:11px 'Noto Serif Thai',serif}
+.favorite-color-add button:hover,.favorite-swatch:hover{background:#5c4354}
+.favorite-color-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.favorite-color-item{display:flex;align-items:center;border:1px solid #705842;border-radius:5px;overflow:hidden;background:#302731}
+.favorite-swatch,.favorite-remove{border:0;color:#e8d4ba;background:transparent;cursor:pointer;min-height:32px}
+.favorite-swatch{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;font:11px Georgia,serif}
+.favorite-swatch-dot{height:17px;width:17px;flex-shrink:0;border-radius:3px;border:1px solid #a48b7f}
+.favorite-remove{padding:3px 7px;border-left:1px solid #705842;font-size:14px}
+.favorite-remove:hover{background:#7b3c48}
 .editor{height:245px;min-height:160px;max-height:500px;resize:vertical;overflow:auto;padding:13px;line-height:2;background:#100e12;border:1px solid #796049;border-radius:0 0 6px 6px;font:14px/2 'Noto Serif Thai',serif;white-space:pre-wrap;overflow-wrap:anywhere;scrollbar-width:thin}
 .word-count-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:9px 11px;margin-top:7px;border:1px solid #70563a;border-radius:5px;background:#241d23;color:#e4c69d;font:12px 'Noto Serif Thai',serif}.word-count-bar strong{font:700 15px Georgia,serif;color:#f2dfbd}.word-count-bar #countTip{font-size:10px;color:#a9988b}
 .editor p{margin:0 0 10px}.editor ul,.editor ol{padding-left:26px}.editor a{color:#d7ad75}
@@ -102,6 +116,12 @@ input[type=color]{width:29px;height:27px;padding:2px;border:0;border-radius:4px;
 <button type="button" class="tool" data-cmd="undo" title="ย้อนกลับ">↶</button>
 <button type="button" class="tool" data-cmd="redo" title="ทำซ้ำ">↷</button>
 </div></div>
+<div class="favorite-color-section" aria-label="คลังสี HEX ที่ใช้ประจำ">
+  <div class="favorite-color-head"><span>สี HEX ที่ใช้ประจำ</span><span class="favorite-color-note">บันทึกไว้ในเบราว์เซอร์ · สูงสุด 20 สี</span></div>
+  <div class="favorite-color-add"><input id="favoriteHex" type="text" maxlength="7" placeholder="#BFA38A" autocomplete="off" spellcheck="false" aria-label="รหัสสี HEX"><button type="button" id="addFavoriteColor">+ จำสีนี้</button><button type="button" id="savePickedColor">จำสีที่เลือกอยู่</button></div>
+  <div class="favorite-color-list" id="favoriteColors" aria-label="สีที่บันทึกไว้"></div>
+  <div id="favoriteColorMessage" class="favorite-color-note" aria-live="polite">จิ้มสีเพื่อใช้กับข้อความที่เลือก · กด × เพื่อลบสี</div>
+</div>
 </div>
 <div id="editor" class="editor" contenteditable="true" role="textbox" aria-multiline="true" spellcheck="false"><p>เมื่อแสงจันทร์สาดส่องลงมา ทริสเตียนก็ค่อย ๆ เปิดหน้าหนังสือที่ค้างไว้...</p></div>
 <div class="word-count-bar" aria-live="polite" aria-atomic="true"><span>จำนวนคำ <strong id="wordCount">0</strong> คำ</span><span>อักขระ <strong id="charCount">0</strong></span><span id="countTip">นับเฉพาะเนื้อหา ไม่รวม HTML</span></div>
@@ -177,6 +197,60 @@ const DEFAULT_ROLE_TEXT_COLOR='#f1e8dc';
 el('textColor').addEventListener('input',e=>command('foreColor',e.target.value));
 el('resetTextColor').addEventListener('mousedown',e=>e.preventDefault());
 el('resetTextColor').addEventListener('click',()=>{el('textColor').value=DEFAULT_ROLE_TEXT_COLOR;command('foreColor',DEFAULT_ROLE_TEXT_COLOR)});
+
+const FAVORITE_COLORS_KEY='tristian_romantic_favorite_hex_v1';
+let favoriteColors=[];
+function normalizeHex(hex){
+ const value=String(hex||'').trim().toUpperCase();
+ if(/^#[0-9A-F]{6}$/.test(value))return value;
+ if(/^#[0-9A-F]{3}$/.test(value))return '#'+[...value.slice(1)].map(c=>c+c).join('');
+ return '';
+}
+function loadFavoriteColors(){
+ try{
+  const data=JSON.parse(localStorage.getItem(FAVORITE_COLORS_KEY)||'[]');
+  if(Array.isArray(data))favoriteColors=[...new Set(data.map(normalizeHex).filter(Boolean))].slice(0,20);
+ }catch(e){favoriteColors=[]}
+ showFavoriteColors();
+}
+function showFavoriteColors(){
+ const list=el('favoriteColors');
+ list.replaceChildren();
+ if(!favoriteColors.length){
+  const hint=document.createElement('span');
+  hint.className='favorite-color-note';hint.textContent='ยังไม่ได้บันทึกสี';
+  list.appendChild(hint);return;
+ }
+ favoriteColors.forEach(color=>{
+  const group=document.createElement('span');group.className='favorite-color-item';
+  const pick=document.createElement('button');pick.type='button';pick.className='favorite-swatch';pick.title='ใช้สี '+color;
+  const dot=document.createElement('span');dot.className='favorite-swatch-dot';dot.style.backgroundColor=color;
+  const label=document.createElement('span');label.textContent=color;
+  pick.append(dot,label);pick.addEventListener('mousedown',e=>e.preventDefault());
+  pick.addEventListener('click',()=>{el('textColor').value=color.toLowerCase();command('foreColor',color);el('favoriteColorMessage').textContent='ใช้สี '+color+' แล้ว'});
+  const remove=document.createElement('button');remove.type='button';remove.className='favorite-remove';remove.textContent='×';remove.title='ลบสี '+color;remove.setAttribute('aria-label','ลบสี '+color);
+  remove.addEventListener('click',()=>{favoriteColors=favoriteColors.filter(c=>c!==color);storeFavoriteColors();showFavoriteColors();el('favoriteColorMessage').textContent='ลบ '+color+' ออกจากสีโปรดแล้ว'});
+  group.append(pick,remove);list.appendChild(group);
+ });
+}
+function storeFavoriteColors(){
+ try{localStorage.setItem(FAVORITE_COLORS_KEY,JSON.stringify(favoriteColors));return true}
+ catch(e){el('favoriteColorMessage').textContent='เบราว์เซอร์ไม่อนุญาตให้บันทึกสีโปรด';return false}
+}
+function addFavorite(hex){
+ const color=normalizeHex(hex);
+ if(!color){el('favoriteColorMessage').textContent='ใส่รหัสสี HEX เช่น #BFA38A หรือ #ABC';return}
+ if(favoriteColors.includes(color)){el('favoriteColorMessage').textContent=color+' อยู่ในคลังแล้ว';return}
+ if(favoriteColors.length>=20){el('favoriteColorMessage').textContent='บันทึกได้สูงสุด 20 สี ลบสีเก่าก่อนนะ';return}
+ favoriteColors.push(color);storeFavoriteColors();showFavoriteColors();
+ el('favoriteHex').value=color;
+ el('favoriteColorMessage').textContent='บันทึก '+color+' แล้ว ✓';
+}
+el('addFavoriteColor').addEventListener('click',()=>addFavorite(el('favoriteHex').value));
+el('savePickedColor').addEventListener('click',()=>addFavorite(el('textColor').value));
+el('favoriteHex').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addFavorite(el('favoriteHex').value)}});
+loadFavoriteColors();
+
 el('highlight').addEventListener('input',e=>command('hiliteColor',e.target.value));
 el('linkBtn').addEventListener('mousedown',ev=>ev.preventDefault());
 el('linkBtn').addEventListener('click',()=>{const url=prompt('วางลิงก์ https://');if(url&&/^https:\/\//i.test(url.trim()))command('createLink',url.trim())});
