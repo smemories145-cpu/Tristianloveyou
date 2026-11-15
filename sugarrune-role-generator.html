@@ -11,7 +11,11 @@
 <div class="field"><label>ลิงก์รูปตัวละคร</label><input id="pic" value="https://i.postimg.cc/tgB40DvZ/Aloof-Mystic-with-Starbound-Book.png"></div>
 <div class="twocol"><div class="field"><label>ตำแหน่งรูป</label><select id="pos"><option value="right top">ขวาบน (ต้นฉบับ)</option><option value="center top">กลางบน</option><option value="center center">กลาง</option><option value="left top">ซ้ายบน</option><option value="right center">ขวากลาง</option></select></div><div class="field"><label>ซูมภาพ <span id="zoomText">122%</span></label><input id="zoom" type="range" min="70" max="200" value="122"></div></div>
 <div class="twocol"><div class="field"><label>ภาพล็อกเก็ต (เว้นว่างได้)</label><input id="locket"></div><div class="field"><label>ภาพคทา (เว้นว่างได้)</label><input id="wand"></div></div>
-<h2>✎ เขียนโรล</h2><div class="field"><label>ข้อความ <span id="count"></span></label><textarea id="role" spellcheck="false">หัวใจสีเหลืองปรากฎตรงหน้า พบว่าเธอตกใจใส่เขา งั้นหรอ? ตัวเขาเองก็ไม่น่ากลัวเสียหน่อย หรือมิโซโนะอาจจะตีความหมายผิดไปก็ได้ [b]"ขออภัยด้วยครับ"[/b]  คำพูดนั้นไม่ค่อยชัดเจนเท่าไหร่
+<h2>✦ ภาพพื้นหลังส่วนข้อความ</h2>
+<div class="field"><label>ลิงก์ภาพพื้นหลัง (เว้นว่างเพื่อใช้กรอบเดิม)</label><input id="bg" type="url" placeholder="https://example.com/background.jpg"></div>
+<div class="twocol"><div class="field"><label>ตำแหน่งพื้นหลัง</label><select id="bgPos"><option value="center center">ตรงกลาง</option><option value="center top">กลางบน</option><option value="center bottom">กลางล่าง</option><option value="left center">ชิดซ้าย</option><option value="right center">ชิดขวา</option></select></div><div class="field"><label>ขนาดพื้นหลัง</label><select id="bgSize"><option value="cover">เต็มพื้นที่ (Cover)</option><option value="contain">เห็นทั้งภาพ (Contain)</option><option value="100% 100%">ยืดเต็มกรอบ</option><option value="auto">ขนาดต้นฉบับ</option></select></div></div>
+<div class="muted">ใส่รูปเฉพาะส่วนเนื้อหา ไม่แตะรูปตัวละครและของตกแต่ง ถ้าไม่ใส่ภาพ โค้ดจะเหมือนเดิม</div>
+<h2 style="margin-top:22px">✎ เขียนโรล</h2><div class="field"><label>ข้อความ <span id="count"></span></label><textarea id="role" spellcheck="false">หัวใจสีเหลืองปรากฎตรงหน้า พบว่าเธอตกใจใส่เขา งั้นหรอ? ตัวเขาเองก็ไม่น่ากลัวเสียหน่อย หรือมิโซโนะอาจจะตีความหมายผิดไปก็ได้ [b]"ขออภัยด้วยครับ"[/b]  คำพูดนั้นไม่ค่อยชัดเจนเท่าไหร่
 
 หัวใจสีเหลืองของเธอที่ปรากฎตรงหน้าอกถูกเขาเก็บเข้ามาในล็อกเก็ตของตัวเอง เขาตัดสินใจเดินต่อ</textarea></div>
 <div class="row tools"><button data-wrap="b">หนา</button><button data-wrap="i">เอียง</button><button data-wrap="u">ขีดเส้น</button><button id="colorBtn">สี HEX</button></div>
@@ -27,20 +31,25 @@
 'use strict';
 var CSS='https://midsummer-reverie.github.io/rpth-code/sugarrune2/ssr2-playerrp.css';
 var KEY='ssr2-role-generator-v1';
-var keys=['last','first','className','school','pic','pos','zoom','locket','wand','role','note'];
+var keys=['last','first','className','school','pic','pos','zoom','bg','bgPos','bgSize','locket','wand','role','note'];
 var fields={};keys.forEach(function(k){fields[k]=document.getElementById(k)});
 var initial={};keys.forEach(function(k){initial[k]=fields[k].value});
 function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function url(s){s=String(s||'').trim();return /^https?:\/\/[^\s"'<>]+$/i.test(s)?s.replace(/\(/g,'%28').replace(/\)/g,'%29'):''}
 function state(){var o={};keys.forEach(function(k){o[k]=fields[k].value});return o}
 function make(d){
- var p=url(d.pic),l=url(d.locket),w=url(d.wand);
+ var p=url(d.pic),l=url(d.locket),w=url(d.wand),bg=url(d.bg);
  var zoom=Math.max(70,Math.min(200,Number(d.zoom)||122));
  var allowed=['right top','center top','center center','left top','right center'];
  var pos=allowed.indexOf(d.pos)>=0?d.pos:'right top';
+ var bgPositions=['center center','center top','center bottom','left center','right center'];
+ var bgSizes=['cover','contain','100% 100%','auto'];
+ var bgPos=bgPositions.indexOf(d.bgPos)>=0?d.bgPos:'center center';
+ var bgSize=bgSizes.indexOf(d.bgSize)>=0?d.bgSize:'cover';
+ var backgroundStyle=bg?' style="'+escapeHtml("background-image: url('"+bg+"'); background-position: "+bgPos+"; background-size: "+bgSize+"; background-repeat: no-repeat;")+'"':'';
  var style="--p-pic: "+(p?"url('"+p+"') "+pos+" / "+zoom+"% no-repeat":"none")+"; --p-locket: "+(l?"url('"+l+"')":"")+"; --p-wand: "+(w?"url('"+w+"')":"")+";";
  return '<link href="'+CSS+'" rel="stylesheet">\n'
- +'<div id="lightpurple" class="ssr-py-container" style="'+escapeHtml(style)+'"><div class="ssr-py-hd"><div class="ssr-py-pic"></div><div class="ssr-py-hdde"><div class="ssr-py-lastname">'+escapeHtml(d.last)+'</div><div class="ssr-py-name">'+escapeHtml(d.first)+'</div><div class="ssr-py-add"><div class="ssr-py-addc">'+escapeHtml(d.className)+'</div><div class="ssr-py-addc">'+escapeHtml(d.school)+'</div></div></div></div><div class="ssr-py-content"><div class="ssr-py-ovl"></div><div class="ssr-py-grad"></div><div class="ssr-py-text">\n'
+ +'<div id="lightpurple" class="ssr-py-container" style="'+escapeHtml(style)+'"><div class="ssr-py-hd"><div class="ssr-py-pic"></div><div class="ssr-py-hdde"><div class="ssr-py-lastname">'+escapeHtml(d.last)+'</div><div class="ssr-py-name">'+escapeHtml(d.first)+'</div><div class="ssr-py-add"><div class="ssr-py-addc">'+escapeHtml(d.className)+'</div><div class="ssr-py-addc">'+escapeHtml(d.school)+'</div></div></div></div><div class="ssr-py-content"'+backgroundStyle+'><div class="ssr-py-ovl"></div><div class="ssr-py-grad"></div><div class="ssr-py-text">\n'
  +escapeHtml(d.role)+'\n</div></div><div class="ssr-py-note">'+escapeHtml(d.note)+'</div><div class="ssr-py-locket"></div><div class="ssr-py-wand"></div><div class="ssr-py-ssr"></div><div class="ssr-py-sp"></div></div>';
 }
 function formatted(s){return s.replace(/\[b\]([\s\S]*?)\[\/b\]/gi,'<strong>$1</strong>').replace(/\[i\]([\s\S]*?)\[\/i\]/gi,'<em>$1</em>').replace(/\[u\]([\s\S]*?)\[\/u\]/gi,'<u>$1</u>').replace(/\[color=(#[0-9a-f]{3,8})\]([\s\S]*?)\[\/color\]/gi,'<span style="color:$1">$2</span>')}
