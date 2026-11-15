@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sugar Sugar Rune · RP Form</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;color:#ede8f5;background:#100f19;font-family:system-ui,"Noto Sans Thai",sans-serif}header{padding:25px max(18px,calc((100vw - 1260px)/2));border-bottom:1px solid #383149;background:linear-gradient(115deg,#251c3c,#100f19)}h1{font-size:clamp(21px,3vw,31px);margin:0}p{color:#b7a9c8}main{max-width:1260px;margin:auto;padding:22px 16px;display:grid;grid-template-columns:minmax(310px,460px) minmax(0,1fr);gap:18px}.panel{background:#1c1929;border:1px solid #3b334e;border-radius:15px;padding:18px;min-width:0}h2{font-size:17px;margin:0 0 17px}.field{margin-bottom:13px}label{display:block;color:#d0c2df;font-size:13px;margin-bottom:6px}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:11px}input,textarea,select{width:100%;border-radius:8px;border:1px solid #504464;background:#100e19;color:#fff;font:inherit;padding:10px;outline:none}input:focus,textarea:focus{border-color:#b999f1}textarea{min-height:230px;resize:vertical;line-height:1.8}button{background:#43335f;border:1px solid #665482;color:#fff;border-radius:8px;padding:9px 13px;cursor:pointer;font:inherit}button:hover{background:#584176}button.primary{background:#c9a8ff;color:#201330;font-weight:700}.row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.tools button{font-size:12px;padding:6px 9px}.status{font-size:12px;color:#b8e3c0;min-height:20px}.muted{font-size:12px;color:#ac9dbc}.screen{border-radius:10px;background:#f2eef6;overflow:hidden;min-height:570px}.screen iframe{border:0;width:100%;height:680px;display:block}.code{height:170px;min-height:150px;font-size:12px;line-height:1.5}#count{float:right;color:#a99abc}@media(max-width:900px){main{grid-template-columns:1fr}}@media(max-width:430px){.twocol{grid-template-columns:1fr}}
+</style></head><body>
+<header><h1>✦ Sugar Sugar Rune · Role Form</h1><p>กรอกโรล · ดูพรีวิว · คัดลอกโค้ดต้นฉบับ · บันทึกงานล่าสุดอัตโนมัติ</p></header>
+<main><section class="panel"><h2>✧ ข้อมูลตัวละคร</h2>
+<div class="twocol"><div class="field"><label>นามสกุล</label><input id="last" value="Misono"></div><div class="field"><label>ชื่อ</label><input id="first" value="Ren"></div></div>
+<div class="twocol"><div class="field"><label>ห้องเรียน</label><input id="className" value="Class 2-A"></div><div class="field"><label>โรงเรียน</label><input id="school" value="Moegi School"></div></div>
+<div class="field"><label>ลิงก์รูปตัวละคร</label><input id="pic" value="https://i.postimg.cc/tgB40DvZ/Aloof-Mystic-with-Starbound-Book.png"></div>
+<div class="twocol"><div class="field"><label>ตำแหน่งรูป</label><select id="pos"><option value="right top">ขวาบน (ต้นฉบับ)</option><option value="center top">กลางบน</option><option value="center center">กลาง</option><option value="left top">ซ้ายบน</option><option value="right center">ขวากลาง</option></select></div><div class="field"><label>ซูมภาพ <span id="zoomText">122%</span></label><input id="zoom" type="range" min="70" max="200" value="122"></div></div>
+<div class="twocol"><div class="field"><label>ภาพล็อกเก็ต (เว้นว่างได้)</label><input id="locket"></div><div class="field"><label>ภาพคทา (เว้นว่างได้)</label><input id="wand"></div></div>
+<h2>✎ เขียนโรล</h2><div class="field"><label>ข้อความ <span id="count"></span></label><textarea id="role" spellcheck="false">หัวใจสีเหลืองปรากฎตรงหน้า พบว่าเธอตกใจใส่เขา งั้นหรอ? ตัวเขาเองก็ไม่น่ากลัวเสียหน่อย หรือมิโซโนะอาจจะตีความหมายผิดไปก็ได้ [b]"ขออภัยด้วยครับ"[/b]  คำพูดนั้นไม่ค่อยชัดเจนเท่าไหร่
+
+หัวใจสีเหลืองของเธอที่ปรากฎตรงหน้าอกถูกเขาเก็บเข้ามาในล็อกเก็ตของตัวเอง เขาตัดสินใจเดินต่อ</textarea></div>
+<div class="row tools"><button data-wrap="b">หนา</button><button data-wrap="i">เอียง</button><button data-wrap="u">ขีดเส้น</button><button id="colorBtn">สี HEX</button></div>
+<div class="field"><label>หมายเหตุท้ายกรอบ</label><input id="note" value="เปิดหนังสือทำนาย ≽^• ˕ • ྀི≼"></div>
+<div class="row"><span id="status" class="status">กำลังเริ่มต้น…</span></div><div class="row"><button id="reset">คืนค่าเริ่มต้น</button><button id="backup">ดาวน์โหลดข้อมูลสำรอง</button><button id="restore">นำเข้าข้อมูลสำรอง</button><input type="file" id="backupFile" accept=".json,application/json" hidden></div><div class="muted">บันทึกโดยอัตโนมัติในเบราว์เซอร์นี้ ข้อมูลไม่ถูกส่งไปยัง GitHub และไม่ซิงก์ข้ามเครื่อง</div>
+</section>
+<section class="panel"><h2>◈ พรีวิวจาก CSS ต้นฉบับ</h2><div class="screen"><iframe id="preview" title="พรีวิวกรอบโรล"></iframe></div><p class="muted" id="previewNote">พรีวิวใช้ไฟล์ CSS ต้นฉบับจาก midsummer-reverie หากเซิร์ฟเวอร์ CSS ใช้งานไม่ได้ จะแสดงแบบสำรองเพื่อให้ตรวจข้อความได้</p>
+<div class="row"><button id="copy" class="primary">คัดลอกโค้ดโรล</button><button id="select">เลือกโค้ด</button><button id="download">ดาวน์โหลด HTML</button></div>
+<div class="field"><label>HTML สำหรับโพสต์ · โครงสร้างตรงตามโค้ดที่ส่งมา</label><textarea class="code" id="output" readonly></textarea></div>
+</section></main>
+<script>
+(function(){
+'use strict';
+var CSS='https://midsummer-reverie.github.io/rpth-code/sugarrune2/ssr2-playerrp.css';
+var KEY='ssr2-role-generator-v1';
+var keys=['last','first','className','school','pic','pos','zoom','locket','wand','role','note'];
+var fields={};keys.forEach(function(k){fields[k]=document.getElementById(k)});
+var initial={};keys.forEach(function(k){initial[k]=fields[k].value});
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function url(s){s=String(s||'').trim();return /^https?:\/\/[^\s"'<>]+$/i.test(s)?s.replace(/\(/g,'%28').replace(/\)/g,'%29'):''}
+function state(){var o={};keys.forEach(function(k){o[k]=fields[k].value});return o}
+function make(d){
+ var p=url(d.pic),l=url(d.locket),w=url(d.wand);
+ var zoom=Math.max(70,Math.min(200,Number(d.zoom)||122));
+ var allowed=['right top','center top','center center','left top','right center'];
+ var pos=allowed.indexOf(d.pos)>=0?d.pos:'right top';
+ var style="--p-pic: "+(p?"url('"+p+"') "+pos+" / "+zoom+"% no-repeat":"none")+"; --p-locket: "+(l?"url('"+l+"')":"")+"; --p-wand: "+(w?"url('"+w+"')":"")+";";
+ return '<link href="'+CSS+'" rel="stylesheet">\n'
+ +'<div id="lightpurple" class="ssr-py-container" style="'+escapeHtml(style)+'"><div class="ssr-py-hd"><div class="ssr-py-pic"></div><div class="ssr-py-hdde"><div class="ssr-py-lastname">'+escapeHtml(d.last)+'</div><div class="ssr-py-name">'+escapeHtml(d.first)+'</div><div class="ssr-py-add"><div class="ssr-py-addc">'+escapeHtml(d.className)+'</div><div class="ssr-py-addc">'+escapeHtml(d.school)+'</div></div></div></div><div class="ssr-py-content"><div class="ssr-py-ovl"></div><div class="ssr-py-grad"></div><div class="ssr-py-text">\n'
+ +escapeHtml(d.role)+'\n</div></div><div class="ssr-py-note">'+escapeHtml(d.note)+'</div><div class="ssr-py-locket"></div><div class="ssr-py-wand"></div><div class="ssr-py-ssr"></div><div class="ssr-py-sp"></div></div>';
+}
+function formatted(s){return s.replace(/\[b\]([\s\S]*?)\[\/b\]/gi,'<strong>$1</strong>').replace(/\[i\]([\s\S]*?)\[\/i\]/gi,'<em>$1</em>').replace(/\[u\]([\s\S]*?)\[\/u\]/gi,'<u>$1</u>').replace(/\[color=(#[0-9a-f]{3,8})\]([\s\S]*?)\[\/color\]/gi,'<span style="color:$1">$2</span>')}
+function updateFrame(d){
+ var raw=make(d);
+ var fallback='<style>body{background:#f3eff8;margin:0;padding:28px 12px;box-sizing:border-box}.ssr-py-container{margin:0 auto;max-width:570px;min-height:420px;background:#fff;border:1px solid #e0d3e8;border-radius:13px;color:#5a466a;box-shadow:0 8px 28px #27153c14;overflow:hidden}.ssr-py-hd{position:relative;min-height:185px;background:linear-gradient(120deg,#d9c7eb,#f4dcec);display:flex;align-items:end;padding:18px 22px}.ssr-py-pic{position:absolute;inset:0;background:var(--p-pic)}.ssr-py-hdde{position:relative;background:#ffffffc7;padding:8px 13px;border-radius:8px}.ssr-py-lastname{font-size:18px}.ssr-py-name{font-size:30px;font-weight:bold}.ssr-py-add{display:flex;gap:12px;font-size:11px}.ssr-py-content{padding:25px 27px}.ssr-py-text{white-space:pre-line;line-height:1.9;font-size:15px}.ssr-py-note{padding:10px 22px 24px;text-align:center;font-size:12px}</style>';
+ // The fallback is intentionally preview-only. The copied post contains no fallback markup.
+ var body=formatted(raw.replace('<link href="'+CSS+'" rel="stylesheet">',''));
+ var doc='<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+fallback+'<link rel="stylesheet" href="'+CSS+'"></head><body>'+body+'</body></html>';
+ document.getElementById('preview').srcdoc=doc;
+}
+var timer=0;
+function render(){var d=state();document.getElementById('output').value=make(d);document.getElementById('count').textContent=Array.from(d.role).length+' ตัวอักษร';document.getElementById('zoomText').textContent=d.zoom+'%';updateFrame(d);try{localStorage.setItem(KEY,JSON.stringify(d));document.getElementById('status').textContent='✓ บันทึกงานล่าสุดแล้ว'}catch(e){document.getElementById('status').textContent='เบราว์เซอร์ไม่อนุญาตให้บันทึก'}}
+try{var saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved&&typeof saved==='object'){keys.forEach(function(k){if(typeof saved[k]==='string')fields[k].value=saved[k]});}}catch(e){}
+keys.forEach(function(k){fields[k].addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(render,170)});fields[k].addEventListener('change',render)});
+function wrap(tag,color){var e=fields.role,start=e.selectionStart,end=e.selectionEnd;var open='['+tag+(color?'='+color:'')+']',close='[/'+tag+']';e.setRangeText(open+e.value.slice(start,end)+close,start,end,'select');e.focus();e.setSelectionRange(start+open.length,end+open.length);render()}
+document.querySelectorAll('[data-wrap]').forEach(function(b){b.onclick=function(){wrap(b.dataset.wrap)}});
+document.getElementById('colorBtn').onclick=function(){var c=prompt('กรอกรหัสสี HEX เช่น #b79ade','#b79ade');if(c&&/^#[0-9a-f]{3}([0-9a-f]{3})?$/i.test(c.trim()))wrap('color',c.trim())};
+document.getElementById('reset').onclick=function(){if(!confirm('ต้องการล้างข้อมูลล่าสุดทั้งหมด แล้วคืนค่าเริ่มต้นหรือไม่?'))return;keys.forEach(function(k){fields[k].value=initial[k]});render()};
+function download(name,contents,type){var a=document.createElement('a'),u=URL.createObjectURL(new Blob([contents],{type:type}));a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},500)}
+document.getElementById('backup').onclick=function(){download('sugarrune-role-backup.json',JSON.stringify(state(),null,2),'application/json')};
+document.getElementById('restore').onclick=function(){document.getElementById('backupFile').click()};
+document.getElementById('backupFile').onchange=function(ev){var file=ev.target.files[0];if(!file)return;file.text().then(function(text){var data=JSON.parse(text);keys.forEach(function(k){if(typeof data[k]==='string')fields[k].value=data[k]});render()}).catch(function(){alert('ไฟล์ข้อมูลสำรองไม่ถูกต้อง')});ev.target.value=''};
+document.getElementById('select').onclick=function(){var e=document.getElementById('output');e.focus();e.select()};
+document.getElementById('copy').onclick=function(){var e=document.getElementById('output');var s=e.value;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(function(){document.getElementById('status').textContent='✓ คัดลอกโค้ดแล้ว'}).catch(function(){e.focus();e.select();document.execCommand('copy')})}else{e.focus();e.select();document.execCommand('copy')}};
+document.getElementById('download').onclick=function(){download('sugarrune-role.html','<!doctype html><html lang="th"><head><meta charset="utf-8"></head><body>'+make(state())+'</body></html>','text/html;charset=utf-8')};
+render();
+})();
+</script></body></html>
