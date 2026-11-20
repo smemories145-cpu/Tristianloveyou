@@ -31,3 +31,15 @@
 /* Gentle depth only — original typography, sizes and layout preserved */
 .nc-card{box-shadow:0 12px 32px rgba(0,0,0,.24)}
 .nc-name{text-shadow:0 2px 13px rgba(0,0,0,.20)}
+
+/* Optional name details. All effects are CSS only; "normal" preserves original. */
+.nc-card[data-nc-name-style="elegant"] .nc-name,
+.nc-card[data-nc-name-style="luxury"] .nc-name,
+.nc-card[data-nc-name-style="soft"] .nc-name{position:relative}
+.nc-card[data-nc-name-style="elegant"] .nc-name{padding-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,.22)}
+.nc-card[data-nc-name-style="elegant"] .nc-name:after{content:"";position:absolute;left:0;bottom:2px;width:70px;max-width:40%;height:1px;background:linear-gradient(90deg,var(--nc-accent),transparent)}
+.nc-card[data-nc-name-style="elegant"] .nc-name:before{content:"✦";display:inline-block;color:var(--nc-accent);font-size:.35em;vertical-align:top;margin:.15em 0 0 .5em;font-weight:400;opacity:.85}
+.nc-card[data-nc-name-style="luxury"] .nc-name{padding-left:13px;border-left:2px solid var(--nc-accent);text-shadow:0 3px 14px rgba(0,0,0,.26)}
+.nc-card[data-nc-name-style="soft"] .nc-name{text-shadow:0 0 16px rgba(220,190,165,.19);padding-bottom:9px}
+.nc-card[data-nc-name-style="soft"] .nc-name:before{content:"✧";display:inline-block;color:var(--nc-accent);font-size:.45em;vertical-align:top;margin:.05em 0 0 .4em;font-weight:400;opacity:.85}
+.nc-card[data-nc-name-style="soft"] .nc-name:after{content:"";position:absolute;left:0;bottom:1px;width:45%;max-width:110px;height:1px;background:var(--nc-accent);opacity:.48}
