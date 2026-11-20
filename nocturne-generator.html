@@ -46,6 +46,10 @@ input:focus,textarea:focus,select:focus{outline:2px solid #9e8b74;outline-offset
 .palette-add{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
 .palette-add input{max-width:120px;text-transform:uppercase}
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.backup-panel{margin-top:17px;padding:13px;border:1px solid #494541;border-radius:9px;background:#211f1f}
+.backup-title{font-size:11px;letter-spacing:1.5px;color:#d7c3ab;font-weight:700}
+.backup-panel .hint{margin:6px 0 0}
+.backup-panel .actions{margin-top:10px}
 #status{font-size:11px;color:#b6c7ae;min-height:20px;margin:10px 0 3px}
 #result{min-height:96px;font:11px/1.5 monospace;resize:vertical}
 .preview-wrap{max-height:calc(100vh - 135px);overflow:auto;padding:10px;scrollbar-width:thin;scrollbar-color:#565c5e transparent}
@@ -111,6 +115,12 @@ input:focus,textarea:focus,select:focus{outline:2px solid #9e8b74;outline-offset
 <label for="signature">ลายเซ็นท้ายกรอบ</label><input id="signature" value="A PRIVATE ARCHIVE · TSK">
 </div>
 <div class="group"><div class="actions"><button type="button" class="btn btn-primary" id="copy">คัดลอก HTML</button><button type="button" class="btn" id="download">บันทึกโค้ด</button><button type="button" class="btn" id="reset">เริ่มใหม่</button></div>
+<div class="backup-panel">
+<div class="backup-title">BACKUP / ย้ายงานข้ามเครื่อง</div>
+<p class="hint">ดาวน์โหลดข้อมูลทั้งหมดเป็นไฟล์ .json ส่งไปโทรศัพท์ แล้วกดนำเข้าเพื่อทำงานต่อได้ ข้อมูลจะไม่อัปขึ้นเซิร์ฟเวอร์</p>
+<div class="actions"><button type="button" class="btn" id="exportBackup">↓ สำรองข้อมูลทั้งหมด</button><button type="button" class="btn" id="importBackup">↑ นำเข้า Backup</button></div>
+<input type="file" id="backupFile" accept=".json,application/json" style="display:none" aria-label="เลือกไฟล์สำรองข้อมูล NOCTURNE">
+</div>
 <p id="status" aria-live="polite">พร้อมใช้งาน</p>
 <label for="result">โค้ดสำหรับเว็บบอร์ด (บรรทัดเดียว)</label><textarea id="result" readonly></textarea>
 </div>
@@ -199,6 +209,47 @@ function addHex(x){const hex=validHex(x);if(!hex){$('status').textContent='ใ�
 $('saveHex').onclick=()=>addHex(v('newHex'));$('savePicked').onclick=()=>addHex(v('pickedColor'));
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(v('result'));$('status').textContent='✓ คัดลอก HTML บรรทัดเดียวแล้ว'}catch(e){$('result').focus();$('result').select();$('status').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
 $('download').onclick=()=>{const blob=new Blob([v('result')],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='nocturne-roleplay.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+function backupData(){
+ const fields={};
+ keys.forEach(k=>fields[k]=v(k));
+ return {format:'nocturne-rp-backup',version:1,exportedAt:new Date().toISOString(),fields,palette:palettes.slice()};
+}
+$('exportBackup').onclick=()=>{
+ try{
+  if(saveTimer){clearTimeout(saveTimer);saveTimer=null}
+  saveDraft();
+  const data=JSON.stringify(backupData(),null,2);
+  const blob=new Blob([data],{type:'application/json;charset=utf-8'});
+  const link=document.createElement('a');
+  const name=new Date().toISOString().slice(0,10);
+  link.href=URL.createObjectURL(blob);
+  link.download='nocturne-backup-'+name+'.json';
+  document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(link.href),3000);
+  $('status').textContent='✓ ดาวน์โหลด Backup แล้ว ส่งไฟล์นี้ไปโทรศัพท์เพื่อนำเข้าได้';
+ }catch(e){$('status').textContent='สำรองข้อมูลไม่สำเร็จ กรุณาลองอีกครั้ง'}
+};
+$('importBackup').onclick=()=>$('backupFile').click();
+$('backupFile').addEventListener('change',async e=>{
+ const file=e.target.files&&e.target.files[0];
+ if(!file)return;
+ try{
+  if(file.size>2000000)throw Error('ไฟล์ใหญ่เกิน 2 MB');
+  const data=JSON.parse(await file.text());
+  if(!data||data.format!=='nocturne-rp-backup'||data.version!==1||typeof data.fields!=='object'||!data.fields||Array.isArray(data.fields)||!Array.isArray(data.palette))throw Error('รูปแบบ Backup ไม่ถูกต้อง');
+  for(const k of keys){if(k in data.fields && (typeof data.fields[k]!=='string'||data.fields[k].length>300000))throw Error('ข้อมูล '+k+' ไม่ถูกต้อง')}
+  if(data.palette.length>100||data.palette.some(c=>typeof c!=='string'||!validHex(c)))throw Error('ข้อมูลสี HEX ไม่ถูกต้อง');
+  if(!confirm('นำเข้าข้อมูลจาก Backup นี้? ข้อมูลที่กำลังเปิดอยู่ในเครื่องนี้จะถูกแทนที่'))return;
+  if(saveTimer){clearTimeout(saveTimer);saveTimer=null}
+  loading=true;
+  keys.forEach(k=>{if(typeof data.fields[k]==='string')$(k).value=data.fields[k]});
+  palettes=[...new Set(data.palette.map(validHex))].slice(0,20);
+  loading=false;
+  storePalette();showPalette();render();saveDraft();
+  $('status').textContent='✓ กู้คืนข้อมูลจาก Backup สำเร็จแล้ว';
+ }catch(err){loading=false;$('status').textContent='นำเข้าไม่ได้: '+err.message}
+ finally{e.target.value=''}
+});
 $('reset').onclick=()=>{if(!confirm('เริ่มใหม่และล้างข้อความที่บันทึกอัตโนมัติ? (สีโปรดยังอยู่)'))return;localStorage.removeItem(draftKey);location.reload()};
 window.addEventListener('pagehide',()=>{if(saveTimer){clearTimeout(saveTimer);saveDraft()}});
 loadDraft();try{palettes=JSON.parse(localStorage.getItem(paletteKey)||'[]').filter(x=>validHex(x)).slice(0,20)}catch(e){}showPalette();render();
