@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NOCTURNE · Roleplay Studio</title>
+<link rel="stylesheet" href="nocturne-role.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{color-scheme:dark;--bg:#101113;--surface:#1a1c1f;--line:#393d40;--sub:#a9adb0;--text:#eae8e4;--accent:#c8b59d}
+body{margin:0;background:var(--bg);color:var(--text);font:13px/1.65 'DM Sans','Noto Serif Thai',sans-serif}
+header{padding:22px 22px 18px;border-bottom:1px solid #313638;background:#151719}
+.header-inner{max-width:1330px;margin:auto;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.logo{font-weight:700;font-size:23px;letter-spacing:3px;color:#e8d5bd}
+.logo span{font-weight:400;font-size:10px;letter-spacing:2px;color:#9ea3a5;display:block}
+.header-link{color:#b6b9b6;text-decoration:none;border:1px solid #464a4a;border-radius:6px;padding:7px 11px}
+main{max-width:1330px;margin:auto;padding:18px;display:grid;grid-template-columns:minmax(315px,445px) minmax(0,1fr);gap:18px;align-items:start}
+.panel{min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+.panel-title{font-size:16px;font-weight:600;margin:0 0 4px}
+.hint{font-size:11px;color:var(--sub);margin:0 0 14px;line-height:1.7}
+.form{height:calc(100vh - 155px);min-height:480px;overflow:auto;padding-right:6px;scrollbar-width:thin;scrollbar-color:#5f6667 transparent}
+.group{border-top:1px solid #36393b;padding:14px 0 4px}
+.group-title{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#c3ad95;margin-bottom:7px}
+label{display:block;color:#c3c4c2;font-size:12px;margin:10px 0 5px}
+input,textarea,select{width:100%;border-radius:7px;border:1px solid #46494b;padding:9px 10px;background:#111315;color:#eee;font:12px/1.6 'Noto Serif Thai',sans-serif}
+input[type=range]{padding:1px 0;accent-color:#c1a98c}
+input[type=color]{width:33px;height:31px;padding:2px;border:1px solid #5b5c5c;cursor:pointer}
+input:focus,textarea:focus,select:focus{outline:2px solid #9e8b74;outline-offset:1px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.btn{border:1px solid #62594f;background:#302b29;color:#ece5db;padding:9px 11px;border-radius:7px;font:12px 'Noto Serif Thai',sans-serif;cursor:pointer}
+.btn:hover{background:#494039}
+.btn-primary{background:#c3ad92;color:#1b1918;border-color:#c3ad92;font-weight:600}
+.btn-primary:hover{background:#e0cbb2}
+.btn-small{padding:6px 9px}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border:1px solid #49494b;background:#242629;border-radius:8px 8px 0 0}
+.toolbar .btn{min-width:33px}
+.toolbar select{width:auto;flex:1;min-width:90px;max-width:180px}
+#story{border-radius:0 0 7px 7px;min-height:215px;font-size:14px;line-height:1.85;resize:vertical}
+.counter{display:flex;gap:15px;flex-wrap:wrap;color:#aeb2ae;font-size:11px;margin-top:7px}
+.counter strong{color:#d7c4ad}
+.palette{display:flex;flex-wrap:wrap;gap:7px;margin-top:7px}
+.swatch{border:1px solid #5c5e5e;background:#27282a;color:#eee;border-radius:6px;display:flex;align-items:center;gap:6px;padding:5px;cursor:pointer;font:10px 'DM Sans',sans-serif}
+.swatch-dot{width:18px;height:18px;border:1px solid #777;display:inline-block;border-radius:4px}
+.swatch-remove{border:0;background:none;color:#bbb;cursor:pointer;margin:0 1px}
+.palette-add{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+.palette-add input{max-width:120px;text-transform:uppercase}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+#status{font-size:11px;color:#b6c7ae;min-height:20px;margin:10px 0 3px}
+#result{min-height:96px;font:11px/1.5 monospace;resize:vertical}
+.preview-wrap{max-height:calc(100vh - 135px);overflow:auto;padding:10px;scrollbar-width:thin;scrollbar-color:#565c5e transparent}
+.preview-wrap .nc-card{margin:0 auto}
+.preview-panel{position:sticky;top:12px}
+#preview{min-width:0;overflow-x:auto}
+#preview .nc-card{min-width:0}
+@media(max-width:900px){main{grid-template-columns:1fr}.form{height:auto;max-height:72vh}.preview-panel{position:static}.preview-wrap{max-height:none}}
+@media(max-width:430px){main{padding:8px}.panel{padding:11px}.logo{font-size:20px}.three{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="header-inner"><div class="logo">NOCTURNE<span>A MINIMAL ROLEPLAY STUDIO · TSK</span></div><a class="header-link" href="romantic-generator.html">Romantic Archive เดิม ↗</a></div></header>
+<main>
+<section class="panel"><h2 class="panel-title">01 / Compose</h2><p class="hint">ธีมใหม่ที่อ่านง่าย ไม่ต้องจัด HTML เอง · ทุกอย่างบันทึกอัตโนมัติในเครื่อง</p>
+<div class="form">
+<div class="group"><div class="group-title">Appearance</div>
+<div class="two">
+<div><label for="theme">โทนสี</label><select id="theme"><option value="charcoal">Charcoal / Champagne</option><option value="sage">Midnight Sage</option><option value="plum">Dusty Plum</option></select></div>
+<div><label for="width">ความกว้างกรอบ</label><select id="width"><option value="480">480 px</option><option value="560">560 px</option><option value="610" selected>610 px</option><option value="700">700 px</option><option value="820">820 px</option></select></div>
+<div><label for="size">ขนาดข้อความ</label><select id="size"><option value="14">14 px</option><option value="15" selected>15 px</option><option value="16">16 px</option><option value="17">17 px</option><option value="18">18 px</option></select></div>
+<div><label for="align">การจัดข้อความ</label><select id="align"><option value="left">ชิดซ้าย</option><option value="justify">Justify</option><option value="center">กึ่งกลาง</option></select></div>
+<div><label for="gap">ช่องว่างย่อหน้า <span id="gapDisplay">10px</span></label><input id="gap" type="range" min="0" max="25" value="10"></div>
+<div><label for="imageHeight">ความสูงภาพ <span id="heightDisplay">235px</span></label><input id="imageHeight" type="range" min="120" max="480" step="5" value="235"></div>
+</div></div>
+<div class="group"><div class="group-title">Character & image</div>
+<label for="imageUrl">URL รูปตัวละคร (เว้นว่างเพื่อไม่ใส่รูป)</label><input id="imageUrl" placeholder="https://..." value="https://i.pinimg.com/1200x/d7/fd/34/d7fd342a0f362b8878cfae808790895d.jpg">
+<div class="three">
+<div><label for="zoom">ซูมรูป <span id="zoomDisplay">100%</span></label><input type="range" id="zoom" min="100" max="300" step="5" value="100"></div>
+<div><label for="x">เลื่อนซ้ายขวา</label><input type="range" id="x" min="0" max="100" value="50"></div>
+<div><label for="y">เลื่อนบนล่าง</label><input type="range" id="y" min="0" max="100" value="50"></div>
+</div>
+<div class="two">
+<div><label for="name">ชื่อตัวละคร</label><input id="name" value="TRISTIAN S. KENNEDY"></div>
+<div><label for="scene">Scene / Chapter</label><input id="scene" value="SCENE 01"></div>
+</div>
+<label for="eyebrow">ข้อความเล็กเหนือชื่อ</label><input id="eyebrow" value="A PRIVATE STORY">
+<label for="subtitle">คำโปรย</label><input id="subtitle" value="The world moves on. He takes his time.">
+<label for="coverlabel">คำบรรยายใต้ภาพ</label><input id="coverlabel" value="A MOMENT IN TIME">
+</div>
+<div class="group"><div class="group-title">Roleplay text</div>
+<p class="hint">ใช้ปุ่มจัดรูปแบบกับข้อความที่เลือก · Enter = ย่อหน้าใหม่ / Shift+Enter = ขึ้นบรรทัดในย่อหน้าเดิม · ใช้ [indent] เฉพาะย่อหน้าที่อยากเยื้อง</p>
+<div class="toolbar">
+<button type="button" class="btn btn-small" data-tag="b" title="ตัวหนา"><b>B</b></button>
+<button type="button" class="btn btn-small" data-tag="i" title="ตัวเอียง"><i>I</i></button>
+<button type="button" class="btn btn-small" data-tag="u" title="ขีดเส้นใต้"><u>U</u></button>
+<button type="button" class="btn btn-small" id="indent" title="เยื้องย่อหน้า">↳ ย่อหน้า</button>
+<button type="button" class="btn btn-small" id="quote" title="คำพูด/ข้อความอ้างอิง">❝ Quote</button>
+<button type="button" class="btn btn-small" id="resetColor">สีเดิม</button>
+<input type="color" id="pickedColor" value="#d6bba0" aria-label="เลือกสีตัวอักษร">
+<button type="button" class="btn btn-small" id="insertColor">ใช้สี</button>
+</div>
+<textarea id="story" spellcheck="false">ทริสเตียนเดินทอดน่องผ่านทางเดินที่เงียบสงบ เขาแวะหยุดมองท้องฟ้าอยู่ครู่หนึ่ง ก่อนจะก้าวเดินต่อไปตามจังหวะของตัวเอง
+
+[i]คืนนี้คงเป็นคืนที่ยาวนานอีกคืนหนึ่ง[/i]</textarea>
+<div class="counter"><span>คำ <strong id="wordCount">0</strong></span><span>ตัวอักษร <strong id="charCount">0</strong></span></div>
+<label>สี HEX ที่ใช้ประจำ</label><div class="palette" id="palette"></div>
+<div class="palette-add"><input id="newHex" placeholder="#D6BBA0" maxlength="7"><button type="button" class="btn btn-small" id="saveHex">+ จำสี</button><button type="button" class="btn btn-small" id="savePicked">จำสีที่เลือก</button></div>
+</div>
+<div class="group"><div class="group-title">Footer</div>
+<label for="note">หมายเหตุ</label><textarea id="note" rows="2">NOTE / A quiet afternoon.</textarea>
+<label for="signature">ลายเซ็นท้ายกรอบ</label><input id="signature" value="A PRIVATE ARCHIVE · TSK">
+</div>
+<div class="group"><div class="actions"><button type="button" class="btn btn-primary" id="copy">คัดลอก HTML</button><button type="button" class="btn" id="download">บันทึกโค้ด</button><button type="button" class="btn" id="reset">เริ่มใหม่</button></div>
+<p id="status" aria-live="polite">พร้อมใช้งาน</p>
+<label for="result">โค้ดสำหรับเว็บบอร์ด (บรรทัดเดียว)</label><textarea id="result" readonly></textarea>
+</div>
+</div></section>
+<section class="panel preview-panel"><h2 class="panel-title">02 / Live preview</h2><p class="hint">ตัวอย่างหน้าตาจริงที่ส่งออกไปเว็บบอร์ด</p><div class="preview-wrap"><div id="preview"></div></div></section>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), v=id=>$(id).value;
+const keys=['theme','width','size','align','gap','imageHeight','imageUrl','zoom','x','y','name','scene','eyebrow','subtitle','coverlabel','story','note','signature'];
+const cssUrl='https://smemories145-cpu.github.io/Tristianloveyou/nocturne-role.css';
+const draftKey='nocturne_rp_generator_draft_1',paletteKey='nocturne_rp_palette_1';
+const escapeHtml=x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const validUrl=x=>/^https:\/\//i.test(String(x).trim())?String(x).trim().replace(/['"()\\<>\s]/g,''):'';
+const validHex=x=>{let s=String(x||'').trim().toUpperCase();if(/^#[0-9A-F]{3}$/.test(s))return '#'+[...s.slice(1)].map(c=>c+c).join('');return /^#[0-9A-F]{6}$/.test(s)?s:''};
+let palettes=[],saveTimer=null,loading=false;
+function inline(text){
+ let s=escapeHtml(text);
+ s=s.replace(/\[color=(#[0-9a-fA-F]{3}|#[0-9a-fA-F]{6})\]([\s\S]*?)\[\/color\]/gi,(full,color,body)=>'<span style="color:'+validHex(color)+'">'+body+'</span>');
+ s=s.replace(/\[b\]([\s\S]*?)\[\/b\]/gi,'<strong>$1</strong>');
+ s=s.replace(/\[i\]([\s\S]*?)\[\/i\]/gi,'<em>$1</em>');
+ s=s.replace(/\[u\]([\s\S]*?)\[\/u\]/gi,'<u>$1</u>');
+ s=s.replace(/\[quote\]([\s\S]*?)\[\/quote\]/gi,'<span class="nc-quote">$1</span>');
+ s=s.replace(/\[center\]([\s\S]*?)\[\/center\]/gi,'<span class="nc-centered" style="display:block;text-align:center">$1</span>');
+ return s.replace(/\n/g,'<br>');
+}
+function storyHtml(){
+ return v('story').replace(/\r\n?/g,'\n').split(/\n\n/).map(segment=>{
+ const indent=/^\[indent\]/i.test(segment),body=segment.replace(/^\[indent\]/i,'').replace(/\[\/indent\]\s*$/i,'');
+ return '<p'+(indent?' class="nc-indented" style="text-indent:2em"':'')+'>'+(inline(body)||'&nbsp;')+'</p>';
+ }).join('');
+}
+function makeCard(){
+ const img=validUrl(v('imageUrl'));const theme=v('theme'),width=Number(v('width'))||610;
+ const style='--nc-width:'+width+'px;--nc-image-height:'+Number(v('imageHeight'))+'px;--nc-zoom:'+(Number(v('zoom'))/100)+';--nc-x:'+Number(v('x'))+'%;--nc-y:'+Number(v('y'))+'%;--nc-font-size:'+Number(v('size'))+'px;--nc-align:'+v('align')+';--nc-gap:'+Number(v('gap'))+'px';
+ let h='<div class="nc-card" data-nc-theme="'+theme+'" style="'+style+'">';
+ h+='<div class="nc-top"><span class="nc-kicker">NOCTURNE / ARCHIVE</span><span class="nc-scene">'+escapeHtml(v('scene'))+'</span></div>';
+ h+='<div class="nc-cover'+(img?'':' nc-noimage')+'">';
+ if(img)h+='<img alt="" src="'+escapeHtml(img)+'" style="width:100%;height:100%;object-fit:cover;object-position:'+Number(v('x'))+'% '+Number(v('y'))+'%;transform:scale('+(Number(v('zoom'))/100)+')">';
+ h+='<span class="nc-coverlabel">'+escapeHtml(v('coverlabel'))+'</span></div>';
+ h+='<div class="nc-content"><div class="nc-heading"><div class="nc-eyebrow">'+escapeHtml(v('eyebrow'))+'</div><div class="nc-name">'+escapeHtml(v('name'))+'</div><div class="nc-subtitle">'+escapeHtml(v('subtitle'))+'</div></div>';
+ h+='<div class="nc-story">'+storyHtml()+'</div><div class="nc-end"><div class="nc-note">'+escapeHtml(v('note'))+'</div><div class="nc-sigil">'+escapeHtml(v('signature'))+'</div></div></div></div>';
+ return h;
+}
+function countWords(s){
+ const text=s.replace(/\[(?:\/)?(?:b|i|u|quote|center|indent|color(?:=#[a-f0-9]{3,6})?)\]/gi,'').trim();
+ const wordSegmenter=typeof Intl.Segmenter==='function'?new Intl.Segmenter('th',{granularity:'word'}):null;
+ $('wordCount').textContent=wordSegmenter?Array.from(wordSegmenter.segment(text)).filter(w=>w.isWordLike).length:(text.match(/[\p{L}\p{N}]+/gu)||[]).length;
+ $('charCount').textContent=[...text].length;
+}
+function render(){
+ $('zoomDisplay').textContent=v('zoom')+'%';$('gapDisplay').textContent=v('gap')+'px';$('heightDisplay').textContent=v('imageHeight')+'px';
+ const h=makeCard();$('preview').innerHTML=h;
+ $('result').value='<link rel="stylesheet" href="'+cssUrl+'">'+h.replace(/\r?\n/g,'');
+ countWords(v('story'));
+ if(!loading)scheduleSave();
+}
+function saveDraft(){
+ try{const fields={};keys.forEach(k=>fields[k]=v(k));localStorage.setItem(draftKey,JSON.stringify(fields));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่สามารถบันทึกอัตโนมัติได้'}
+}
+function scheduleSave(){clearTimeout(saveTimer);saveTimer=setTimeout(saveDraft,450)}
+function loadDraft(){
+ try{let fields=JSON.parse(localStorage.getItem(draftKey)||'null');if(fields){loading=true;keys.forEach(k=>{if(typeof fields[k]==='string')$(k).value=fields[k]});loading=false}}catch(e){loading=false}
+}
+keys.forEach(k=>$(k).addEventListener('input',render));
+function wrap(a,b){const el=$('story'),start=el.selectionStart,end=el.selectionEnd,selected=el.value.slice(start,end);el.setRangeText(a+selected+b,start,end,'select');el.focus();el.setSelectionRange(start+a.length,start+a.length+selected.length);render()}
+document.querySelectorAll('[data-tag]').forEach(btn=>btn.onclick=()=>wrap('['+btn.dataset.tag+']','[/'+btn.dataset.tag+']'));
+$('indent').onclick=()=>wrap('[indent]','[/indent]');
+$('quote').onclick=()=>wrap('[quote]','[/quote]');
+$('insertColor').onclick=()=>wrap('[color='+validHex(v('pickedColor'))+']','[/color]');
+$('resetColor').onclick=()=>wrap('[color=#F0EBE4]','[/color]');
+function showPalette(){
+ const p=$('palette');p.replaceChildren();
+ if(!palettes.length){const a=document.createElement('span');a.className='hint';a.textContent='ยังไม่มีสีที่จำไว้';p.append(a);return}
+ palettes.forEach(hex=>{
+ const group=document.createElement('span');group.className='swatch';
+ const pick=document.createElement('button');pick.type='button';pick.className='swatch';pick.title='ใส่สี '+hex;
+ const dot=document.createElement('span');dot.className='swatch-dot';dot.style.background=hex;pick.append(dot,document.createTextNode(hex));
+ pick.onclick=()=>wrap('[color='+hex+']','[/color]');
+ const x=document.createElement('button');x.type='button';x.className='swatch-remove';x.textContent='×';x.title='ลบสี '+hex;x.onclick=()=>{palettes=palettes.filter(v=>v!==hex);storePalette();showPalette()};
+ group.append(pick,x);p.append(group);
+ });
+}
+function storePalette(){try{localStorage.setItem(paletteKey,JSON.stringify(palettes))}catch(e){}}
+function addHex(x){const hex=validHex(x);if(!hex){$('status').textContent='ใส่รหัสสี HEX ให้ถูก เช่น #BBAACC';return}if(!palettes.includes(hex)){if(palettes.length>=20){$('status').textContent='บันทึกสูงสุด 20 สี';return}palettes.push(hex);storePalette()}$('newHex').value=hex;showPalette();$('status').textContent='✓ จำสี '+hex+' แล้ว'}
+$('saveHex').onclick=()=>addHex(v('newHex'));$('savePicked').onclick=()=>addHex(v('pickedColor'));
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(v('result'));$('status').textContent='✓ คัดลอก HTML บรรทัดเดียวแล้ว'}catch(e){$('result').focus();$('result').select();$('status').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
+$('download').onclick=()=>{const blob=new Blob([v('result')],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='nocturne-roleplay.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+$('reset').onclick=()=>{if(!confirm('เริ่มใหม่และล้างข้อความที่บันทึกอัตโนมัติ? (สีโปรดยังอยู่)'))return;localStorage.removeItem(draftKey);location.reload()};
+window.addEventListener('pagehide',()=>{if(saveTimer){clearTimeout(saveTimer);saveDraft()}});
+loadDraft();try{palettes=JSON.parse(localStorage.getItem(paletteKey)||'[]').filter(x=>validHex(x)).slice(0,20)}catch(e){}showPalette();render();
+</script></body></html>
