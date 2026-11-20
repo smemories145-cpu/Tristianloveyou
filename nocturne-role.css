@@ -28,3 +28,23 @@
 .nc-note{font:400 11px/1.7 'Noto Serif Thai',serif;color:var(--nc-mute);white-space:pre-wrap;overflow-wrap:anywhere}
 .nc-sigil{font:600 10px 'DM Sans',Arial,sans-serif;letter-spacing:1.8px;color:var(--nc-accent)}
 @media(max-width:470px){.nc-top{padding:15px 16px}.nc-content{padding:20px 18px}.nc-coverlabel{left:17px;right:17px}.nc-name{font-size:27px}.nc-story{line-height:1.85}}
+/* Nocturne editorial refresh — CSS only; no heavy scripts or animations */
+.nc-card{border-radius:13px;box-shadow:0 10px 30px rgba(0,0,0,.13)}
+.nc-top{padding:18px 27px 16px;background:linear-gradient(180deg,rgba(255,255,255,.022),transparent)}
+.nc-kicker,.nc-scene{font-family:'Outfit','DM Sans',sans-serif;font-weight:700;letter-spacing:1.7px}
+.nc-cover{border-bottom:1px solid var(--nc-line)}
+.nc-coverlabel{bottom:16px;font-family:'Outfit','DM Sans',sans-serif;font-weight:700;letter-spacing:1.6px}
+.nc-content{padding:26px 29px 28px}
+.nc-heading{position:relative;margin-bottom:18px;padding:19px 20px 20px;border:1px solid var(--nc-line);border-left:2px solid var(--nc-accent);border-radius:9px;background:linear-gradient(90deg,rgba(255,255,255,.035),transparent 83%)}
+.nc-heading:after{content:'';position:absolute;top:15px;right:16px;width:35px;height:1px;background:var(--nc-accent);opacity:.65}
+.nc-eyebrow{font-family:'Outfit','DM Sans',sans-serif;font-weight:700;letter-spacing:1.7px}
+.nc-name{margin:9px 0 12px;font-family:'Outfit','DM Sans',sans-serif;font-size:clamp(28px,5vw,45px);font-weight:800;letter-spacing:-.02em;line-height:1.07;color:var(--nc-text);overflow-wrap:anywhere}
+.nc-subtitle{font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;font-weight:500;font-style:italic;line-height:1.35;color:var(--nc-accent)}
+.nc-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:17px}
+.nc-meta-item{display:inline-flex;align-items:center;min-height:24px;padding:4px 9px;border:1px solid var(--nc-line);border-radius:5px;color:var(--nc-mute);background:rgba(255,255,255,.022);font:600 10px/1.4 'Outfit','DM Sans',sans-serif;letter-spacing:1.2px;overflow-wrap:anywhere}
+.nc-meta-item:first-child{border-color:var(--nc-accent);color:var(--nc-accent)}
+.nc-story{font-family:'Noto Serif Thai',serif;font-weight:500;line-height:1.95}
+.nc-story:before{content:'';display:block;width:48px;height:1px;background:var(--nc-accent);margin:0 0 18px;opacity:.75}
+.nc-end{margin-top:23px;padding-top:16px}
+.nc-sigil{font-family:'Outfit','DM Sans',sans-serif;font-weight:700}
+@media(max-width:470px){.nc-content{padding:20px 17px 22px}.nc-heading{padding:16px 15px;margin-bottom:18px}.nc-name{font-size:clamp(27px,8vw,37px)}.nc-subtitle{font-size:18px}.nc-meta{gap:6px}.nc-meta-item{font-size:9px;padding:4px 7px}}
