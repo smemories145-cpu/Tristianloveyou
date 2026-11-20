@@ -82,6 +82,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid #9e8b74;outline-offset
 <div><label for="name">ชื่อตัวละคร</label><input id="name" value="TRISTIAN S. KENNEDY"></div>
 <div><label for="scene">Scene / Chapter</label><input id="scene" value="SCENE 01"></div>
 </div>
+<label for="archiveLabel">ข้อความมุมบนซ้ายของกรอบ</label><input id="archiveLabel" value="NOCTURNE / ARCHIVE" placeholder="ใส่ข้อความที่ต้องการ">
 <label for="eyebrow">ข้อความเล็กเหนือชื่อ</label><input id="eyebrow" value="A PRIVATE STORY">
 <label for="subtitle">คำโปรย</label><input id="subtitle" value="The world moves on. He takes his time.">
 <label for="coverlabel">คำบรรยายใต้ภาพ</label><input id="coverlabel" value="A MOMENT IN TIME">
@@ -119,7 +120,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid #9e8b74;outline-offset
 <script>
 'use strict';
 const $=id=>document.getElementById(id), v=id=>$(id).value;
-const keys=['theme','width','size','align','gap','imageHeight','imageUrl','zoom','x','y','name','scene','eyebrow','subtitle','coverlabel','story','note','signature'];
+const keys=['theme','width','size','align','gap','imageHeight','imageUrl','zoom','x','y','name','scene','archiveLabel','eyebrow','subtitle','coverlabel','story','note','signature'];
 const cssUrl='https://smemories145-cpu.github.io/Tristianloveyou/nocturne-role.css';
 const draftKey='nocturne_rp_generator_draft_1',paletteKey='nocturne_rp_palette_1';
 const escapeHtml=x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
@@ -146,7 +147,7 @@ function makeCard(){
  const img=validUrl(v('imageUrl'));const theme=v('theme'),width=Number(v('width'))||610;
  const style='--nc-width:'+width+'px;--nc-image-height:'+Number(v('imageHeight'))+'px;--nc-zoom:'+(Number(v('zoom'))/100)+';--nc-x:'+Number(v('x'))+'%;--nc-y:'+Number(v('y'))+'%;--nc-font-size:'+Number(v('size'))+'px;--nc-align:'+v('align')+';--nc-gap:'+Number(v('gap'))+'px';
  let h='<div class="nc-card" data-nc-theme="'+theme+'" style="'+style+'">';
- h+='<div class="nc-top"><span class="nc-kicker">NOCTURNE / ARCHIVE</span><span class="nc-scene">'+escapeHtml(v('scene'))+'</span></div>';
+ h+='<div class="nc-top"><span class="nc-kicker">'+escapeHtml(v('archiveLabel'))+'</span><span class="nc-scene">'+escapeHtml(v('scene'))+'</span></div>';
  h+='<div class="nc-cover'+(img?'':' nc-noimage')+'">';
  if(img)h+='<img alt="" src="'+escapeHtml(img)+'" style="width:100%;height:100%;object-fit:cover;object-position:'+Number(v('x'))+'% '+Number(v('y'))+'%;transform:scale('+(Number(v('zoom'))/100)+')">';
  h+='<span class="nc-coverlabel">'+escapeHtml(v('coverlabel'))+'</span></div>';
