@@ -1,7 +1,39 @@
-<!doctype html><html lang=th><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>NOCTURNE Writer</title><meta name=referrer content=no-referrer><meta name=robots content=noindex,nofollow><style>*{box-sizing:border-box}body{margin:0;background:#0e0e0f;color:#eae8e5;font:14px system-ui,Tahoma}button,select,input,textarea{font:inherit;background:#202022;color:inherit;border:1px solid #3b3b3c;border-radius:7px;padding:10px}button{cursor:pointer}button:hover{background:#333}textarea,input,select{width:100%}textarea{resize:vertical;line-height:1.9}header{padding:18px 25px;border-bottom:1px solid #333;display:flex;justify-content:space-between;gap:12px;align-items:center}strong.logo{font:26px Georgia;letter-spacing:3px}main{display:grid;grid-template-columns:210px minmax(0,1fr) 270px;min-height:90vh}aside{background:#151516;padding:18px;border-right:1px solid #333}aside:last-child{border-right:0;border-left:1px solid #333}article{padding:26px min(4vw,50px)}h1{font:32px Georgia}h2{font-size:13px;letter-spacing:1px}label{display:block;margin:12px 0 5px;color:#aaa;font-size:12px}.item{display:block;width:100%;text-align:left;margin:8px 0}.active{background:#4a4846}.editor{min-height:440px;border:0;background:transparent;font:17px/2.1 Georgia,'Noto Serif Thai',serif}.card{padding:16px;background:#19191b;border:1px solid #3b3b3b;border-radius:12px;margin-top:25px}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}.primary{background:#d8d5cf;color:#121212;border-color:#d8d5cf}.hint{color:#aaa;font-size:12px;line-height:1.8}.memory{border:1px solid #333;padding:10px;margin:8px 0;white-space:pre-wrap;font-size:12px}#login{position:fixed;inset:0;background:#0d0d0e;display:grid;place-items:center;z-index:9}#login>div{background:#1c1c1d;border:1px solid #3c3c3d;padding:35px;border-radius:14px;width:min(380px,90vw)}#notice{white-space:pre-wrap;line-height:1.9;max-height:500px;overflow:auto}.hidden{display:none!important}@media(max-width:900px){main{grid-template-columns:1fr}aside{border:0;border-bottom:1px solid #333}article{padding:20px}}</style>
+<!doctype html><html lang=th><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>NOCTURNE Writer</title><meta name=referrer content=no-referrer><meta name=robots content=noindex,nofollow><style>*{box-sizing:border-box}body{margin:0;background:#0e0e0f;color:#eae8e5;font:14px system-ui,Tahoma}button,select,input,textarea{font:inherit;background:#202022;color:inherit;border:1px solid #3b3b3c;border-radius:7px;padding:10px}button{cursor:pointer}button:hover{background:#333}textarea,input,select{width:100%}textarea{resize:vertical;line-height:1.9}header{padding:18px 25px;border-bottom:1px solid #333;display:flex;justify-content:space-between;gap:12px;align-items:center}strong.logo{font:26px Georgia;letter-spacing:3px}main{display:grid;grid-template-columns:210px minmax(0,1fr) 270px;min-height:90vh}aside{background:#151516;padding:18px;border-right:1px solid #333}aside:last-child{border-right:0;border-left:1px solid #333}article{padding:26px min(4vw,50px)}h1{font:32px Georgia}h2{font-size:13px;letter-spacing:1px}label{display:block;margin:12px 0 5px;color:#aaa;font-size:12px}.item{display:block;width:100%;text-align:left;margin:8px 0}.active{background:#4a4846}.editor{min-height:440px;border:0;background:transparent;font:17px/2.1 Georgia,'Noto Serif Thai',serif}.card{padding:16px;background:#19191b;border:1px solid #3b3b3b;border-radius:12px;margin-top:25px}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}.primary{background:#d8d5cf;color:#121212;border-color:#d8d5cf}.hint{color:#aaa;font-size:12px;line-height:1.8}.memory{border:1px solid #333;padding:10px;margin:8px 0;white-space:pre-wrap;font-size:12px}#login{position:fixed;inset:0;background:#0d0d0e;display:grid;place-items:center;z-index:9}#login>div{background:#1c1c1d;border:1px solid #3c3c3d;padding:35px;border-radius:14px;width:min(380px,90vw)}#notice{white-space:pre-wrap;line-height:1.9;max-height:500px;overflow:auto}.hidden{display:none!important}@media(max-width:900px){main{grid-template-columns:1fr}aside{border:0;border-bottom:1px solid #333}article{padding:20px}}
+.chat-card{padding:0;overflow:hidden;border:1px solid #353538;background:#171719}
+.chat-head{padding:17px 19px;border-bottom:1px solid #303034;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ghost-button{background:transparent;border:1px solid #3a3a3d;color:#bebbb6;font-size:12px;padding:7px 10px}
+.chat-messages{height:350px;min-height:240px;overflow-y:auto;padding:20px 16px;display:flex;flex-direction:column;gap:15px;scroll-behavior:smooth;background:#111113}
+.chat-welcome{margin:auto;text-align:center;color:#e0ddd7;line-height:2}
+.chat-line{display:flex;flex-direction:column;gap:6px;max-width:90%;min-width:0}
+.chat-line.user{align-self:flex-end;align-items:flex-end}
+.chat-line.assistant{align-self:flex-start;align-items:flex-start}
+.chat-label{font-size:11px;color:#97938e;letter-spacing:.2px}
+.chat-bubble{white-space:pre-wrap;overflow-wrap:anywhere;border-radius:13px;padding:13px 15px;line-height:1.9;max-width:100%;background:#252529;border:1px solid #39393e}
+.chat-line.user .chat-bubble{background:#353533;border-color:#4e4e4a;color:#f2eee9}
+.chat-line.assistant .chat-bubble{background:#202023;color:#e8e4df}
+.chat-insert{font-size:11px;padding:7px 10px;margin-top:2px;background:#252629}
+.chat-pending .chat-bubble{font-style:italic;color:#bbb8b2}
+.chat-compose{padding:15px 15px 9px;display:flex;gap:9px;align-items:flex-end;border-top:1px solid #303033}
+.chat-compose textarea{background:#242426;min-height:66px;max-height:170px;border:1px solid #454549;border-radius:11px;line-height:1.6;padding:12px}
+.chat-send{min-width:85px;flex:0 0 auto;min-height:46px}
+.chat-footer{padding:0 15px 15px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.chat-options{display:flex;flex-wrap:nowrap;gap:7px}
+.chat-options select{font-size:12px;width:auto;max-width:160px;padding:7px}
+.chat-error{background:#2a2022;border-top:1px solid #764648;padding:12px 15px;color:#f3c7c6;font-size:12px;line-height:1.7;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
+.chat-error button{color:#f3c7c6;border-color:#765053}
+@media(max-width:650px){.chat-messages{height:380px}.chat-line{max-width:96%}.chat-compose{padding:10px}.chat-head{padding:12px}.chat-options select{max-width:125px}.chat-footer{padding:0 10px 12px}}
+</style>
 <div id=login><div><strong class=logo>✦ NOCTURNE</strong><p>Private Writing Studio · Midnight Black</p><input id=password type=password placeholder="รหัสผ่าน"><p><button id=enter class=primary>เข้าสู่ระบบ</button></p><p id=loginError class=hint></p></div></div>
 <header><strong class=logo>✦ NOCTURNE</strong><span id=status class=hint>Private Writing Studio</span><button id=logout>ออกจากระบบ</button></header><main><aside><h2>STORIES</h2><button id=newStory>＋ เรื่องใหม่</button><div id=storyList></div><h2>CHAPTERS</h2><button id=newChapter>＋ เพิ่มบท</button><div id=chapterList></div><button id=backup>⇩ สำรอง JSON</button><p><button id=restore>↑ นำเข้า JSON</button><input id=restoreFile type=file accept=.json class=hidden></p></aside>
-<article><input id=title placeholder="ชื่อเรื่อง" style="font:30px Georgia;background:transparent;border:0"><input id=chapterTitle placeholder="ชื่อบท" style="background:transparent;border:0"><textarea id=editor class=editor placeholder="เริ่มเขียนนิยายที่นี่..."></textarea><p id=saveStatus class=hint>บันทึกอัตโนมัติ</p><div class=card><h2>✧ AI WRITING COMPANION</h2><textarea id=prompt placeholder="คำสั่งให้ AI ช่วยเขียนต่อ หรือเกลาฉาก" rows=3></textarea><div class=row><select id=mode><option value=continue>เขียนต่อ</option><option value=rewrite>เกลาช่วงท้าย</option><option value=ideas>เสนอพล็อต</option></select><select id=size><option value=900>สั้น</option><option value=1700 selected>ปานกลาง</option><option value=2600>ยาว</option></select><button id=generate class=primary>✧ ให้ AI เขียน</button></div><div id=resultBox class=hidden><h2>ข้อความจาก AI</h2><div id=notice></div><p><button id=accept class=primary>รับข้อความเข้าต้นฉบับ</button><button id=dismiss>ปิด</button></p></div></div></article>
+<article><input id=title placeholder="ชื่อเรื่อง" style="font:30px Georgia;background:transparent;border:0"><input id=chapterTitle placeholder="ชื่อบท" style="background:transparent;border:0"><textarea id=editor class=editor placeholder="เริ่มเขียนนิยายที่นี่..."></textarea><p id=saveStatus class=hint>บันทึกอัตโนมัติ</p>
+<div class="card chat-card">
+ <div class="chat-head"><div><h2 style="margin:0 0 5px">✧ AI WRITING COMPANION</h2><div class="hint">แชตกับ AI เพื่อช่วยคิดพล็อต แต่งต่อ หรือแก้ฉาก</div></div><button id="clearChat" class="ghost-button" type="button">ล้างแชต</button></div>
+ <div id="chatMessages" class="chat-messages" role="log" aria-live="polite" aria-label="บทสนทนากับ AI"><div class="chat-welcome">✧ เริ่มบทสนทนาได้เลย<br><span class="hint">ตัวอย่าง: ช่วยเขียนฉากถัดไปให้หน่อย โดยคงบุคลิกของตัวละครเดิม</span></div></div>
+ <div id="chatError" class="chat-error hidden" role="alert"><div id="chatErrorMessage"></div><button id="chatRetry" class="ghost-button" type="button">↻ ลองส่งอีกครั้ง</button></div>
+ <div class="chat-compose"><textarea id="prompt" rows="2" aria-label="ข้อความถึง AI" placeholder="พิมพ์ข้อความถึง AI ที่นี่..."></textarea><button id="generate" class="primary chat-send" type="button" aria-label="ส่งข้อความ">ส่ง ↗</button></div>
+ <div class="chat-footer"><div class="row chat-options"><select id="mode" aria-label="โหมดแชต"><option value="chat">คุยกับ AI</option><option value="continue">แต่งนิยายต่อ</option><option value="rewrite">เกลาข้อความ</option><option value="ideas">คิดพล็อต</option></select><select id="size" aria-label="ความยาวคำตอบ"><option value="900">สั้น</option><option value="1700" selected>ปานกลาง</option><option value="2600">ยาว</option></select></div><span class="hint">Enter เพื่อส่ง · Shift+Enter ขึ้นบรรทัดใหม่</span></div>
+ <div id="resultBox" class="hidden"><div id="notice"></div><button id="accept">รับเข้าต้นฉบับ</button><button id="dismiss">ปิด</button></div>
+</div></article>
 <aside><h2>AI MODEL</h2><label>ผู้ให้บริการ</label><select id=provider><option value=horde>AI Horde · Anonymous Free</option><option value=kyrune>Kyrune Mini · Free key</option><option value=meganova>MegaNova Euryale · Free quota</option></select><label>โมเดล</label><select id=model></select><button id=refreshModels>โหลดรายชื่อโมเดล</button><label>API Key (ไม่บันทึกลงฐานข้อมูล)</label><input id=apiKey type=password placeholder="AI Horde ไม่ต้องใช้คีย์"><p class=hint>การสร้างข้อความขึ้นกับนโยบายและโควตาของผู้ให้บริการ AI</p><h2>STORY BIBLE</h2><label>แนวเรื่องและเรื่องย่อ</label><textarea id=synopsis rows=4></textarea><label>ตัวละครและความสัมพันธ์</label><textarea id=characters rows=6></textarea><label>CANON ที่ห้ามขัดแย้ง</label><textarea id=canon rows=6></textarea><label>ไทม์ไลน์</label><textarea id=timeline rows=5></textarea><h2>MEMORIES</h2><textarea id=memoryText rows=3 placeholder="ข้อเท็จจริงที่ต้องจำ"></textarea><button id=addMemory>＋ ปักหมุด</button><div id=memoryList></div></aside></main>
 <script>
 const $=x=>document.getElementById(x);const fields=['synopsis','characters','canon','timeline'];let pw=sessionStorage.pw||'',items=[],story=null,idx=0,timer,proposal='',usedMode='';
@@ -18,4 +50,103 @@ $('enter').onclick=async()=>{pw=$('password').value;try{await api({action:'login
 $('generate').onclick=async()=>{if(!story)return error('สร้างนิยายก่อน');$('generate').disabled=true;try{await save();const j=await api({action:'generate',provider:$('provider').value,model:$('model').value,key:$('apiKey').value,story,idx,mode:$('mode').value,prompt:$('prompt').value,max:Number($('size').value)});proposal=j.text;usedMode=$('mode').value;$('notice').textContent=proposal;$('resultBox').classList.remove('hidden');$('accept').disabled=usedMode==='ideas'}catch(e){error(e)}finally{$('generate').disabled=false}};$('accept').onclick=()=>{if(!proposal)return;const c=story.chapters[idx];if(usedMode==='rewrite'){const pos=c.content.lastIndexOf('\n\n');c.content=c.content.slice(0,pos<0?0:pos+2)+proposal}else c.content=c.content.trimEnd()+'\n\n'+proposal;proposal='';$('resultBox').classList.add('hidden');$('editor').value=c.content;sync();save().catch(error)};$('dismiss').onclick=()=>$('resultBox').classList.add('hidden');
 $('backup').onclick=()=>{if(!story)return;const a=document.createElement('a');const u=URL.createObjectURL(new Blob([JSON.stringify(story,null,2)],{type:'application/json'}));a.href=u;a.download='nocturne-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)};$('restore').onclick=()=>$('restoreFile').click();$('restoreFile').onchange=async e=>{try{const s=JSON.parse(await e.target.files[0].text());if(!Array.isArray(s.chapters))throw Error('ไฟล์ไม่ถูกต้อง');s.id=crypto.randomUUID();await api({action:'save',story:s});await list();await open(s.id)}catch(e){error(e)}};
 if(pw)api({action:'login'}).then(()=>{$('login').classList.add('hidden');list();models()}).catch(()=>{sessionStorage.removeItem('pw');pw=''});
+
+/* NOCTURNE conversational chat: separate persistent history for each chapter */
+let nwChatBusy=false;
+let nwChatFailure=false;
+const nwPrevFill=fill;
+fill=function(){nwPrevFill();nwRenderChat()};
+function nwCurrentChapter(){return story&&story.chapters&&story.chapters[idx]}
+function nwHistory(){const ch=nwCurrentChapter();if(!ch)return[];if(!Array.isArray(ch.chatMessages))ch.chatMessages=[];return ch.chatMessages}
+function nwScrollChat(){const box=$('chatMessages');box.scrollTop=box.scrollHeight}
+function nwAddChatLine(role,content,number){
+ const line=document.createElement('div');
+ line.className='chat-line '+role;
+ const label=document.createElement('div');label.className='chat-label';
+ label.textContent=role==='user'?'คุณ':'NOCTURNE AI';
+ const bubble=document.createElement('div');bubble.className='chat-bubble';bubble.textContent=content;
+ line.append(label,bubble);
+ if(role==='assistant'){
+  const insert=document.createElement('button');
+  insert.className='chat-insert';insert.type='button';insert.textContent='＋ นำข้อความนี้ใส่ต้นฉบับ';
+  const currentId=story&&story.id;const currentIndex=idx;
+  insert.onclick=async()=>{
+   if(!story||story.id!==currentId||idx!==currentIndex){alert('กลับไปยังบทที่มีข้อความนี้ก่อน');return}
+   const chapter=nwCurrentChapter();if(!chapter)return;
+   chapter.content=(chapter.content||'').trimEnd()+((chapter.content||'').trim()?'\n\n':'')+content;
+   $('editor').value=chapter.content;sync();
+   try{await save();$('saveStatus').textContent='เพิ่มข้อความลงต้นฉบับแล้ว'}catch(e){nwShowChatError(e.message||String(e))}
+  };
+  line.append(insert);
+ }
+ $('chatMessages').append(line);return line;
+}
+function nwRenderChat(){
+ const box=$('chatMessages');box.replaceChildren();
+ const history=nwHistory();
+ if(!history.length){
+  const welcome=document.createElement('div');welcome.className='chat-welcome';
+  welcome.textContent='✧ เริ่มคุยกับ AI ได้เลย';
+  const sample=document.createElement('div');sample.className='hint';
+  sample.textContent='พิมพ์คำสั่งหรือถามเรื่องพล็อต ตัวละคร และฉากที่กำลังเขียน';
+  welcome.append(sample);box.append(welcome);
+ }else history.forEach((m,i)=>{if(m&&(m.role==='user'||m.role==='assistant')&&typeof m.content==='string')nwAddChatLine(m.role,m.content,i)});
+ if(nwChatBusy){const line=nwAddChatLine('assistant','กำลังคิดคำตอบ...');line.classList.add('chat-pending')}
+ nwScrollChat();
+}
+function nwShowChatError(message){
+ $('chatErrorMessage').textContent=message||'AI ตอบกลับไม่สำเร็จ';
+ $('chatError').classList.remove('hidden');
+}
+function nwHideChatError(){$('chatError').classList.add('hidden')}
+function nwSetBusy(value){
+ nwChatBusy=value;
+ $('generate').disabled=value;
+ $('generate').textContent=value?'กำลังตอบ…':'ส่ง ↗';
+ $('prompt').disabled=value;
+ $('chatRetry').disabled=value;
+}
+async function nwSendChat(retry=false){
+ if(nwChatBusy)return;
+ if(!story){nwShowChatError('กรุณาสร้างนิยายก่อนเริ่มแชต');return}
+ const chapter=nwCurrentChapter();if(!chapter){nwShowChatError('กรุณาเลือกบทก่อน');return}
+ const history=nwHistory();
+ const message=$('prompt').value.trim();
+ if(!retry&&!message)return;
+ if(retry&&(!history.length||history[history.length-1].role!=='user'))return;
+ nwHideChatError();nwChatFailure=false;
+ if(!retry){
+  history.push({role:'user',content:message});
+  $('prompt').value='';
+ }
+ const storyId=story.id,chapterIndex=idx;
+ nwSetBusy(true);nwRenderChat();
+ try{
+  await save();
+  const res=await api({action:'chat',provider:$('provider').value,model:$('model').value,key:$('apiKey').value.trim(),story,idx,mode:$('mode').value,messages:history.slice(-18),max:Number($('size').value)});
+  if(story.id!==storyId||idx!==chapterIndex)throw Error('เปลี่ยนบทขณะ AI กำลังตอบ กรุณากลับไปบทเดิม');
+  if(typeof res.text!=='string'||!res.text.trim())throw Error('AI ไม่ส่งข้อความกลับมา');
+  history.push({role:'assistant',content:res.text.trim()});
+  await save();
+ }catch(e){
+  nwChatFailure=true;
+  nwShowChatError((e&&e.message)||String(e));
+ }finally{nwSetBusy(false);nwRenderChat()}
+}
+$('generate').onclick=()=>nwSendChat(false);
+$('chatRetry').onclick=()=>nwSendChat(true);
+$('prompt').addEventListener('keydown',e=>{
+ if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){
+  e.preventDefault();nwSendChat(false);
+ }
+});
+$('clearChat').onclick=async()=>{
+ if(!story)return;
+ if(!confirm('ต้องการลบประวัติแชตของบทนี้หรือไม่? การลบนี้ไม่กระทบต้นฉบับ'))return;
+ nwCurrentChapter().chatMessages=[];
+ nwHideChatError();
+ nwRenderChat();
+ try{await save()}catch(e){nwShowChatError('บันทึกการลบประวัติแชตไม่สำเร็จ: '+e.message)}
+};
+$('provider').addEventListener('change',()=>{nwHideChatError()});
 </script></html>
