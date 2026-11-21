@@ -26,6 +26,21 @@ button:hover{background:#70534d}button.primary{background:#dfb8a4;color:#281c1b;
 @media(min-width:851px){.preview-panel{position:sticky;top:12px}.editor{max-height:calc(100vh - 65px);overflow:auto;scrollbar-width:thin}}
 @media(max-width:850px){main{grid-template-columns:1fr}}
 @media(max-width:430px){main{padding:8px}.panel{padding:11px}.two{grid-template-columns:1fr}}
+
+details.fieldgroup{border:1px solid #655148;border-radius:9px;background:#302728;margin:10px 0;overflow:hidden}
+details.fieldgroup>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:9px;cursor:pointer;padding:12px 13px;font-weight:600;color:#e9d1c2;font-size:12px}
+details.fieldgroup>summary::-webkit-details-marker{display:none}
+details.fieldgroup>summary:after{content:"⌄";color:#e2b9a1;font:18px Georgia;transition:transform .2s}
+details.fieldgroup[open]>summary:after{transform:rotate(180deg)}
+details.fieldgroup>div{border-top:1px solid #57443f;padding:6px 13px 14px}
+.slider-row{display:grid;grid-template-columns:1fr 57px;gap:12px;align-items:center}
+.slider-row output{text-align:right;color:#e6c4ad;font:600 12px 'DM Sans',sans-serif}
+.slider-row input{margin:0}
+.minihelp{font-size:10px;color:#baa29a;margin:3px 0 8px}
+.presets{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.presets button{padding:7px 9px;font-size:10px}
+.preview-note{font-size:11px;color:#c4aca2;margin:10px 0 0}
+.editor{scrollbar-color:#725b52 #2b2425}
 </style>
 <style>
 .hgcard,.hgcard *{box-sizing:border-box}
@@ -50,47 +65,107 @@ button:hover{background:#70534d}button.primary{background:#dfb8a4;color:#281c1b;
 .hg11 .description{margin:15px 5px;color:#685e59}
 .hg11 .foot{padding-top:11px;border-top:1px solid #dcc9bb;color:#967a75}
 @media(max-width:490px){.hg11 .inner{padding:12px}.hg11 .heading:before,.hg11 .heading:after{display:none}.hgcard .roomname{font-size:clamp(43px,12vw,64px)}}
+.hg11{--outer-shadow-y:14px;--outer-shadow-blur:35px;--outer-shadow-alpha:.19;--light-x:80%;--light-y:5%;--glow-opacity:.24;--hero-softness:.15;--image-brightness:1;--image-saturation:1;--photo-shadow-alpha:.12}
+.hg11{box-shadow:0 var(--outer-shadow-y) var(--outer-shadow-blur) rgb(117 99 88 / var(--outer-shadow-alpha))}
+.hg11 .hero{position:relative;isolation:isolate;height:var(--floral-height,145px);background-position:var(--image-x,50%) var(--image-y,50%);filter:brightness(var(--image-brightness,1)) saturate(var(--image-saturation,1));transition:width .2s ease,height .2s ease;background-clip:padding-box}
+.hg11 .hero:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(252,249,243,var(--hero-softness,.15)),rgba(252,249,243,calc(var(--hero-softness,.15) * .45)))}
+.hg11 .inner{position:relative;isolation:isolate;background:radial-gradient(ellipse at var(--light-x,80%) var(--light-y,5%),rgb(255 226 189 / var(--glow-opacity,.24)),transparent 62%),#fcf9f3}
+.hg11 .heading{position:relative;z-index:1}
+.hg11 .body{position:relative;z-index:1}
+.hg11 .roomphoto{box-shadow:0 6px 18px rgb(117 79 72 / var(--photo-shadow-alpha,.12))}
+@media(prefers-reduced-motion:reduce){.hg11 .hero{transition:none!important}}
+
 </style>
 </head><body>
-<header><div class="wrap"><div><h1>✿ Rose Gold Conservatory</h1><p>แบบ 11 ต้นฉบับ · แยกฟอร์มใช้งาน · ปรับความกว้างรูปดอกไม้ด้านบนได้</p></div><a href="home-location-gallery-vol3.html">← กลับแกลเลอรี Vol. 3</a></div></header>
+<header><div class="wrap"><div><h1>✿ Rose Gold Conservatory</h1><p>แบบ 11 ต้นฉบับ · แยกฟอร์มใช้งาน · ปรับขนาดภาพ แสง เงา และบรรยากาศได้แบบเรียลไทม์</p></div><a href="home-location-gallery-vol3.html">← กลับแกลเลอรี Vol. 3</a></div></header>
 <main>
-<section class="panel editor"><h2>01 / EDIT YOUR HEADER</h2><p class="helper">คงหน้าตา Rose Gold แบบเดิมทุกส่วน ยกเว้นความกว้างรูปด้านบนที่คุณเลือกปรับเองได้</p>
-<div class="info">🌷 ตั้งต้นรูปบนที่ 78% ของกรอบ แต่สามารถเลื่อนกลับเป็น 100% เพื่อเทียบกับแบบเดิมได้</div>
-<label for="floralWidth">ความกว้างภาพดอกไม้ด้านบน <strong id="widthText">78%</strong></label><input id="floralWidth" type="range" min="35" max="100" step="1" value="78">
-<div class="controls"><button type="button" id="originalWidth">ดูขนาดเดิม 100%</button><button type="button" id="suggestedWidth">กลับขนาดแนะนำ 78%</button></div>
+<section class="panel editor"><h2>01 / EDIT YOUR HEADER</h2><p class="helper">แบบ 11 ต้นฉบับ แบ่งหมวดให้กดเปิด–ปิดได้ ปรับแล้วเห็นผลที่พรีวิวทันที</p>
+<details class="fieldgroup" open><summary>✿ ขนาดและตำแหน่งภาพด้านบน</summary><div>
+<label for="floralWidth">ความกว้างรูปดอกไม้</label><div class="slider-row"><input id="floralWidth" type="range" min="25" max="100" step="1" value="78"><output id="floralWidthText">78%</output></div>
+<label for="floralHeight">ความสูงรูปดอกไม้</label><div class="slider-row"><input id="floralHeight" type="range" min="35" max="340" step="1" value="145"><output id="floralHeightText">145px</output></div>
+<label for="imageX">เลื่อนตำแหน่งภาพแนวนอน</label><div class="slider-row"><input id="imageX" type="range" min="0" max="100" value="50"><output id="imageXText">50%</output></div>
+<label for="imageY">เลื่อนตำแหน่งภาพแนวตั้ง</label><div class="slider-row"><input id="imageY" type="range" min="0" max="100" value="50"><output id="imageYText">50%</output></div>
+<p class="minihelp">เมื่อเปลี่ยนความสูง รูปจะครอปตามกรอบ เลื่อน X/Y เพื่อเลือกส่วนที่อยากให้เห็น</p>
+<div class="presets"><button type="button" data-preset="original">ภาพเต็มเดิม</button><button type="button" data-preset="slim">แถบภาพบาง</button><button type="button" data-preset="square">รูปเด่นตรงกลาง</button><button type="button" data-preset="balanced">ขนาดละมุน</button></div>
+<label>URL รูปดอกไม้ด้านบน<input id="bgImage" value="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1200&q=85"></label>
+</div></details>
+<details class="fieldgroup"><summary>☀️ แสงและโทนภาพ</summary><div>
+<label for="glowOpacity">ความเข้มของแสงทอง</label><div class="slider-row"><input id="glowOpacity" type="range" min="0" max="80" step="1" value="24"><output id="glowOpacityText">24%</output></div>
+<label for="lightX">ทิศทางแสงแนวนอน</label><div class="slider-row"><input id="lightX" type="range" min="0" max="100" value="80"><output id="lightXText">80%</output></div>
+<label for="lightY">ทิศทางแสงแนวตั้ง</label><div class="slider-row"><input id="lightY" type="range" min="0" max="100" value="5"><output id="lightYText">5%</output></div>
+<label for="heroSoftness">ม่านแสงครีมบนรูปดอกไม้</label><div class="slider-row"><input id="heroSoftness" type="range" min="0" max="85" value="15"><output id="heroSoftnessText">15%</output></div>
+<label for="imageBrightness">ความสว่างของภาพ</label><div class="slider-row"><input id="imageBrightness" type="range" min="55" max="145" value="100"><output id="imageBrightnessText">100%</output></div>
+<label for="imageSaturation">ความสดของสีภาพ</label><div class="slider-row"><input id="imageSaturation" type="range" min="0" max="170" value="100"><output id="imageSaturationText">100%</output></div>
+<div class="presets"><button type="button" data-light="natural">แสงธรรมชาติ</button><button type="button" data-light="golden">Golden Hour</button><button type="button" data-light="soft">นุ่มละมุน</button></div>
+</div></details>
+<details class="fieldgroup"><summary>◈ เงาและมิติของกรอบ</summary><div>
+<label for="shadowDepth">ระยะเงากรอบ</label><div class="slider-row"><input id="shadowDepth" type="range" min="0" max="35" value="14"><output id="shadowDepthText">14px</output></div>
+<label for="shadowBlur">ความฟุ้งของเงากรอบ</label><div class="slider-row"><input id="shadowBlur" type="range" min="0" max="75" value="35"><output id="shadowBlurText">35px</output></div>
+<label for="shadowOpacity">ความเข้มเงากรอบ</label><div class="slider-row"><input id="shadowOpacity" type="range" min="0" max="65" value="19"><output id="shadowOpacityText">19%</output></div>
+<label for="photoShadow">เงาใต้รูปห้อง</label><div class="slider-row"><input id="photoShadow" type="range" min="0" max="65" value="12"><output id="photoShadowText">12%</output></div>
+<div class="presets"><button type="button" data-shadow="subtle">เงาบาง</button><button type="button" data-shadow="luxury">เงาลึกหรู</button><button type="button" data-shadow="none">ไม่มีเงา</button></div>
+</div></details>
+<details class="fieldgroup" open><summary>✧ ข้อความและข้อมูลบ้าน</summary><div>
 <div class="two"><label>ชื่อบ้าน<input id="house" value="THE ROSEWOOD HOUSE"></label><label>ชื่อห้อง (ฟอนต์ตัวเขียน)<input id="room" value="The Bedroom"></label></div>
 <div class="two"><label>ชื่อห้องภาษาไทย<input id="thai" value="ห้องนอน · พื้นที่ส่วนตัว"></label><label>เลขห้อง<input id="number" value="01"></label></div>
-<label>URL รูปดอกไม้ด้านบน<input id="bgImage" value="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1200&q=85"></label>
-<label>URL รูปห้องด้านล่าง<input id="mainImage" value="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=85"></label>
 <label>คำบรรยาย<textarea id="description">ห้องนอนที่แสงแดดอุ่น ๆ สาดผ่านม่านบาง เฟอร์นิเจอร์สีไม้เข้มตัดกับผ้าปูเตียงสีครีม และดอกไม้สดในแจกันเล็ก ๆ ทำให้ทุกเช้าเริ่มต้นอย่างสงบ</textarea></label>
 <label>ตำแหน่งในบ้าน<input id="floor" value="SECOND FLOOR"></label>
-<div class="controls"><button type="button" id="restore">คืนค่าเริ่มต้น</button></div><p id="feedback" aria-live="polite">บันทึกอัตโนมัติในเบราว์เซอร์นี้</p>
+</div></details>
+<details class="fieldgroup"><summary>▣ รูปห้องด้านล่าง</summary><div>
+<label>URL รูปห้องด้านล่าง<input id="mainImage" value="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=85"></label><p class="minihelp">รูปห้องส่วนล่างยังคงขนาดและโครงสร้างเดิมของแบบ 11</p>
+</div></details>
+<div class="controls"><button type="button" id="restore">คืนค่าเริ่มต้นทุกหมวด</button></div><p id="feedback" aria-live="polite">บันทึกอัตโนมัติในเบราว์เซอร์นี้</p>
 </section>
 <section class="panel preview-panel"><div class="copybar"><h2>02 / LIVE PREVIEW</h2><div class="controls"><button type="button" class="primary" id="copy">คัดลอก HTML</button><button type="button" id="download">โหลดโค้ด</button></div></div><div id="preview"></div><label>โค้ดสำหรับคัดลอก (พร้อม CSS)</label><textarea id="code" readonly></textarea></section>
 </main>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const fields=['floralWidth','house','room','thai','number','bgImage','mainImage','description','floor'];
+const fields=['floralWidth','floralHeight','imageX','imageY','glowOpacity','lightX','lightY','heroSoftness','imageBrightness','imageSaturation','shadowDepth','shadowBlur','shadowOpacity','photoShadow','house','room','thai','number','bgImage','mainImage','description','floor'];
 const key='rose_gold_header_generator_draft_v1';
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const url=s=>/^https:\/\/[^\s"'<>]+$/i.test(String(s).trim())?String(s).trim():'';
 const defaults=Object.fromEntries(fields.map(id=>[id,$(id).value]));
 const font='<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+Thai:wght@400;500&display=swap" rel="stylesheet">';
-const cardCSS="\n.hgcard,.hgcard *{box-sizing:border-box}\n.hgcard{max-width:610px;width:100%;margin:0 auto;overflow:hidden;position:relative;font-family:'Cormorant Garamond',Georgia,serif}\n.hgcard .overline{text-transform:uppercase;font:600 10px/1.5 'DM Sans',Arial,sans-serif;letter-spacing:2.7px}\n.hgcard .housename{font:500 19px/1.25 'Cormorant Garamond',Georgia,serif;letter-spacing:3px;text-align:center;text-transform:uppercase}\n.hgcard .roomname{font:400 clamp(45px,10vw,72px)/1.17 'Great Vibes','Brush Script MT',cursive;text-align:center;overflow-wrap:anywhere}\n.hgcard .description{font:13px/1.95 'Noto Serif Thai',serif;overflow-wrap:anywhere}\n.hgcard .thainame{font:13px/1.8 'Noto Serif Thai',serif}\n.hgcard .frame-img{width:100%;display:block;object-fit:cover}\n.hgcard .foot{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font:600 10px/1.7 'DM Sans',sans-serif;letter-spacing:1.4px}\n.hg11{background:#eee4d9;color:#564d4b;border:1px solid #d5bdaf;border-radius:17px;box-shadow:0 14px 35px #75635830;padding:13px}\n.hg11 .inner{background:#fcf9f3;border:1px solid #e2cbbf;border-radius:11px;padding:14px 19px 20px}\n.hg11 .hero{height:145px;background-position:center;background-size:cover;border-radius:5px;width:var(--floral-width,78%);margin-left:auto;margin-right:auto}\n.hg11 .heading{padding:16px 8px 13px;text-align:center;position:relative}\n.hg11 .heading:before,.hg11 .heading:after{content:\"✦\";position:absolute;top:55px;color:#c2a281;font:12px Georgia,serif}\n.hg11 .heading:before{left:4px}.hg11 .heading:after{right:4px}\n.hg11 .overline{color:#a78381}.hg11 .housename{color:#8f756c;margin:10px 0 3px}\n.hg11 .roomname{color:#9c686e;text-shadow:0 3px 15px #d8a4a63b}\n.hg11 .thainame{color:#997d7b}.hg11 .body{background:#f8f2eb;border:1px solid #e8d7c9;border-radius:6px;padding:13px}\n.hg11 .roomphoto{height:177px;border-radius:3px}\n.hg11 .description{margin:15px 5px;color:#685e59}\n.hg11 .foot{padding-top:11px;border-top:1px solid #dcc9bb;color:#967a75}\n@media(max-width:490px){.hg11 .inner{padding:12px}.hg11 .heading:before,.hg11 .heading:after{display:none}.hgcard .roomname{font-size:clamp(43px,12vw,64px)}}\n";
+const cardCSS="\n.hgcard,.hgcard *{box-sizing:border-box}\n.hgcard{max-width:610px;width:100%;margin:0 auto;overflow:hidden;position:relative;font-family:'Cormorant Garamond',Georgia,serif}\n.hgcard .overline{text-transform:uppercase;font:600 10px/1.5 'DM Sans',Arial,sans-serif;letter-spacing:2.7px}\n.hgcard .housename{font:500 19px/1.25 'Cormorant Garamond',Georgia,serif;letter-spacing:3px;text-align:center;text-transform:uppercase}\n.hgcard .roomname{font:400 clamp(45px,10vw,72px)/1.17 'Great Vibes','Brush Script MT',cursive;text-align:center;overflow-wrap:anywhere}\n.hgcard .description{font:13px/1.95 'Noto Serif Thai',serif;overflow-wrap:anywhere}\n.hgcard .thainame{font:13px/1.8 'Noto Serif Thai',serif}\n.hgcard .frame-img{width:100%;display:block;object-fit:cover}\n.hgcard .foot{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font:600 10px/1.7 'DM Sans',sans-serif;letter-spacing:1.4px}\n.hg11{background:#eee4d9;color:#564d4b;border:1px solid #d5bdaf;border-radius:17px;box-shadow:0 14px 35px #75635830;padding:13px}\n.hg11 .inner{background:#fcf9f3;border:1px solid #e2cbbf;border-radius:11px;padding:14px 19px 20px}\n.hg11 .hero{height:145px;background-position:center;background-size:cover;border-radius:5px;width:var(--floral-width,78%);margin-left:auto;margin-right:auto}\n.hg11 .heading{padding:16px 8px 13px;text-align:center;position:relative}\n.hg11 .heading:before,.hg11 .heading:after{content:\"✦\";position:absolute;top:55px;color:#c2a281;font:12px Georgia,serif}\n.hg11 .heading:before{left:4px}.hg11 .heading:after{right:4px}\n.hg11 .overline{color:#a78381}.hg11 .housename{color:#8f756c;margin:10px 0 3px}\n.hg11 .roomname{color:#9c686e;text-shadow:0 3px 15px #d8a4a63b}\n.hg11 .thainame{color:#997d7b}.hg11 .body{background:#f8f2eb;border:1px solid #e8d7c9;border-radius:6px;padding:13px}\n.hg11 .roomphoto{height:177px;border-radius:3px}\n.hg11 .description{margin:15px 5px;color:#685e59}\n.hg11 .foot{padding-top:11px;border-top:1px solid #dcc9bb;color:#967a75}\n@media(max-width:490px){.hg11 .inner{padding:12px}.hg11 .heading:before,.hg11 .heading:after{display:none}.hgcard .roomname{font-size:clamp(43px,12vw,64px)}}\n\n.hg11{--outer-shadow-y:14px;--outer-shadow-blur:35px;--outer-shadow-alpha:.19;--light-x:80%;--light-y:5%;--glow-opacity:.24;--hero-softness:.15;--image-brightness:1;--image-saturation:1;--photo-shadow-alpha:.12}\n.hg11{box-shadow:0 var(--outer-shadow-y) var(--outer-shadow-blur) rgb(117 99 88 / var(--outer-shadow-alpha))}\n.hg11 .hero{position:relative;isolation:isolate;height:var(--floral-height,145px);background-position:var(--image-x,50%) var(--image-y,50%);filter:brightness(var(--image-brightness,1)) saturate(var(--image-saturation,1));transition:width .2s ease,height .2s ease;background-clip:padding-box}\n.hg11 .hero:after{content:\"\";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(252,249,243,var(--hero-softness,.15)),rgba(252,249,243,calc(var(--hero-softness,.15) * .45)))}\n.hg11 .inner{position:relative;isolation:isolate;background:radial-gradient(ellipse at var(--light-x,80%) var(--light-y,5%),rgb(255 226 189 / var(--glow-opacity,.24)),transparent 62%),#fcf9f3}\n.hg11 .heading{position:relative;z-index:1}\n.hg11 .body{position:relative;z-index:1}\n.hg11 .roomphoto{box-shadow:0 6px 18px rgb(117 79 72 / var(--photo-shadow-alpha,.12))}\n@media(prefers-reduced-motion:reduce){.hg11 .hero{transition:none!important}}\n";
 function content(){
- const v=id=>esc($(id).value),w=Math.min(100,Math.max(35,Number($('floralWidth').value)||78));
+ const v=id=>esc($(id).value);
+ const num=(id,low,high)=>Math.min(high,Math.max(low,Number($(id).value)||0));
+ const w=num('floralWidth',25,100),h=num('floralHeight',35,340),x=num('imageX',0,100),y=num('imageY',0,100);
+ const glow=num('glowOpacity',0,80)/100,lx=num('lightX',0,100),ly=num('lightY',0,100),soft=num('heroSoftness',0,85)/100;
+ const bright=num('imageBrightness',55,145)/100,sat=num('imageSaturation',0,170)/100;
+ const depth=num('shadowDepth',0,35),blur=num('shadowBlur',0,75),shade=num('shadowOpacity',0,65)/100,photoShadow=num('photoShadow',0,65)/100;
+ const variables='--floral-width:'+w+'%;--floral-height:'+h+'px;--image-x:'+x+'%;--image-y:'+y+'%;--light-x:'+lx+'%;--light-y:'+ly+'%;--glow-opacity:'+glow+';--hero-softness:'+soft+';--image-brightness:'+bright+';--image-saturation:'+sat+';--outer-shadow-y:'+depth+'px;--outer-shadow-blur:'+blur+'px;--outer-shadow-alpha:'+shade+';--photo-shadow-alpha:'+photoShadow;
  const bg=esc(url($('bgImage').value)||defaults.bgImage),p=esc(url($('mainImage').value)||defaults.mainImage);
- return '<article class="hgcard hg11" style="--floral-width:'+w+'%"><div class="inner"><div class="hero" style="background-image:url(&quot;'+bg+'&quot;)"></div><div class="heading"><div class="overline">✿ HOUSE JOURNAL / '+v('number')+'</div><div class="housename">'+v('house')+'</div><div class="roomname">'+v('room')+'</div><div class="thainame">'+v('thai')+'</div></div><div class="body"><img class="frame-img roomphoto" alt="room" src="'+p+'"><div class="description">'+v('description')+'</div><div class="foot"><span>'+v('floor')+'</span><span>ROSE GOLD DAYS</span></div></div></div></article>';
+ return '<article class="hgcard hg11" style="'+variables+'"><div class="inner"><div class="hero" style="background-image:url(&quot;'+bg+'&quot;)"></div><div class="heading"><div class="overline">✿ HOUSE JOURNAL / '+v('number')+'</div><div class="housename">'+v('house')+'</div><div class="roomname">'+v('room')+'</div><div class="thainame">'+v('thai')+'</div></div><div class="body"><img class="frame-img roomphoto" alt="room" src="'+p+'"><div class="description">'+v('description')+'</div><div class="foot"><span>'+v('floor')+'</span><span>ROSE GOLD DAYS</span></div></div></div></article>';
 }
 function result(){return font+'<style>'+cardCSS+'</style>'+content()}
 let saveTimer;
-function render(){$('widthText').textContent=$('floralWidth').value+'%';$('preview').innerHTML=content();$('code').value=result()}
+const displayUnits={floralWidth:'%',floralHeight:'px',imageX:'%',imageY:'%',glowOpacity:'%',lightX:'%',lightY:'%',heroSoftness:'%',imageBrightness:'%',imageSaturation:'%',shadowDepth:'px',shadowBlur:'px',shadowOpacity:'%',photoShadow:'%'};
+function render(){Object.keys(displayUnits).forEach(id=>$(id+'Text').textContent=$(id).value+displayUnits[id]);$('preview').innerHTML=content();$('code').value=result()}
 function save(){try{localStorage.setItem(key,JSON.stringify(Object.fromEntries(fields.map(id=>[id,$(id).value]))));$('feedback').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('feedback').textContent='ไม่สามารถบันทึกข้อมูลในเบราว์เซอร์นี้ได้'}}
 function changed(){render();clearTimeout(saveTimer);saveTimer=setTimeout(save,400)}
 fields.forEach(id=>$(id).addEventListener('input',changed));
-$('originalWidth').onclick=()=>{$('floralWidth').value=100;changed()};
-$('suggestedWidth').onclick=()=>{$('floralWidth').value=78;changed()};
+const setBatch=obj=>{Object.entries(obj).forEach(([id,val])=>$(id).value=val);changed()};
+const sizePresets={
+ original:{floralWidth:100,floralHeight:145,imageX:50,imageY:50},
+ slim:{floralWidth:100,floralHeight:67,imageX:50,imageY:50},
+ square:{floralWidth:54,floralHeight:230,imageX:50,imageY:50},
+ balanced:{floralWidth:78,floralHeight:115,imageX:50,imageY:50}
+};
+const lightPresets={
+ natural:{glowOpacity:0,lightX:80,lightY:5,heroSoftness:0,imageBrightness:100,imageSaturation:100},
+ golden:{glowOpacity:48,lightX:83,lightY:8,heroSoftness:12,imageBrightness:108,imageSaturation:95},
+ soft:{glowOpacity:21,lightX:50,lightY:0,heroSoftness:48,imageBrightness:108,imageSaturation:75}
+};
+const shadowPresets={
+ subtle:{shadowDepth:9,shadowBlur:24,shadowOpacity:12,photoShadow:7},
+ luxury:{shadowDepth:21,shadowBlur:46,shadowOpacity:34,photoShadow:29},
+ none:{shadowDepth:0,shadowBlur:0,shadowOpacity:0,photoShadow:0}
+};
+document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>setBatch(sizePresets[b.dataset.preset])));
+document.querySelectorAll('[data-light]').forEach(b=>b.addEventListener('click',()=>setBatch(lightPresets[b.dataset.light])));
+document.querySelectorAll('[data-shadow]').forEach(b=>b.addEventListener('click',()=>setBatch(shadowPresets[b.dataset.shadow])));
 $('restore').onclick=()=>{if(!confirm('คืนค่าฟอร์ม Rose Gold เป็นค่าเริ่มต้น?'))return;fields.forEach(id=>{$(id).value=defaults[id]});changed()};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(result());$('copy').textContent='✓ คัดลอกแล้ว';setTimeout(()=>$('copy').textContent='คัดลอก HTML',1800)}catch(e){$('code').focus();$('code').select();$('feedback').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
 $('download').onclick=()=>{const b=new Blob([result()],{type:'text/html;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='rose-gold-header.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
