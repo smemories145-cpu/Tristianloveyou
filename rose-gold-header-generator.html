@@ -423,6 +423,49 @@ $('richEditor').addEventListener('input',syncRich);
 $('richEditor').addEventListener('paste',e=>{e.preventDefault();document.execCommand('insertText',false,e.clipboardData.getData('text/plain'))});
 document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedown',e=>e.preventDefault());b.addEventListener('click',()=>{$('richEditor').focus();document.execCommand(b.dataset.cmd,false,null);syncRich()})});
 
+// On-demand sections preserve all field values when hidden.
+const groupModuleKey='rose_gold_header_modules_v2';
+const extraModules={top:[],house:[]};
+function redrawModuleGroup(kind){
+ const top=kind==='top',panel=top?'#topAddonPanel':'.rg-add-manager';const names=top?['top','light']:['lettering','flourish','spacing','typography'];
+ const choice=$(top?'topAddonChoice':'homeAddonChoice'),add=$(top?'topAddonAdd':'homeAddonAdd'),selected=extraModules[kind];
+ document.querySelectorAll(top?'[data-addon]':'[data-addonsub]').forEach(el=>{
+  const visible=selected.includes(top?el.dataset.addon:el.dataset.addonsub);
+  el.classList.toggle('rg-added',visible);
+  if(!visible)el.open=false;
+ });
+ for(const option of choice.options)option.disabled=selected.includes(option.value);
+ const remaining=[...choice.options].find(x=>!x.disabled);
+ if(remaining)choice.value=remaining.value;
+ add.disabled=!remaining;
+ $(top?'topAddonCount':'homeAddonCount').textContent=selected.length?selected.length+' หัวข้อที่เพิ่มแล้ว':'ยังไม่ได้เพิ่ม';
+}
+function storeModuleChoices(){
+ try{localStorage.setItem(groupModuleKey,JSON.stringify(extraModules))}catch(e){}
+}
+function addGroupModule(kind){
+ const top=kind==='top',choice=$(top?'topAddonChoice':'homeAddonChoice'),value=choice.value;
+ if(extraModules[kind].includes(value))return;
+ extraModules[kind].push(value);redrawModuleGroup(kind);storeModuleChoices();
+ const el=document.querySelector(top?'[data-addon="'+value+'"]':'[data-addonsub="'+value+'"]');
+ el.open=true;if(top)$('topAddonPanel').closest('.rg-add-wrapper').open=true;
+}
+$('topAddonAdd').onclick=()=>addGroupModule('top');
+$('homeAddonAdd').onclick=()=>addGroupModule('house');
+document.querySelectorAll('[data-addon],[data-addonsub]').forEach(el=>{
+ const top=el.hasAttribute('data-addon'),kind=top?'top':'house';
+ const value=top?el.dataset.addon:el.dataset.addonsub;
+ const btn=document.createElement('button');btn.type='button';btn.className='rg-remove';btn.textContent='× นำออก';
+ btn.title='ซ่อนหัวข้อนี้จากฟอร์ม แต่คงค่าที่ตั้งไว้';
+ btn.onclick=e=>{e.preventDefault();e.stopPropagation();extraModules[kind]=extraModules[kind].filter(x=>x!==value);redrawModuleGroup(kind);storeModuleChoices()};
+ el.querySelector('summary').appendChild(btn);
+});
+try{
+ const old=JSON.parse(localStorage.getItem(groupModuleKey)||'null');
+ if(old){for(const kind of ['top','house'])if(Array.isArray(old[kind]))extraModules[kind]=old[kind].filter(x=>(kind==='top'?['top','light']:['lettering','flourish','spacing','typography']).includes(x))}
+}catch(e){}
+redrawModuleGroup('top');redrawModuleGroup('house');
+
 // Portable URL design snapshot: no account or back-end required.
 function encodeDesign(fieldsObject){
  const bytes=new TextEncoder().encode(JSON.stringify({v:1,fields:fieldsObject}));
