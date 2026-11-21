@@ -248,7 +248,7 @@ details.rg-addon-sub>summary::-webkit-details-marker{display:none}details.rg-add
 <div class="presets"><button type="button" data-light="natural">แสงธรรมชาติ</button><button type="button" data-light="golden">Golden Hour</button><button type="button" data-light="soft">นุ่มละมุน</button></div>
 </div></details>
 </div></div></details>
-<div class="controls"><button type="button" id="restore">คืนค่าเริ่มต้นทุกหมวด</button><button type="button" id="copyCurrentSetup" class="primary">🔗 คัดลอกลิงก์แชร์ดีไซน์</button></div><p class="tip">กดคัดลอกลิงก์แชร์ดีไซน์ แล้วส่งให้ใครก็ได้ เมื่อเปิดลิงก์จะเห็นหน้าตาแบบที่คุณแต่งไว้ทันที หากต้องการให้กลายเป็นค่าเริ่มต้นของเว็บทุกครั้ง ให้ส่งลิงก์นั้นในแชตนี้</p><p id="feedback" aria-live="polite">บันทึกอัตโนมัติในเบราว์เซอร์นี้</p>
+<div class="controls"><button type="button" id="restore">คืนค่าเริ่มต้นทุกหมวด</button><button type="button" id="copyCurrentSetup" class="primary">🔗 คัดลอกลิงก์แชร์ดีไซน์ (กระชับ)</button></div><p class="tip">ลิงก์แชร์จะบีบอัดข้อมูลให้สั้นลง และเปิดแล้วเห็นแบบที่แต่งไว้ได้ทันที หากต้องการให้ทุกคนที่เปิด URL หลักเห็นเป็นค่าเริ่มต้น ให้ส่งลิงก์แชร์มาเพื่อตั้งค่าลงเว็บ</p><p id="feedback" aria-live="polite">บันทึกอัตโนมัติในเบราว์เซอร์นี้</p>
 </section>
 <section class="panel preview-panel"><div class="copybar"><h2>02 / LIVE PREVIEW</h2><div class="controls"><button type="button" class="primary" id="copy">คัดลอกโค้ดสั้น</button></div></div><div id="preview"></div><p class="preview-note">โค้ดสั้นจะโหลด CSS และลายตกแต่งจาก GitHub Pages อัตโนมัติ</p><label>โค้ดสำหรับนำไปวางในหน้าเว็บ</label><textarea id="code" readonly></textarea></section>
 </main>
@@ -467,37 +467,80 @@ try{
 redrawModuleGroup('top');redrawModuleGroup('house');
 
 // Portable URL design snapshot: no account or back-end required.
-function encodeDesign(fieldsObject){
- const bytes=new TextEncoder().encode(JSON.stringify({v:1,fields:fieldsObject}));
+// Compact share URL: store only differences from built-in defaults and gzip when supported.
+// The old ?design= links stay supported for backwards compatibility.
+function encodeBase64Url(bytes){
  let binary='';for(const byte of bytes)binary+=String.fromCharCode(byte);
  return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
+function decodeBase64Url(token){
+ const binary=atob(token.replace(/-/g,'+').replace(/_/g,'/'));
+ return Uint8Array.from(binary,c=>c.charCodeAt(0));
+}
+function encodeDesign(fieldsObject){
+ const bytes=new TextEncoder().encode(JSON.stringify({v:1,fields:fieldsObject}));
+ return encodeBase64Url(bytes);
+}
 function decodeDesign(token){
  if(!token||token.length>30000)return null;
- const binary=atob(token.replace(/-/g,'+').replace(/_/g,'/'));
- const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
- const payload=JSON.parse(new TextDecoder().decode(bytes));
+ const payload=JSON.parse(new TextDecoder().decode(decodeBase64Url(token)));
  if(payload?.v!==1||!payload.fields||typeof payload.fields!=='object'||Array.isArray(payload.fields))return null;
+ return payload.fields;
+}
+async function compactToken(fieldsObject){
+ const bytes=new TextEncoder().encode(JSON.stringify({v:2,fields:fieldsObject}));
+ if(typeof CompressionStream==='function'){
+  const gz=await new Response(new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer();
+  return 'g'+encodeBase64Url(new Uint8Array(gz));
+ }
+ return 'u'+encodeBase64Url(bytes);
+}
+async function expandCompactToken(token){
+ if(!token||token.length>30000)return null;
+ const bytes=decodeBase64Url(token.slice(1));
+ let raw=bytes;
+ if(token[0]==='g'){
+  if(typeof DecompressionStream!=='function')throw Error('gzip not supported');
+  const unpacked=await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+  raw=new Uint8Array(unpacked);
+ }else if(token[0]!=='u')return null;
+ const payload=JSON.parse(new TextDecoder().decode(raw));
+ if(payload?.v!==2||!payload.fields||Array.isArray(payload.fields)||typeof payload.fields!=='object')return null;
  return payload.fields;
 }
 $('copyCurrentSetup').onclick=async()=>{
  syncRich();
- const state=Object.fromEntries(fields.map(id=>[id,$(id).value]));
+ const changedValues=Object.fromEntries(fields.filter(id=>$(id).value!==defaults[id]).map(id=>[id,$(id).value]));
  const link=new URL(location.pathname,location.origin);
- link.searchParams.set('design',encodeDesign(state));
+ try{link.searchParams.set('d',await compactToken(changedValues))}
+ catch(e){link.searchParams.set('design',encodeDesign(changedValues))}
  const shareURL=link.toString();
- try{await navigator.clipboard.writeText(shareURL);$('feedback').textContent='✓ คัดลอกลิงก์แล้ว! เปิดลิงก์นี้ที่เครื่องอื่นก็จะเห็นดีไซน์เดียวกัน'}
- catch(e){let box=$('shareLinkFallback');if(!box){box=document.createElement('textarea');box.id='shareLinkFallback';box.readOnly=true;box.style.cssText='width:100%;min-height:90px;margin-top:10px';$('feedback').after(box)}box.value=shareURL;box.focus();box.select();$('feedback').textContent='เลือกลิงก์แล้ว กด Ctrl+C เพื่อคัดลอก'}
+ try{await navigator.clipboard.writeText(shareURL);$('feedback').textContent='✓ คัดลอกลิงก์แชร์แบบกระชับแล้ว เปิดที่เครื่องอื่นจะเห็นดีไซน์ที่แต่งไว้'}
+ catch(e){
+  let box=$('shareLinkFallback');
+  if(!box){box=document.createElement('textarea');box.id='shareLinkFallback';box.readOnly=true;box.style.cssText='width:100%;min-height:90px;margin-top:10px';$('feedback').after(box)}
+  box.value=shareURL;box.focus();box.select();
+  $('feedback').textContent='เลือกลิงก์แล้ว กด Ctrl+C เพื่อคัดลอก';
+ }
 };
 try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&typeof saved==='object'){fields.forEach(id=>{if(typeof saved[id]==='string')$(id).value=saved[id]});if(typeof saved.journalLine!=='string'&&typeof saved.number==='string')$('journalLine').value='✿ HOUSE JOURNAL / '+saved.number}}catch(e){}
-// A shared design overrides local autosave on this visit so recipients see exactly the shared design.
-try{
- const token=new URLSearchParams(location.search).get('design');
- if(token){const shared=decodeDesign(token);if(shared){
-  for(const id of fields)if(typeof shared[id]==='string')$(id).value=shared[id];
+// Shared URLs override old local drafts for this visit, including the unchanged defaults.
+async function loadSharedDesign(){
+ const params=new URLSearchParams(location.search);
+ const compact=params.get('d'),legacy=params.get('design');
+ if(!compact&&!legacy)return;
+ try{
+  const shared=compact?await expandCompactToken(compact):decodeDesign(legacy);
+  if(!shared)throw Error('invalid snapshot');
+  for(const id of fields)$(id).value=typeof shared[id]==='string'?shared[id]:defaults[id];
   $('feedback').textContent='✓ โหลดดีไซน์จากลิงก์แชร์แล้ว';
- }else $('feedback').textContent='⚠ ลิงก์แชร์ไม่ถูกต้อง'}
-}catch(e){$('feedback').textContent='⚠ ไม่สามารถอ่านลิงก์แชร์นี้ได้'}
-$('richEditor').innerHTML=sanitizeRich($('description').value.includes('<')?$('description').value:'<p>'+esc($('description').value)+'</p>');$('description').value=sanitizeRich($('richEditor').innerHTML);
-render();window.addEventListener('pagehide',()=>{clearTimeout(saveTimer);save()});
+ }catch(e){$('feedback').textContent='⚠ เปิดข้อมูลดีไซน์จากลิงก์แชร์ไม่สำเร็จ'}
+}
+
+loadSharedDesign().then(()=>{
+ $('richEditor').innerHTML=sanitizeRich($('description').value.includes('<')?$('description').value:'<p>'+esc($('description').value)+'</p>');
+ $('description').value=sanitizeRich($('richEditor').innerHTML);
+ render();
+});
+window.addEventListener('pagehide',()=>{clearTimeout(saveTimer);save()});
 </script></body></html>
