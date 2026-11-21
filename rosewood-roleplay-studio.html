@@ -31,30 +31,62 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 @media(min-width:880px){.editpanel{max-height:calc(100vh - 45px);overflow:auto;position:sticky;top:12px}}
 @media(max-width:879px){main{grid-template-columns:1fr}}
 @media(max-width:440px){main{padding:9px}.panel{padding:12px}.two{grid-template-columns:1fr}}
-</style></head><body>
-<header><div class="wrap"><div><h1>Rosewood · Roleplay Studio</h1><p>ชมพูละมุน / ชมพูหรู · ภาพตัวละครใหญ่ 350px · โรลเพลย์ 16px</p></div><a href="rose-gold-header-generator.html">← กลับ Rose Gold Generator</a></div></header>
-<main><section class="panel editpanel"><h2>01 / EDIT YOUR ROLEPLAY</h2>
-<details><summary>00 · เลือกธีม</summary><div class="detail">
-<p class="tip">สลับแบบเพื่อเปรียบเทียบกันได้ทันที ไม่เปลี่ยนข้อความและรูปที่แต่งไว้</p>
-<label>ธีมการ์ด<select id="pinkTheme"><option value="luxury">02 · Clean Luxury — ชมพูหรู เรียบสง่า</option><option value="soft">01 · Soft Rose — ชมพูหวานละมุน</option></select></label>
-<div class="actions"><button type="button" data-theme-choice="soft">♡ หวานละมุน</button><button type="button" data-theme-choice="luxury">✧ ชมพูหรู</button></div>
-</div></details>
-<details open><summary>01 · ตัวละครและรูปหลัก</summary><div class="detail">
-<label>ชื่อตัวละคร<input id="name" value="Tristian S. Kennedy"></label>
-<label>ชื่อรอง / คำอธิบายตัวละคร<input id="subtitle" value="ทริสเตียน · บ้านที่อบอุ่น"></label>
-<label>ข้อมูลใต้ชื่อ<input id="meta" value="A PRIVATE STORY · 01"></label>
-<label>URL ภาพตัวละคร<input id="portrait" value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=85"></label>
-<label>ตำแหน่งภาพและชื่อ<select id="layout"><option value="left">รูปอยู่ซ้าย</option><option value="right">รูปอยู่ขวา</option><option value="center">กึ่งกลางแนวตั้ง</option></select></label>
-<label>สไตล์กรอบภาพตัวละคร<select id="frameStyle">
-<option value="minimal">Clean Portrait · ภาพใหญ่ เรียบหรู</option><option value="ornate">Soft Border · กรอบเรียบ</option>
-</select></label>
-<label>ขนาดรูปตัวละคร</label><div class="slide"><input id="portraitSize" type="range" min="180" max="480" value="350"><output id="portraitSizeOut">350px</output></div>
-<label>สัดส่วนความสูงของภาพ</label><div class="slide"><input id="portraitRatio" type="range" min="55" max="135" value="84"><output id="portraitRatioOut">84%</output></div>
 
-<label>ปรับจุดโฟกัสภาพแนวนอน</label><div class="slide"><input id="portraitX" type="range" min="0" max="100" value="50"><output id="portraitXOut">50%</output></div>
-<label>ปรับจุดโฟกัสภาพแนวตั้ง</label><div class="slide"><input id="portraitY" type="range" min="0" max="100" value="50"><output id="portraitYOut">50%</output></div>
+/* Compact editing controls and on-demand modules */
+.image-move{display:flex;gap:6px;justify-content:center;margin:8px 0}.image-move button{min-width:38px;font-size:16px;padding:5px 9px}.tool-divider{height:25px;border-left:1px solid #80695e;margin:1px 4px}.color-controls{display:grid;grid-template-columns:60px minmax(90px,1fr) auto auto;gap:6px;align-items:end;margin-top:12px}.color-controls label{margin:0}.color-controls input{margin-top:3px}.color-controls button{padding:7px 9px;min-height:36px}.color-favorites{display:flex;align-items:center;gap:9px;margin-top:8px;color:#c8b5a7}.color-swatches{display:flex;flex-wrap:wrap;gap:6px}.color-swatches button{width:26px;height:26px;min-width:0;padding:0;border:2px solid #e6d1c1;border-radius:50%}.module-manager{margin-top:14px;padding:12px;border:1px dashed #8a695b;border-radius:10px;background:#382b27}.module-manager .actions select{flex:1;min-width:120px;width:auto;margin:0}.optional-modules details:not(.module-on){display:none}.optional-modules details .detail{padding-bottom:15px}.editable a{color:#d9abcc;text-decoration:underline}.editable s{text-decoration:line-through}@media(max-width:440px){.color-controls{grid-template-columns:55px 1fr}.color-controls button{min-width:0}}
+</style></head><body>
+<header><div class="wrap"><div><h1>Rosewood · Roleplay Studio</h1><p>เขียนโรลเพลย์ · ปรับรูปตัวละคร · จัดรูปแบบข้อความ · บันทึกอัตโนมัติ</p></div><a href="rose-gold-header-generator.html">← กลับ Rose Gold Generator</a></div></header>
+<main><section class="panel editpanel"><h2>01 / EDIT YOUR ROLEPLAY</h2>
+<details open><summary>01 · ตัวละครและรูปภาพ</summary><div class="detail">
+
+<p class="tip">เลื่อนรูปได้ด้วยปุ่มลูกศร และซูมรูปได้โดยไม่ต้องเปลี่ยนสัดส่วนกรอบ</p>
+<div class="image-move">
+ <button type="button" data-pan="0,-10" title="ขยับขึ้น">↑</button>
+ <button type="button" data-pan="-10,0" title="ขยับซ้าย">←</button>
+ <button type="button" data-pan="0,0" title="วางกลาง">◎</button>
+ <button type="button" data-pan="10,0" title="ขยับขวา">→</button>
+ <button type="button" data-pan="0,10" title="ขยับลง">↓</button>
+</div>
+<label>ซูมรูปภาพ</label><div class="slide"><input id="portraitZoom" type="range" min="100" max="190" value="100" step="5"><output id="portraitZoomOut">100%</output></div>
+<input type="hidden" id="portraitX" value="50"><input type="hidden" id="portraitY" value="50">
 </div></details>
-<details open><summary>02 · รูปพื้นหลังกล่องชื่อ</summary><div class="detail">
+<details open><summary>02 · เนื้อเรื่องโรลเพลย์</summary><div class="detail">
+<p class="tip">เลือกข้อความก่อนกดจัดรูปแบบ หรือตั้งสีก่อนพิมพ์ได้</p>
+<div class="toolbar" role="toolbar" aria-label="จัดรูปแบบข้อความ">
+ <button type="button" data-cmd="bold" title="ตัวหนา"><b>B</b></button>
+ <button type="button" data-cmd="italic" title="ตัวเอียง"><i>I</i></button>
+ <button type="button" data-cmd="underline" title="ขีดเส้นใต้"><u>U</u></button>
+ <button type="button" data-cmd="strikeThrough" title="ขีดฆ่า"><s>S</s></button>
+ <button type="button" id="insertLink" title="ใส่ลิงก์">🔗</button>
+ <span class="tool-divider"></span>
+ <button type="button" data-cmd="justifyLeft" title="ชิดซ้าย">≡</button>
+ <button type="button" data-cmd="justifyCenter" title="กึ่งกลาง">☰</button>
+ <button type="button" data-cmd="justifyRight" title="ชิดขวา">≡⇥</button>
+ <button type="button" data-cmd="justifyFull" title="จัดเต็มบรรทัด">☷</button>
+ <span class="tool-divider"></span>
+ <button type="button" data-cmd="removeFormat" title="ล้างรูปแบบ">Tx</button>
+</div>
+<div class="color-controls">
+ <label>สีข้อความ <input id="editorColorPicker" type="color" value="#a8728c"></label>
+ <label>รหัสสี HEX <input id="editorColorHex" type="text" value="#a8728c" maxlength="7" placeholder="#a8728c"></label>
+ <button type="button" id="applyTextColor">ใช้สี</button>
+ <button type="button" id="saveFavoriteColor" title="บันทึกสีโปรด">♡ เก็บสี</button>
+</div>
+<div class="color-favorites"><span>สีโปรด</span><div id="favoriteColors" class="color-swatches"></div></div>
+<div id="storyEditor" class="editable" contenteditable="true" role="textbox" aria-multiline="true" aria-label="เนื้อหาโรลเพลย์"><p>ทริสเตียนวางหนังสือเล่มเล็กลงบนโต๊ะไม้ ก่อนจะหันไปมองแสงอาทิตย์ที่ลอดผ่านม่านสีครีมเข้ามาในห้อง บรรยากาศยามบ่ายสงบจนได้ยินเสียงลมอ่อน ๆ จากนอกหน้าต่าง</p><p><strong>“วันนี้อากาศดีจังเลยนะครับ”</strong></p><p>เขาเอ่ยด้วยรอยยิ้มบางเบา แล้วขยับเก้าอี้ให้คนตรงหน้าได้นั่งอย่างสะดวก</p></div>
+<label>ขนาดข้อความโรล</label><div class="slide"><input id="storySize" type="range" min="14" max="21" value="16"><output id="storySizeOut">16px</output></div>
+<label>ระยะบรรทัด</label><div class="slide"><input id="storyLine" type="range" min="1.5" max="2.5" step=".05" value="2"><output id="storyLineOut">2</output></div>
+</div></details>
+<details><summary>03 · หมายเหตุท้ายโรล</summary><div class="detail">
+<p class="tip">ไม่ใส่ก็ได้ หากเว้นว่างกล่องหมายเหตุจะไม่แสดงบนการ์ด</p>
+<label>หมายเหตุ<textarea id="note" rows="3" placeholder="เช่น ขอบคุณที่ร่วมโรลด้วยกันนะ ♡"></textarea></label>
+</div></details>
+<div class="module-manager"><strong>✦ เพิ่มฟังก์ชันเสริม</strong>
+<p class="tip">ฟังก์ชันที่ไม่ใช้จะไม่รบกวนหน้าฟอร์ม เมื่อเพิ่มแล้วจะปรากฏเป็นหมวดที่เปิด–ปิดได้</p>
+<div class="actions"><select id="moduleChoice" aria-label="เลือกฟังก์ชันเสริม"><option value="identity">รูปพื้นหลังกล่องชื่อ</option><option value="theme">ปรับธีมสีชมพู</option></select><button id="addModule" type="button">＋ เพิ่มหัวข้อ</button></div>
+</div>
+<div id="optionalModules" class="optional-modules">
+<details id="optionalIdentity" data-module="identity"><summary>รูปพื้นหลังกล่องชื่อ <small style="color:#c9ab9c;font-weight:400">ฟังก์ชันเสริม</small></summary><div class="detail">
 <p class="tip">จะใส่หรือไม่ใส่รูปก็ได้ ภาพที่ใส่จะมีม่านขาวนวลทับ เพื่อให้ชื่อตัวละครเด่น</p>
 <label>URL รูปในกล่องชื่อ (ไม่บังคับ)<input id="identityImage" type="url" placeholder="https://.../photo.jpg"></label>
 <p class="tip" id="identityImageStatus" aria-live="polite">ไม่ใส่รูปจะใช้พื้นชมพูครีม</p>
@@ -62,13 +94,11 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <label>ความเบลอของภาพ</label><div class="slide"><input id="identityImageBlur" type="range" min="0" max="12" step=".5" value="2"><output id="identityImageBlurOut">2px</output></div>
 <label>ม่านสีขาวทับภาพ (ยิ่งมาก ภาพยิ่งจาง)</label><div class="slide"><input id="identityVeil" type="range" min="0" max="95" value="55"><output id="identityVeilOut">55%</output></div>
 </div></details>
-<details open><summary>03 · เนื้อเรื่องโรลเพลย์</summary><div class="detail">
-<p class="tip">คลิกพิมพ์ได้โดยตรง กด Enter เพื่อขึ้นย่อหน้าใหม่ เลือกข้อความแล้วกดตัวหนา/ตัวเอียงได้</p>
-<div class="toolbar"><button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button><button type="button" data-cmd="underline"><u>U</u></button><button type="button" data-cmd="removeFormat">Tx</button></div>
-<div id="storyEditor" class="editable" contenteditable="true" role="textbox" aria-multiline="true" aria-label="เนื้อหาโรลเพลย์"><p>ทริสเตียนวางหนังสือเล่มเล็กลงบนโต๊ะไม้ ก่อนจะหันไปมองแสงอาทิตย์ที่ลอดผ่านม่านสีครีมเข้ามาในห้อง บรรยากาศยามบ่ายสงบจนได้ยินเสียงลมอ่อน ๆ จากนอกหน้าต่าง</p><p><strong>“วันนี้อากาศดีจังเลยนะครับ”</strong></p><p>เขาเอ่ยด้วยรอยยิ้มบางเบา แล้วขยับเก้าอี้ให้คนตรงหน้าได้นั่งอย่างสะดวก</p></div>
-<label>ขนาดข้อความโรล</label><div class="slide"><input id="storySize" type="range" min="14" max="21" value="16"><output id="storySizeOut">16px</output></div>
-<label>ระยะบรรทัด</label><div class="slide"><input id="storyLine" type="range" min="1.5" max="2.5" step=".05" value="2"><output id="storyLineOut">2</output></div>
+
+<details id="optionalTheme" data-module="theme"><summary>ปรับธีมสีชมพู <small style="color:#c9ab9c;font-weight:400">ฟังก์ชันเสริม</small></summary><div class="detail">
+<label>ธีมการ์ด<select id="pinkTheme"><option value="luxury">Clean Luxury</option><option value="soft">Soft Rose</option></select></label>
 </div></details>
+</div>
 <details><summary>04 · หัวเรื่อง</summary><div class="detail">
 <label>รูปแบบหัวเรื่อง<select id="headerMode"><option value="compact">หัวเรื่องเล็ก (แนะนำ)</option><option value="normal">หัวเรื่องปกติ</option><option value="none">ซ่อนหัวเรื่อง</option></select></label>
 <label>ข้อความบรรทัดบน<input id="eyebrow" value="✿ A PRIVATE FILM / ROLEPLAY"></label>
@@ -107,7 +137,7 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const ids=["pinkTheme","identityImage","identityImageOpacity","identityImageBlur","identityVeil","name","subtitle","meta","portrait","layout","frameStyle","portraitSize","portraitRatio","portraitX","portraitY","headerMode","eyebrow","title","caption","titleSize","storySize","storyLine","outerMode","outerBg","outerEnd","outerImage","outerImageSize","outerPreset","outerX","outerY","outerOverlay","paper","inner","ink","rule","footerLeft","footerRight"];
+const ids=["pinkTheme","identityImage","identityImageOpacity","identityImageBlur","identityVeil","name","subtitle","meta","portrait","portraitSize","portraitZoom","portraitX","portraitY","headerMode","eyebrow","title","caption","titleSize","storySize","storyLine","note","outerMode","outerBg","outerEnd","outerImage","outerImageSize","outerPreset","outerX","outerY","outerOverlay","paper","inner","ink","rule","footerLeft","footerRight"];
 const defaults=Object.fromEntries(ids.map(id=>[id,$(id).value]));
 const initialStory=$('storyEditor').innerHTML;
 const storageKey='rosewood-roleplay-studio-v1';
