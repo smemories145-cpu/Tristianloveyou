@@ -327,3 +327,95 @@
   .rp-rose .rp-identity::after{animation:none}
   .rp-rose .rp-portrait{transition:none!important}
 }
+
+/* Mobile desktop-composition lock — keep photo LEFT and identity RIGHT,
+   including exported HTML pasted into another website. */
+@media(max-width:760px){
+  .rp-rose{
+    width:100%!important;max-width:820px;min-width:0;
+    padding:clamp(5px,1.6vw,12px)!important;
+  }
+  .rp-rose .rp-shell{
+    min-width:0!important;
+    padding:clamp(12px,4vw,27px)!important;
+  }
+  .rp-rose .rp-person,
+  .rp-rose[data-layout="right"] .rp-person,
+  .rp-rose[data-layout="center"] .rp-person{
+    display:flex!important;flex-direction:row!important;
+    align-items:stretch!important;gap:0!important;
+    width:100%!important;min-width:0!important;
+    margin:clamp(12px,2.3vw,17px) 0 clamp(13px,3vw,22px)!important;
+  }
+  .rp-rose .rp-photo-frame,
+  .rp-rose[data-frame="minimal"] .rp-photo-frame,
+  .rp-rose[data-frame="ornate"] .rp-photo-frame,
+  .rp-rose[data-layout="right"] .rp-photo-frame,
+  .rp-rose[data-layout="center"] .rp-photo-frame{
+    flex:0 0 29%!important;width:29%!important;max-width:29%!important;
+    min-width:0!important;align-self:stretch!important;
+    aspect-ratio:auto!important;border-radius:0!important;
+  }
+  .rp-rose .rp-photo-frame .rp-portrait{
+    display:block;width:100%!important;height:100%!important;
+    object-fit:cover!important;
+  }
+  .rp-rose .rp-identity,
+  .rp-rose .rp-person .rp-identity,
+  .rp-rose[data-layout="right"] .rp-identity,
+  .rp-rose[data-layout="center"] .rp-identity{
+    display:flex!important;flex-direction:column!important;justify-content:center!important;
+    flex:1 1 0!important;width:auto!important;min-width:0!important;
+    min-height:clamp(150px,34vw,230px)!important;
+    padding:clamp(11px,3vw,24px)!important;
+    text-align:left!important;align-items:flex-start!important;
+  }
+  .rp-rose .rp-character{
+    font-size:clamp(24px,5.5vw,45px)!important;
+    line-height:1.06!important;overflow-wrap:break-word;
+  }
+  .rp-rose .rp-character-thai{
+    font-size:clamp(9px,2.2vw,13px)!important;
+    line-height:1.6!important;
+  }
+  .rp-rose .rp-meta{
+    align-self:flex-start!important;
+    max-width:100%!important;
+    padding:7px 9px!important;
+    font-size:clamp(6px,1.35vw,9px)!important;
+    letter-spacing:.7px!important;
+    white-space:normal!important;
+    text-align:left!important;
+    overflow-wrap:anywhere;
+  }
+  .rp-rose .rp-header{padding-bottom:clamp(8px,2vw,16px)!important}
+  .rp-rose .rp-eyebrow{font-size:clamp(7px,1.8vw,10px)!important;letter-spacing:clamp(1px,.35vw,2.8px)!important}
+  .rp-rose .rp-title{font-size:clamp(21px,5.1vw,var(--rp-title-size))!important}
+  .rp-rose .rp-subtitle{font-size:clamp(9px,2.2vw,12px)!important}
+  .rp-rose .rp-story{padding:clamp(13px,3vw,24px)!important;font-size:var(--rp-font-size)!important}
+  .rp-rose .rp-footer{font-size:clamp(7px,1.6vw,10px)!important;letter-spacing:.8px!important}
+}
+@media(max-width:420px){
+  .rp-rose .rp-person,
+  .rp-rose[data-layout="right"] .rp-person,
+  .rp-rose[data-layout="center"] .rp-person{
+    flex-direction:row!important;
+  }
+  .rp-rose .rp-photo-frame,
+  .rp-rose[data-frame="minimal"] .rp-photo-frame,
+  .rp-rose[data-frame="ornate"] .rp-photo-frame,
+  .rp-rose[data-layout="right"] .rp-photo-frame,
+  .rp-rose[data-layout="center"] .rp-photo-frame{
+    flex:0 0 29%!important;width:29%!important;max-width:29%!important;
+    aspect-ratio:auto!important;
+  }
+  .rp-rose .rp-identity,
+  .rp-rose .rp-person .rp-identity,
+  .rp-rose[data-layout="right"] .rp-identity,
+  .rp-rose[data-layout="center"] .rp-identity{
+    width:auto!important;min-height:158px!important;
+    padding:13px 11px!important;text-align:left!important;align-items:flex-start!important;
+  }
+  .rp-rose .rp-character{font-size:clamp(23px,6vw,28px)!important}
+  .rp-rose .rp-identity::after{right:9px;top:8px;font-size:10px}
+}
