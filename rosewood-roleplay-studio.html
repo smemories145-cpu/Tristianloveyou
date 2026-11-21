@@ -45,6 +45,20 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 .extra-features .optional-modules details{margin:9px 0;border-color:#786051;background:#2c2421}
 .extra-features .optional-modules summary{font-size:11px}
 .extra-features .remove-module{margin-left:8px;padding:3px 6px;font-size:10px;flex-shrink:0}
+
+/* Shared card-only mode: public link shows exactly the finished composition. */
+body.shared-card-mode{background:#2c2424}
+body.shared-card-mode>header,body.shared-card-mode .editpanel,
+body.shared-card-mode .panel>h2,body.shared-card-mode .panel>.actions,
+body.shared-card-mode .panel>.tip,body.shared-card-mode .panel>label{display:none!important}
+body.shared-card-mode main{display:block;max-width:800px;padding:25px 12px 48px}
+body.shared-card-mode main>.panel{padding:0;background:transparent;border:0;box-shadow:none}
+body.shared-card-mode #preview{padding:0;background:transparent}
+body.shared-card-mode #preview .rp-rose{margin:0 auto}
+.shared-view-bar{display:none;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;max-width:770px;margin:20px auto 0;color:#e5cabe;font:11px 'Noto Serif Thai',serif}
+.shared-view-bar strong{letter-spacing:1.1px}.shared-view-bar span{opacity:.75;margin-left:6px}
+body.shared-card-mode .shared-view-bar{display:flex}
+@media(max-width:540px){body.shared-card-mode main{padding:12px 7px 35px}.shared-view-bar{padding:0 12px}}
 </style></head><body>
 <header><div class="wrap"><div><h1>Rosewood · Roleplay Studio</h1><p>เขียนโรลเพลย์ · ปรับรูปตัวละคร · จัดรูปแบบข้อความ · บันทึกอัตโนมัติ</p></div><a href="rose-gold-header-generator.html">← กลับ Rose Gold Generator</a></div></header>
 <main><section class="panel editpanel"><h2>01 / EDIT YOUR ROLEPLAY</h2>
@@ -147,10 +161,12 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 </div></details>
 <div class="actions"><button type="button" id="reset">คืนค่าตั้งต้น</button></div><p id="status">ระบบบันทึกข้อความและการตั้งค่าในเบราว์เซอร์นี้</p>
 </section>
-<section class="panel"><h2>02 / LIVE PREVIEW</h2><div class="actions"><button class="primary" type="button" id="copy">คัดลอกโค้ดสั้น</button><button type="button" id="download">ดาวน์โหลด HTML</button></div>
+<section class="panel"><h2>02 / LIVE PREVIEW</h2><div class="actions"><button class="primary" type="button" id="shareCard">🔗 แชร์การ์ดนี้ให้เพื่อน</button><button type="button" id="copy">คัดลอกโค้ดสั้น</button><button type="button" id="download">ดาวน์โหลด HTML</button></div>
+<p class="tip" id="shareHint">แชร์ลิงก์แล้วเพื่อนจะเห็นเฉพาะการ์ดตามที่แต่งไว้ ไม่ต้องเข้าไปตั้งค่าเอง</p>
 <p class="tip">โค้ดสั้นเรียก CSS จาก GitHub Pages พื้นที่นำไปวางต้องรองรับ CSS ภายนอก</p>
 <div id="preview"></div><label>โค้ดสำหรับนำไปวาง<textarea id="out" readonly></textarea></label>
 </section></main>
+<div class="shared-view-bar" id="sharedViewBar" hidden><div>✦ <strong>ROSEWOOD · SHARED CARD</strong> <span>การ์ดที่แชร์มาให้ดู</span></div><button type="button" id="editSharedCard">แก้ไขการ์ดนี้</button></div>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
@@ -324,6 +340,68 @@ $('storyEditor').addEventListener('paste',e=>{
 $('reset').onclick=()=>{if(!confirm('คืนค่าฟอร์มโรลเพลย์ทั้งหมดเป็นค่าเริ่มต้น?'))return;ids.forEach(id=>$(id).value=defaults[id]);$('storyEditor').innerHTML=initialStory;activeModules=[];favoriteColors=['#a8728c','#765866','#c38b9b'];renderFavoriteColors();showModules();update()};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(exported());$('copy').textContent='✓ คัดลอกแล้ว';setTimeout(()=>$('copy').textContent='คัดลอกโค้ดสั้น',1500)}catch(e){$('out').focus();$('out').select();$('status').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
 $('download').onclick=()=>{const html='<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+stylesheet+'</head><body>'+card()+'</body></html>';const a=document.createElement('a'),blob=new Blob([html],{type:'text/html;charset=utf-8'});a.href=URL.createObjectURL(blob);a.download='rosewood-roleplay.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
+// Public, editable-by-copy card sharing. The link contains a compressed snapshot;
+// it does not require access to the creator's browser storage or GitHub account.
+let viewingSharedCard=false;
+function base64Url(bytes){
+ let str='';for(const b of bytes)str+=String.fromCharCode(b);
+ return btoa(str).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function fromBase64Url(token){
+ return Uint8Array.from(atob(token.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));
+}
+async function compressSnapshot(snapshot){
+ const bytes=new TextEncoder().encode(JSON.stringify(snapshot));
+ if(typeof CompressionStream==='function'){
+  const compressed=await new Response(new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer();
+  return 'g'+base64Url(new Uint8Array(compressed));
+ }
+ return 'u'+base64Url(bytes);
+}
+async function unpackSnapshot(token){
+ if(!token||token.length>50000||!['g','u'].includes(token[0]))throw Error('invalid token');
+ const bytes=fromBase64Url(token.slice(1));
+ const unpacked=token[0]==='g'
+  ?new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer())
+  :bytes;
+ const value=JSON.parse(new TextDecoder().decode(unpacked));
+ if(value?.version!==1||typeof value.fields!=='object'||typeof value.story!=='string')throw Error('invalid card');
+ return value;
+}
+$('shareCard').onclick=async()=>{
+ const button=$('shareCard');button.disabled=true;
+ try{
+  const current={version:1,fields:Object.fromEntries(ids.filter(id=>$(id).value!==defaults[id]).map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML),modules:activeModules};
+  const url=new URL(location.pathname,location.origin);
+  url.searchParams.set('card',await compressSnapshot(current));
+  const link=url.toString();
+  try{await navigator.clipboard.writeText(link);$('shareHint').textContent='✓ คัดลอกลิงก์แล้ว! ส่งให้เพื่อนได้เลย เมื่อเปิดจะเห็นเฉพาะการ์ดที่แต่งไว้'}
+  catch(e){
+   let box=$('shareLinkText');
+   if(!box){box=document.createElement('textarea');box.id='shareLinkText';box.readOnly=true;$('shareHint').after(box)}
+   box.value=link;box.select();$('shareHint').textContent='เลือกลิงก์แล้ว กด Ctrl+C เพื่อคัดลอก';
+  }
+ }catch(e){$('shareHint').textContent='⚠ สร้างลิงก์ไม่สำเร็จ ลองใช้ Chrome หรือ Edge รุ่นล่าสุด'}
+ finally{button.disabled=false}
+};
+$('editSharedCard').onclick=()=>{
+ viewingSharedCard=false;document.body.classList.remove('shared-card-mode');
+ history.replaceState(null,'',location.pathname);update();window.scrollTo(0,0);
+};
+async function loadSharedCard(){
+ const token=new URLSearchParams(location.search).get('card');
+ if(!token)return false;
+ try{
+  const data=await unpackSnapshot(token);
+  ids.forEach(id=>$(id).value=typeof data.fields[id]==='string'?data.fields[id]:defaults[id]);
+  $('storyEditor').innerHTML=cleanStory(data.story);
+  activeModules=Array.isArray(data.modules)?data.modules.filter(id=>['identity','theme','outer','colors'].includes(id)):[];
+  viewingSharedCard=true;
+  document.body.classList.add('shared-card-mode');
+  $('sharedViewBar').hidden=false;
+  return true;
+ }catch(e){$('status').textContent='⚠ ลิงก์การ์ดไม่ถูกต้องหรืออ่านไม่ได้';return false}
+}
 try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved){ids.forEach(id=>{if(typeof saved.fields?.[id]==='string')$(id).value=saved.fields[id]});if(!saved.fields?.pinkTheme && saved.fields?.portraitSize==='250'){$('portraitSize').value='350'}if(typeof saved.story==='string')$('storyEditor').innerHTML=cleanStory(saved.story);activeModules=Array.isArray(saved.modules)?saved.modules.filter(x=>['identity','theme','outer','colors'].includes(x)):(saved.fields?.identityImage?['identity']:[]);if(Array.isArray(saved.favoriteColors))favoriteColors=saved.favoriteColors.filter(x=>normalizeHex(x)).slice(0,14)}}catch(e){}
-showModules();renderFavoriteColors();render();window.addEventListener('pagehide',()=>{clearTimeout(saveHandle);save()});
+loadSharedCard().then(()=>{showModules();renderFavoriteColors();render()});window.addEventListener('pagehide',()=>{if(!viewingSharedCard){clearTimeout(saveHandle);save()}});
 </script></body></html>
