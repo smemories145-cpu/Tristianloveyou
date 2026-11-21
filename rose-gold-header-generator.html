@@ -379,7 +379,7 @@ async function copyResult(value,button,label){try{await navigator.clipboard.writ
 $('copy').onclick=()=>copyResult(shortResult(),$('copy'),'คัดลอกโค้ดสั้น');
 $('copyEmbed').onclick=()=>copyResult(embedResult(),$('copyEmbed'),'คัดลอกแบบฝังเว็บ');
 $('copyCSS').onclick=()=>copyResult(cssResult(),$('copyCSS'),'HTML + CSS');
-$('download').onclick=()=>{const b=new Blob(['<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>'+embedResult()+'</body></html>'],{type:'text/html;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='rose-gold-header.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
+$('download').onclick=()=>{const b=new Blob(['<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>'+shortResult()+'</body></html>'],{type:'text/html;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='rose-gold-header.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
 
 const initialRich=$('richEditor').innerHTML;
 $('description').value=initialRich;
