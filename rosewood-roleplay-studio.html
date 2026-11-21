@@ -128,7 +128,8 @@ function card(){
  const outerBackground=';--rp-outer:'+safeColor($('outerBg').value,'#f2dfe7')+';--rp-outer-end:'+safeColor($('outerEnd').value,'#f8e9ef')+';--rp-outer-image:'+(bgURL?'url(&quot;'+esc(bgURL)+'&quot;)':'none')+';--rp-bg-x:'+num('outerX',0,100)+'%;--rp-bg-y:'+num('outerY',0,100)+'%;--rp-bg-overlay:'+(num('outerOverlay',0,90)/100)+';--rp-bg-size:'+($('outerImageSize').value==='contain'?'contain':'cover');
  const vars='--rp-paper:'+safeColor($('paper').value,'#fff9fb')+';--rp-inner:'+safeColor($('inner').value,'#fff3f7')+';--rp-ink:'+safeColor($('ink').value,'#765866')+';--rp-rule:'+safeColor($('rule').value,'#ebd2dd')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',180,480)+'px;--rp-aspect:'+(num('portraitRatio',55,135)/100)+';--rp-photo-x:'+num('portraitX',0,100)+'%;--rp-photo-y:'+num('portraitY',0,100)+'%;--rp-title-size:'+num('titleSize',16,40)+'px'+outerBackground;
  const img=esc(safeURL($('portrait').value));
- return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" data-frame="'+frameStyle+'" data-theme="'+pinkTheme+'" data-outer="'+outerMode+'" style="'+vars+'"><div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity"><div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
+ const backdrop=outerMode==='image'&&bgURL?'<div class="rp-outer-photo" aria-hidden="true"><img src="'+esc(bgURL)+'" alt=""><span class="rp-outer-veil"></span></div>':'';
+ return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" data-frame="'+frameStyle+'" data-theme="'+pinkTheme+'" data-outer="'+outerMode+'" style="'+vars+'">'+backdrop+'<div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity"><div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
 }
 function exported(){return stylesheet+'<div style="display:block;width:100%;max-width:100%;margin:0 auto;">'+card()+'</div>'}
 let bgLoadCounter=0;
@@ -143,6 +144,9 @@ function checkBackgroundImage(){
  lastBgKey=src;
  const token=++bgLoadCounter;
  status.textContent='กำลังตรวจสอบรูปพื้นหลัง...';
+ const rendered=$('preview').querySelector('.rp-outer-photo img');
+ if(!rendered){status.textContent='ยังไม่พบชั้นรูปภาพในพรีวิว';return}
+ rendered.addEventListener('error',()=>{if(token===bgLoadCounter)status.textContent='⚠ พรีวิวโหลดภาพไม่ได้ ลองใช้ลิงก์รูปโดยตรง หรือเว็บฝากรูปที่อนุญาตให้ฝังภาพ'},{once:true});
  const picture=new Image();
  picture.onload=()=>{if(token===bgLoadCounter&&$('outerMode').value==='image')status.textContent='✓ โหลดรูปสำเร็จแล้ว พื้นหลังจะแสดงรอบกรอบและจาง ๆ ผ่านพื้นการ์ด'};
  picture.onerror=()=>{if(token===bgLoadCounter&&$('outerMode').value==='image')status.textContent='⚠ โหลดรูปไม่ได้ ลองลิงก์รูปภาพโดยตรง (.jpg/.png/.webp/.gif) ไม่ใช่หน้าบน Pinterest หรือเว็บที่บล็อกการฝังรูป'};
@@ -153,6 +157,10 @@ let saveHandle;
 function save(){try{localStorage.setItem(storageKey,JSON.stringify({fields:Object.fromEntries(ids.map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML)}));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่อนุญาตบันทึกข้อมูล'}}
 function update(){render();clearTimeout(saveHandle);saveHandle=setTimeout(save,350)}
 ids.forEach(id=>$(id).addEventListener('input',update));
+$('outerImage').addEventListener('input',()=>{
+ if(safeURL($('outerImage').value))$('outerMode').value='image';
+ update();
+});
 document.querySelectorAll('[data-outer-mode]').forEach(b=>b.addEventListener('click',()=>{$('outerMode').value=b.dataset.outerMode;update()}));
 const outerPresets={cream:{outerMode:'solid',outerBg:'#faf5ee'},rose:{outerMode:'solid',outerBg:'#f2dfe7'},brown:{outerMode:'solid',outerBg:'#e3d3c5'},blend:{outerMode:'gradient',outerBg:'#e8d0d9',outerEnd:'#fff1f5'}};
 $('outerPreset').addEventListener('change',()=>{const preset=outerPresets[$('outerPreset').value];if(preset){for(const [id,val] of Object.entries(preset))$(id).value=val;update()}});
