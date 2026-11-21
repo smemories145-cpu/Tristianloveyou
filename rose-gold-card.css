@@ -74,3 +74,9 @@
 .hg11 .room-ornament{height:75px;max-height:75px;background-color:transparent}
 .hg11 .room-ornament.ornament-hosted::before{content:"";display:block;width:100%;height:75px;background-color:var(--ornament-color,#b88380);-webkit-mask-image:url("https://smemories145-cpu.github.io/Tristianloveyou/rose-gold-flourish.svg");mask-image:url("https://smemories145-cpu.github.io/Tristianloveyou/rose-gold-flourish.svg");-webkit-mask-position:center;-webkit-mask-repeat:no-repeat;-webkit-mask-size:contain;mask-position:center;mask-repeat:no-repeat;mask-size:contain}
 .hg11[data-ornament="none"] .room-ornament.ornament-hosted{display:none}
+
+/* Adjustable heading spacing; defaults preserve the original layout */
+.hg11 .overline{margin-bottom:var(--journal-gap,0px)}
+.hg11 .housename{margin-top:var(--house-top-gap,10px)!important;margin-bottom:var(--address-gap,3px)!important}
+.hg11 .room-title-row{margin-top:var(--title-top-gap,1px)!important;margin-bottom:var(--title-gap-bottom,0px)!important}
+.hg11 .thainame{margin-top:var(--thai-gap,0px)}
