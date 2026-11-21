@@ -103,24 +103,6 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <label>ข้อความรองหัวเรื่อง<input id="caption" value="บางช่วงเวลาที่เก็บไว้ในความทรงจำ"></label>
 <label>ขนาดชื่อหัวเรื่อง</label><div class="slide"><input id="titleSize" type="range" min="16" max="40" value="27"><output id="titleSizeOut">27px</output></div>
 </div></details>
-<details><summary>05 · พื้นหลังชั้นนอก</summary><div class="detail">
-<p class="tip">เลือกสีเรียบ สีไล่เฉด หรือรูปภาพเป็นพื้นหลังด้านนอกของการ์ด</p>
-<label>รูปแบบพื้นหลัง<select id="outerMode"><option value="solid">สีพื้นเรียบ</option><option value="gradient">สีไล่เฉด</option><option value="image">รูปภาพ</option></select></label>
-<div class="two"><label>สีพื้นหลังชั้นนอก<input id="outerBg" type="color" value="#f2dfe7"></label><label>สีปลายทางไล่เฉด<input id="outerEnd" type="color" value="#f8e9ef"></label></div>
-<label>ลิงก์รูปพื้นหลัง<input id="outerImage" type="url" placeholder="https://i.pinimg.com/.../photo.jpg"></label>
-<p id="bgImageStatus" class="tip" aria-live="polite">เลือก “รูปภาพ” แล้ววางลิงก์ภาพโดยตรง เช่น i.pinimg.com/...jpg</p>
-<div class="two"><label>ขนาดรูป<select id="outerImageSize"><option value="cover">เต็มกรอบ</option><option value="contain">แสดงรูปครบ</option></select></label><label>สีสำเร็จรูป<select id="outerPreset"><option value="custom">กำหนดเอง</option><option value="cream">ขาวครีม</option><option value="rose">ชมพูกุหลาบ</option><option value="brown">น้ำตาลนู้ด</option><option value="blend">ชมพูไล่เฉด</option></select></label></div>
-<label>เลื่อนภาพแนวนอน</label><div class="slide"><input id="outerX" type="range" min="0" max="100" value="50"><output id="outerXOut">50%</output></div>
-<label>เลื่อนภาพแนวตั้ง</label><div class="slide"><input id="outerY" type="range" min="0" max="100" value="50"><output id="outerYOut">50%</output></div>
-<label>ม่านสีครีมทับภาพ</label><div class="slide"><input id="outerOverlay" type="range" min="0" max="90" value="18"><output id="outerOverlayOut">18%</output></div>
-<div class="actions"><button type="button" data-outer-mode="solid">สีเรียบ</button><button type="button" data-outer-mode="gradient">ไล่เฉด</button><button type="button" data-outer-mode="image">รูปภาพ</button></div>
-<p class="tip">ใช้ลิงก์ภาพสาธารณะ JPG, PNG หรือ GIF</p></div></details>
-<details><summary>06 · สีพื้นการ์ดและตัวหนังสือ</summary><div class="detail"><div class="two">
-<label>สีพื้นหลังการ์ด<input id="paper" type="color" value="#fff9fb"></label>
-<label>พื้นหลังโรล<input id="inner" type="color" value="#fff3f7"></label>
-<label>สีข้อความ<input id="ink" type="color" value="#765866"></label>
-<label>สีเส้นและกรอบ<input id="rule" type="color" value="#ebd2dd"></label>
-</div></div></details>
 <details><summary>07 · ข้อความท้ายการ์ด</summary><div class="detail"><div class="two">
 <label>ข้อความซ้าย<input id="footerLeft" value="TRISTIAN · PRIVATE SCENE"></label>
 <label>ข้อความขวา<input id="footerRight" value="TO BE CONTINUED ♡"></label>
@@ -128,7 +110,7 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <details id="extraFeatures" class="extra-features"><summary>✦ ฟังก์ชันเสริม <span class="extra-count" id="extraCount">เลือกเพิ่มตามต้องการ</span></summary><div class="detail">
 <div class="module-manager"><strong>✦ เพิ่มฟังก์ชันเสริม</strong>
 <p class="tip">ฟังก์ชันที่ไม่ใช้จะไม่รบกวนหน้าฟอร์ม เมื่อเพิ่มแล้วจะปรากฏเป็นหมวดที่เปิด–ปิดได้</p>
-<div class="actions"><select id="moduleChoice" aria-label="เลือกฟังก์ชันเสริม"><option value="identity">รูปพื้นหลังกล่องชื่อ</option><option value="theme">ปรับธีมสีชมพู</option></select><button id="addModule" type="button">＋ เพิ่มหัวข้อ</button></div>
+<div class="actions"><select id="moduleChoice" aria-label="เลือกฟังก์ชันเสริม"><option value="identity">รูปพื้นหลังกล่องชื่อ</option><option value="theme">ปรับธีมสีชมพู</option><option value="outer">05 · พื้นหลังชั้นนอก</option><option value="colors">06 · สีพื้นการ์ดและตัวหนังสือ</option></select><button id="addModule" type="button">＋ เพิ่มหัวข้อ</button></div>
 </div>
 <div id="optionalModules" class="optional-modules">
 <details id="optionalIdentity" data-module="identity"><summary>รูปพื้นหลังกล่องชื่อ <small style="color:#c9ab9c;font-weight:400">ฟังก์ชันเสริม</small></summary><div class="detail">
@@ -143,6 +125,24 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <details id="optionalTheme" data-module="theme"><summary>ปรับธีมสีชมพู <small style="color:#c9ab9c;font-weight:400">ฟังก์ชันเสริม</small></summary><div class="detail">
 <label>ธีมการ์ด<select id="pinkTheme"><option value="luxury">Clean Luxury</option><option value="soft">Soft Rose</option></select></label>
 </div></details>
+<details id="optionalOuter" data-module="outer"><summary>05 · พื้นหลังชั้นนอก <small style="color:#c9ab9c;font-weight:400">ฟังก์ชันเสริม</small></summary><div class="detail">
+<p class="tip">เลือกสีเรียบ สีไล่เฉด หรือรูปภาพเป็นพื้นหลังด้านนอกของการ์ด</p>
+<label>รูปแบบพื้นหลัง<select id="outerMode"><option value="solid">สีพื้นเรียบ</option><option value="gradient">สีไล่เฉด</option><option value="image">รูปภาพ</option></select></label>
+<div class="two"><label>สีพื้นหลังชั้นนอก<input id="outerBg" type="color" value="#f2dfe7"></label><label>สีปลายทางไล่เฉด<input id="outerEnd" type="color" value="#f8e9ef"></label></div>
+<label>ลิงก์รูปพื้นหลัง<input id="outerImage" type="url" placeholder="https://i.pinimg.com/.../photo.jpg"></label>
+<p id="bgImageStatus" class="tip" aria-live="polite">เลือก “รูปภาพ” แล้ววางลิงก์ภาพโดยตรง เช่น i.pinimg.com/...jpg</p>
+<div class="two"><label>ขนาดรูป<select id="outerImageSize"><option value="cover">เต็มกรอบ</option><option value="contain">แสดงรูปครบ</option></select></label><label>สีสำเร็จรูป<select id="outerPreset"><option value="custom">กำหนดเอง</option><option value="cream">ขาวครีม</option><option value="rose">ชมพูกุหลาบ</option><option value="brown">น้ำตาลนู้ด</option><option value="blend">ชมพูไล่เฉด</option></select></label></div>
+<label>เลื่อนภาพแนวนอน</label><div class="slide"><input id="outerX" type="range" min="0" max="100" value="50"><output id="outerXOut">50%</output></div>
+<label>เลื่อนภาพแนวตั้ง</label><div class="slide"><input id="outerY" type="range" min="0" max="100" value="50"><output id="outerYOut">50%</output></div>
+<label>ม่านสีครีมทับภาพ</label><div class="slide"><input id="outerOverlay" type="range" min="0" max="90" value="18"><output id="outerOverlayOut">18%</output></div>
+<div class="actions"><button type="button" data-outer-mode="solid">สีเรียบ</button><button type="button" data-outer-mode="gradient">ไล่เฉด</button><button type="button" data-outer-mode="image">รูปภาพ</button></div>
+<p class="tip">ใช้ลิงก์ภาพสาธารณะ JPG, PNG หรือ GIF</p></div></details>
+<details id="optionalColors" data-module="colors"><summary>06 · สีพื้นการ์ดและตัวหนังสือ <small style="color:#c9ab9c;font-weight:400">ฟังก์ชันเสริม</small></summary><div class="detail"><div class="two">
+<label>สีพื้นหลังการ์ด<input id="paper" type="color" value="#fff9fb"></label>
+<label>พื้นหลังโรล<input id="inner" type="color" value="#fff3f7"></label>
+<label>สีข้อความ<input id="ink" type="color" value="#765866"></label>
+<label>สีเส้นและกรอบ<input id="rule" type="color" value="#ebd2dd"></label>
+</div></div></details>
 </div>
 </div></details>
 <div class="actions"><button type="button" id="reset">คืนค่าตั้งต้น</button></div><p id="status">ระบบบันทึกข้อความและการตั้งค่าในเบราว์เซอร์นี้</p>
@@ -324,6 +324,6 @@ $('storyEditor').addEventListener('paste',e=>{
 $('reset').onclick=()=>{if(!confirm('คืนค่าฟอร์มโรลเพลย์ทั้งหมดเป็นค่าเริ่มต้น?'))return;ids.forEach(id=>$(id).value=defaults[id]);$('storyEditor').innerHTML=initialStory;activeModules=[];favoriteColors=['#a8728c','#765866','#c38b9b'];renderFavoriteColors();showModules();update()};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(exported());$('copy').textContent='✓ คัดลอกแล้ว';setTimeout(()=>$('copy').textContent='คัดลอกโค้ดสั้น',1500)}catch(e){$('out').focus();$('out').select();$('status').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
 $('download').onclick=()=>{const html='<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+stylesheet+'</head><body>'+card()+'</body></html>';const a=document.createElement('a'),blob=new Blob([html],{type:'text/html;charset=utf-8'});a.href=URL.createObjectURL(blob);a.download='rosewood-roleplay.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
-try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved){ids.forEach(id=>{if(typeof saved.fields?.[id]==='string')$(id).value=saved.fields[id]});if(!saved.fields?.pinkTheme && saved.fields?.portraitSize==='250'){$('portraitSize').value='350'}if(typeof saved.story==='string')$('storyEditor').innerHTML=cleanStory(saved.story);activeModules=Array.isArray(saved.modules)?saved.modules.filter(x=>['identity','theme'].includes(x)):(saved.fields?.identityImage?['identity']:[]);if(Array.isArray(saved.favoriteColors))favoriteColors=saved.favoriteColors.filter(x=>normalizeHex(x)).slice(0,14)}}catch(e){}
+try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved){ids.forEach(id=>{if(typeof saved.fields?.[id]==='string')$(id).value=saved.fields[id]});if(!saved.fields?.pinkTheme && saved.fields?.portraitSize==='250'){$('portraitSize').value='350'}if(typeof saved.story==='string')$('storyEditor').innerHTML=cleanStory(saved.story);activeModules=Array.isArray(saved.modules)?saved.modules.filter(x=>['identity','theme','outer','colors'].includes(x)):(saved.fields?.identityImage?['identity']:[]);if(Array.isArray(saved.favoriteColors))favoriteColors=saved.favoriteColors.filter(x=>normalizeHex(x)).slice(0,14)}}catch(e){}
 showModules();renderFavoriteColors();render();window.addEventListener('pagehide',()=>{clearTimeout(saveHandle);save()});
 </script></body></html>
