@@ -68,7 +68,17 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <label>ขนาดข้อความโรล</label><div class="slide"><input id="storySize" type="range" min="14" max="21" value="16"><output id="storySizeOut">16px</output></div>
 <label>ระยะบรรทัด</label><div class="slide"><input id="storyLine" type="range" min="1.5" max="2.5" step=".05" value="2"><output id="storyLineOut">2</output></div>
 </div></details>
-<details><summary>☕ สีพื้นหลังและข้อความ</summary><div class="detail"><div class="two">
+<details open><summary>☕ พื้นหลังชั้นนอกสุดและสีข้อความ</summary><div class="detail">
+<p class="tip">เลือกสีเรียบ สีไล่เฉด หรือรูปภาพเป็นพื้นหลังด้านนอกของการ์ด</p>
+<label>รูปแบบพื้นหลัง<select id="outerMode"><option value="solid">สีพื้นเรียบ</option><option value="gradient">สีไล่เฉด</option><option value="image">รูปภาพ</option></select></label>
+<div class="two"><label>สีพื้นหลังชั้นนอก<input id="outerBg" type="color" value="#f2dfe7"></label><label>สีปลายทางไล่เฉด<input id="outerEnd" type="color" value="#f8e9ef"></label></div>
+<label>ลิงก์รูปพื้นหลัง<input id="outerImage" type="url" placeholder="https://.../background.jpg"></label>
+<div class="two"><label>ขนาดรูป<select id="outerImageSize"><option value="cover">เต็มกรอบ</option><option value="contain">แสดงรูปครบ</option></select></label><label>สีสำเร็จรูป<select id="outerPreset"><option value="custom">กำหนดเอง</option><option value="cream">ขาวครีม</option><option value="rose">ชมพูกุหลาบ</option><option value="brown">น้ำตาลนู้ด</option><option value="blend">ชมพูไล่เฉด</option></select></label></div>
+<label>เลื่อนภาพแนวนอน</label><div class="slide"><input id="outerX" type="range" min="0" max="100" value="50"><output id="outerXOut">50%</output></div>
+<label>เลื่อนภาพแนวตั้ง</label><div class="slide"><input id="outerY" type="range" min="0" max="100" value="50"><output id="outerYOut">50%</output></div>
+<label>ม่านสีครีมทับภาพ</label><div class="slide"><input id="outerOverlay" type="range" min="0" max="90" value="18"><output id="outerOverlayOut">18%</output></div>
+<div class="actions"><button type="button" data-outer-mode="solid">สีเรียบ</button><button type="button" data-outer-mode="gradient">ไล่เฉด</button><button type="button" data-outer-mode="image">รูปภาพ</button></div>
+<p class="tip">ใช้ลิงก์ภาพสาธารณะ JPG, PNG หรือ GIF</p><div class="two">
 <label>สีพื้นหลังการ์ด<input id="paper" type="color" value="#fff9fb"></label>
 <label>พื้นหลังโรล<input id="inner" type="color" value="#fff3f7"></label>
 <label>สีข้อความ<input id="ink" type="color" value="#765866"></label>
@@ -87,7 +97,7 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const ids=['pinkTheme','name','subtitle','meta','portrait','layout','frameStyle','portraitSize','portraitRatio','portraitX','portraitY','headerMode','eyebrow','title','caption','titleSize','storySize','storyLine','paper','inner','ink','rule','footerLeft','footerRight'];
+const ids=['pinkTheme','name','subtitle','meta','portrait','layout','frameStyle','portraitSize','portraitRatio','portraitX','portraitY','headerMode','eyebrow','title','caption','titleSize','storySize','storyLine','outerMode','outerBg','outerEnd','outerImage','outerImageSize','outerPreset','outerX','outerY','outerOverlay','paper','inner','ink','rule','footerLeft','footerRight'];
 const defaults=Object.fromEntries(ids.map(id=>[id,$(id).value]));
 const initialStory=$('storyEditor').innerHTML;
 const storageKey='rosewood-roleplay-studio-v1';
@@ -112,16 +122,23 @@ function card(){
  const header=['compact','normal','none'].includes($('headerMode').value)?$('headerMode').value:'compact';
  const frameStyle=['ornate','arch','cinematic','minimal'].includes($('frameStyle').value)?$('frameStyle').value:'minimal';
  const pinkTheme=$('pinkTheme').value==='soft'?'soft':'luxury';
- const vars='--rp-paper:'+safeColor($('paper').value,'#fff9fb')+';--rp-inner:'+safeColor($('inner').value,'#fff3f7')+';--rp-ink:'+safeColor($('ink').value,'#765866')+';--rp-rule:'+safeColor($('rule').value,'#ebd2dd')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',180,480)+'px;--rp-aspect:'+(num('portraitRatio',55,135)/100)+';--rp-photo-x:'+num('portraitX',0,100)+'%;--rp-photo-y:'+num('portraitY',0,100)+'%;--rp-title-size:'+num('titleSize',16,40)+'px';
+ const outerMode=['solid','gradient','image'].includes($('outerMode').value)?$('outerMode').value:'solid';
+ const bgURL=safeURL($('outerImage').value);
+ const outerBackground=';--rp-outer:'+safeColor($('outerBg').value,'#f2dfe7')+';--rp-outer-end:'+safeColor($('outerEnd').value,'#f8e9ef')+';--rp-outer-image:'+(bgURL?'url(&quot;'+esc(bgURL)+'&quot;)':'none')+';--rp-bg-x:'+num('outerX',0,100)+'%;--rp-bg-y:'+num('outerY',0,100)+'%;--rp-bg-overlay:'+(num('outerOverlay',0,90)/100)+';--rp-bg-size:'+($('outerImageSize').value==='contain'?'contain':'cover');
+ const vars='--rp-paper:'+safeColor($('paper').value,'#fff9fb')+';--rp-inner:'+safeColor($('inner').value,'#fff3f7')+';--rp-ink:'+safeColor($('ink').value,'#765866')+';--rp-rule:'+safeColor($('rule').value,'#ebd2dd')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',180,480)+'px;--rp-aspect:'+(num('portraitRatio',55,135)/100)+';--rp-photo-x:'+num('portraitX',0,100)+'%;--rp-photo-y:'+num('portraitY',0,100)+'%;--rp-title-size:'+num('titleSize',16,40)+'px'+outerBackground;
  const img=esc(safeURL($('portrait').value));
- return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" data-frame="'+frameStyle+'" data-theme="'+pinkTheme+'" style="'+vars+'"><div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity"><div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
+ return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" data-frame="'+frameStyle+'" data-theme="'+pinkTheme+'" data-outer="'+outerMode+'" style="'+vars+'"><div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity"><div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
 }
 function exported(){return stylesheet+'<div style="display:block;width:100%;max-width:100%;margin:0 auto;">'+card()+'</div>'}
-function render(){for(const id of ['portraitSize','portraitRatio','portraitX','portraitY','titleSize','storySize','storyLine'])$(id+'Out').textContent=$(id).value+({'portraitSize':'px','portraitRatio':'%','portraitX':'%','portraitY':'%','titleSize':'px','storySize':'px','storyLine':''}[id]);$('preview').innerHTML=card();$('out').value=exported()}
+function render(){for(const id of ['portraitSize','portraitRatio','portraitX','portraitY','titleSize','storySize','storyLine','outerX','outerY','outerOverlay'])$(id+'Out').textContent=$(id).value+({'portraitSize':'px','portraitRatio':'%','portraitX':'%','portraitY':'%','titleSize':'px','storySize':'px','storyLine':'','outerX':'%','outerY':'%','outerOverlay':'%'}[id]);$('preview').innerHTML=card();$('out').value=exported()}
 let saveHandle;
 function save(){try{localStorage.setItem(storageKey,JSON.stringify({fields:Object.fromEntries(ids.map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML)}));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่อนุญาตบันทึกข้อมูล'}}
 function update(){render();clearTimeout(saveHandle);saveHandle=setTimeout(save,350)}
 ids.forEach(id=>$(id).addEventListener('input',update));
+document.querySelectorAll('[data-outer-mode]').forEach(b=>b.addEventListener('click',()=>{$('outerMode').value=b.dataset.outerMode;update()}));
+const outerPresets={cream:{outerMode:'solid',outerBg:'#faf5ee'},rose:{outerMode:'solid',outerBg:'#f2dfe7'},brown:{outerMode:'solid',outerBg:'#e3d3c5'},blend:{outerMode:'gradient',outerBg:'#e8d0d9',outerEnd:'#fff1f5'}};
+$('outerPreset').addEventListener('change',()=>{const preset=outerPresets[$('outerPreset').value];if(preset){for(const [id,val] of Object.entries(preset))$(id).value=val;update()}});
+
 document.querySelectorAll('[data-theme-choice]').forEach(b=>b.addEventListener('click',()=>{$('pinkTheme').value=b.dataset.themeChoice;update()}));
 document.querySelectorAll('[data-look]').forEach(b=>b.addEventListener('click',()=>{$('frameStyle').value=b.dataset.look;update()}));
 $('storyEditor').addEventListener('input',update);
