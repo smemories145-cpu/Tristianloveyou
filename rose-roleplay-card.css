@@ -149,36 +149,11 @@
 .rp-rose[data-outer="image"][data-theme="soft"] .rp-shell{background:#fffafbe0!important}
 @media(max-width:680px){.rp-rose .rp-person,.rp-rose[data-layout="right"] .rp-person{flex-direction:column;align-items:center;padding:12px;gap:13px}.rp-rose .rp-photo-frame,.rp-rose[data-layout="right"] .rp-photo-frame,.rp-rose[data-frame="minimal"] .rp-photo-frame{flex:none;align-self:center;width:min(var(--rp-portrait),100%);max-width:100%}.rp-rose .rp-identity,.rp-rose[data-layout="right"] .rp-identity{align-items:center;text-align:center;width:100%;padding:18px}.rp-rose .rp-meta,.rp-rose[data-layout="right"] .rp-meta{align-self:center}.rp-rose .rp-shell{padding:20px 15px}.rp-rose .rp-story{padding:20px 18px}}
 
-/* Moonlit Lily: original crescent and lily art, hosted as a small reusable SVG */
-.rp-rose[data-identity-decor="moonlit"] .rp-identity{isolation:isolate;min-height:260px;background:linear-gradient(120deg,#fffafdF2,#fff5f9e0)!important}
-.rp-rose[data-identity-decor="moonlit"] .rp-identity::before{display:none!important;content:none!important}
-.rp-rose[data-identity-decor="moonlit"] .rp-identity::after{content:"";display:block;position:absolute;z-index:0;right:-8px;top:0;bottom:0;width:69%;background-image:url("https://smemories145-cpu.github.io/Tristianloveyou/rose-moonlit-lily.svg");background-repeat:no-repeat;background-position:right center;background-size:contain;opacity:var(--rp-lily-opacity,.62);pointer-events:none}
-.rp-rose[data-identity-decor="moonlit"] .rp-identity>*{position:relative;z-index:1}
-.rp-rose[data-identity-decor="none"] .rp-identity::before,.rp-rose[data-identity-decor="none"] .rp-identity::after{display:none!important;content:none!important}
-.rp-rose[data-identity-decor="monogram"] .rp-identity::after{display:none!important;content:none!important}
-@media(max-width:680px){.rp-rose[data-identity-decor="moonlit"] .rp-identity{min-height:230px}.rp-rose[data-identity-decor="moonlit"] .rp-identity::after{width:62%;opacity:calc(var(--rp-lily-opacity,.62) * .85)}}
 
-/* Custom decorative image beside character name: no image URL escaping through CSS vars. */
-.rp-rose .rp-custom-decor{display:none}
-.rp-rose[data-identity-decor="custom"] .rp-identity{isolation:isolate;min-height:260px}
-.rp-rose[data-identity-decor="custom"] .rp-identity::before,.rp-rose[data-identity-decor="custom"] .rp-identity::after{display:none!important;content:none!important}
-.rp-rose[data-identity-decor="custom"] .rp-custom-decor{display:block;position:absolute!important;z-index:0!important;left:var(--rp-decor-x,78%);top:var(--rp-decor-y,50%);width:var(--rp-decor-width,64%);height:100%;max-width:none;transform:translate(-50%,-50%);opacity:var(--rp-decor-opacity,.55);object-fit:contain;pointer-events:none;filter:none}
-.rp-rose[data-identity-decor="custom"] .rp-identity>.rp-character,.rp-rose[data-identity-decor="custom"] .rp-identity>.rp-character-thai,.rp-rose[data-identity-decor="custom"] .rp-identity>.rp-meta{position:relative;z-index:1}
-@media(max-width:680px){.rp-rose[data-identity-decor="custom"] .rp-identity{min-height:220px}}
-
-/* Feather the left edge of a custom name decoration into the card background. */
-.rp-rose[data-identity-decor="custom"] .rp-custom-decor{
-  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 var(--rp-decor-feather,48%),#000 100%);
-  mask-image:linear-gradient(to right,transparent 0%,#000 var(--rp-decor-feather,48%),#000 100%);
-  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
-  filter:blur(var(--rp-decor-blur,1px));
-}
-
-/* Fade controls work in BOTH Moonlit Lily and custom image mode.
-   Set 0% for a hard left edge; 90% for a long feathered fade. */
-.rp-rose[data-identity-decor="moonlit"] .rp-identity::after{
-  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 var(--rp-decor-feather,48%),#000 100%);
-  mask-image:linear-gradient(to right,transparent 0%,#000 var(--rp-decor-feather,48%),#000 100%);
-  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
-  filter:blur(var(--rp-decor-blur,1px));
-}
+/* Simplified name panel: optional photo, softness, white veil, readable typography */
+.rp-rose .rp-identity{isolation:isolate;overflow:hidden;background:linear-gradient(145deg,#fffdfdeb,#fff6fae9)}
+.rp-rose .rp-identity::before,.rp-rose .rp-identity::after{display:none!important;content:none!important}
+.rp-rose .rp-identity-bg{position:absolute!important;inset:0;z-index:0!important;overflow:hidden;pointer-events:none}
+.rp-rose .rp-identity-bg img{position:absolute;inset:-5%;width:110%;height:110%;max-width:none;display:block;object-fit:cover;object-position:center;opacity:var(--rp-identity-opacity,.7);filter:blur(var(--rp-identity-blur,2px));transform:scale(1.015)}
+.rp-rose .rp-identity-veil{position:absolute;display:block;inset:0;background:rgba(255,251,253,var(--rp-identity-veil,.55));box-shadow:inset 0 0 38px #fff7fb80;pointer-events:none}
+.rp-rose .rp-identity>.rp-character,.rp-rose .rp-identity>.rp-character-thai,.rp-rose .rp-identity>.rp-meta{position:relative;z-index:1}
