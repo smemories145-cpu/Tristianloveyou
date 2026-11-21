@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rosewood · Roleplay Card Studio</title>
-<link rel="stylesheet" href="rose-roleplay-card.css?v=softeditorial5">
+<link rel="stylesheet" href="rose-roleplay-card.css?v=editorrevamp6">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600&display=swap');
 *{box-sizing:border-box}body{margin:0;background:#211d1b;color:#e9dcd0;font:12px/1.8 'Noto Serif Thai',serif}
@@ -38,7 +38,11 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <header><div class="wrap"><div><h1>Rosewood · Roleplay Studio</h1><p>เขียนโรลเพลย์ · ปรับรูปตัวละคร · จัดรูปแบบข้อความ · บันทึกอัตโนมัติ</p></div><a href="rose-gold-header-generator.html">← กลับ Rose Gold Generator</a></div></header>
 <main><section class="panel editpanel"><h2>01 / EDIT YOUR ROLEPLAY</h2>
 <details open><summary>01 · ตัวละครและรูปภาพ</summary><div class="detail">
-
+<label>ชื่อตัวละคร<input id="name" value="Tristian S. Kennedy"></label>
+<label>ชื่อรอง / คำอธิบายตัวละคร<input id="subtitle" value="ทริสเตียน · บ้านที่อบอุ่น"></label>
+<label>ข้อมูลใต้ชื่อ<input id="meta" value="A PRIVATE STORY · 01"></label>
+<label>URL ภาพตัวละคร<input id="portrait" value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=85"></label>
+<label>ขนาดรูปตัวละคร</label><div class="slide"><input id="portraitSize" type="range" min="180" max="480" value="350"><output id="portraitSizeOut">350px</output></div>
 <p class="tip">เลื่อนรูปได้ด้วยปุ่มลูกศร และซูมรูปได้โดยไม่ต้องเปลี่ยนสัดส่วนกรอบ</p>
 <div class="image-move">
  <button type="button" data-pan="0,-10" title="ขยับขึ้น">↑</button>
@@ -144,33 +148,33 @@ const storageKey='rosewood-roleplay-studio-v1';
 const esc=x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const safeURL=x=>/^https?:\/\/[^\s<>"']+$/i.test(x.trim())?x.trim():'';
 const safeColor=(x,fb)=>/^#[0-9a-f]{6}$/i.test(x)?x:fb;
-const stylesheet='<link rel="stylesheet" href="https://smemories145-cpu.github.io/Tristianloveyou/rose-roleplay-card.css?v=softeditorial5">';
+const stylesheet='<link rel="stylesheet" href="https://smemories145-cpu.github.io/Tristianloveyou/rose-roleplay-card.css?v=editorrevamp6">';
 function cleanStory(raw){
  const doc=new DOMParser().parseFromString('<main>'+raw+'</main>','text/html');
- const ok=new Set(['P','DIV','BR','STRONG','B','EM','I','U','BLOCKQUOTE','UL','OL','LI','SPAN']);
+ const ok=new Set(['P','DIV','BR','STRONG','B','EM','I','U','S','STRIKE','DEL','A','FONT','BLOCKQUOTE','UL','OL','LI','SPAN']);
  function clean(n){if(n.nodeType===3)return document.createTextNode(n.textContent);if(n.nodeType!==1)return document.createDocumentFragment();
  if(['SCRIPT','STYLE','IFRAME','SVG','OBJECT','IMG','FORM','INPUT','AUDIO','VIDEO'].includes(n.tagName))return document.createDocumentFragment();
- const el=document.createElement(ok.has(n.tagName)?n.tagName:'span');
- if(n.style){const align=n.style.textAlign;if(['left','center','right'].includes(align))el.style.textAlign=align;}
+ const el=document.createElement(n.tagName==='FONT'?'span':(ok.has(n.tagName)?n.tagName:'span'));
+ if(n.tagName==='A'){const href=n.getAttribute('href')||'';if(/^(https?:\/\/|mailto:)/i.test(href.trim())){el.setAttribute('href',href.trim());el.setAttribute('target','_blank');el.setAttribute('rel','noopener noreferrer nofollow')}}
+ if(n.style){const align=n.style.textAlign;if(['left','center','right','justify'].includes(align))el.style.textAlign=align;const color=n.style.color;if(/^#[0-9a-f]{3,8}$/i.test(color)||/^rgba?\([\d\s.,%]+\)$/i.test(color))el.style.color=color;}
+ if(n.tagName==='FONT'){const clr=n.getAttribute('color')||'';if(/^#[0-9a-f]{3,8}$/i.test(clr))el.style.color=clr;}
  for(const child of Array.from(n.childNodes))el.appendChild(clean(child));return el;}
  const box=document.createElement('div');for(const n of Array.from(doc.querySelector('main').childNodes))box.appendChild(clean(n));
  return box.innerHTML;
 }
 function card(){
  const get=id=>esc($(id).value),num=(id,min,max)=>Math.min(max,Math.max(min,Number($(id).value)||0));
- const layout=['left','right','center'].includes($('layout').value)?$('layout').value:'left';
  const header=['compact','normal','none'].includes($('headerMode').value)?$('headerMode').value:'compact';
- const frameStyle=['ornate','arch','cinematic','minimal'].includes($('frameStyle').value)?$('frameStyle').value:'minimal';
  const pinkTheme=$('pinkTheme').value==='soft'?'soft':'luxury';
  const identityURL=safeURL($('identityImage').value);
  const outerMode=['solid','gradient','image'].includes($('outerMode').value)?$('outerMode').value:'solid';
  const bgURL=safeURL($('outerImage').value);
  const outerBackground=';--rp-outer:'+safeColor($('outerBg').value,'#f2dfe7')+';--rp-outer-end:'+safeColor($('outerEnd').value,'#f8e9ef')+';--rp-outer-image:'+(bgURL?'url(&quot;'+esc(bgURL)+'&quot;)':'none')+';--rp-bg-x:'+num('outerX',0,100)+'%;--rp-bg-y:'+num('outerY',0,100)+'%;--rp-bg-overlay:'+(num('outerOverlay',0,90)/100)+';--rp-bg-size:'+($('outerImageSize').value==='contain'?'contain':'cover');
- const vars='--rp-paper:'+safeColor($('paper').value,'#fff9fb')+';--rp-inner:'+safeColor($('inner').value,'#fff3f7')+';--rp-ink:'+safeColor($('ink').value,'#765866')+';--rp-rule:'+safeColor($('rule').value,'#ebd2dd')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',180,480)+'px;--rp-aspect:'+(num('portraitRatio',55,135)/100)+';--rp-photo-x:'+num('portraitX',0,100)+'%;--rp-photo-y:'+num('portraitY',0,100)+'%;--rp-title-size:'+num('titleSize',16,40)+'px;--rp-identity-opacity:'+(num('identityImageOpacity',0,100)/100)+';--rp-identity-blur:'+num('identityImageBlur',0,12)+'px;--rp-identity-veil:'+(num('identityVeil',0,95)/100)+outerBackground;
+ const vars='--rp-paper:'+safeColor($('paper').value,'#fff9fb')+';--rp-inner:'+safeColor($('inner').value,'#fff3f7')+';--rp-ink:'+safeColor($('ink').value,'#765866')+';--rp-rule:'+safeColor($('rule').value,'#ebd2dd')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',180,480)+'px;--rp-aspect:'+0.84+';--rp-photo-x:50%;--rp-photo-y:50%;--rp-photo-pan-x:'+((num('portraitX',0,100)-50)/2)+'%;--rp-photo-pan-y:'+((num('portraitY',0,100)-50)/2)+'%;--rp-photo-zoom:'+(num('portraitZoom',100,190)/100)+';--rp-title-size:'+num('titleSize',16,40)+'px;--rp-identity-opacity:'+(num('identityImageOpacity',0,100)/100)+';--rp-identity-blur:'+num('identityImageBlur',0,12)+'px;--rp-identity-veil:'+(num('identityVeil',0,95)/100)+outerBackground;
  const img=esc(safeURL($('portrait').value));
  const identityBg=identityURL?'<div class="rp-identity-bg" aria-hidden="true"><img src="'+esc(identityURL)+'" alt=""><span class="rp-identity-veil"></span></div>':'';
  const backdrop=outerMode==='image'&&bgURL?'<div class="rp-outer-photo" aria-hidden="true"><img src="'+esc(bgURL)+'" alt=""><span class="rp-outer-veil"></span></div>':'';
- return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" data-frame="'+frameStyle+'" data-theme="'+pinkTheme+'" data-outer="'+outerMode+'" style="'+vars+'">'+backdrop+'<div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity">'+identityBg+'<div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
+ return '<article class="rp-rose" data-layout="left" data-header="'+header+'" data-frame="minimal" data-theme="'+pinkTheme+'" data-outer="'+outerMode+'" style="'+vars+'">'+backdrop+'<div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity">'+identityBg+'<div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div>'+($('note').value.trim()?'<aside class="rp-note"><span class="rp-note-label">NOTE</span><div>'+esc($('note').value.trim()).replace(/\n/g,'<br>')+'</div></aside>':'')+'<div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
 }
 function exported(){return stylesheet+'<div style="display:block;width:100%;max-width:100%;margin:0 auto;">'+card()+'</div>'}
 let identityToken=0,lastIdentityURL='';
@@ -205,12 +209,12 @@ function checkBackgroundImage(){
  picture.src=src;
 }
 function render(){
- const units={portraitSize:'px',portraitRatio:'%',portraitX:'%',portraitY:'%',titleSize:'px',storySize:'px',storyLine:'',identityImageOpacity:'%',identityImageBlur:'px',identityVeil:'%',outerX:'%',outerY:'%',outerOverlay:'%'};
+ const units={portraitSize:'px',portraitZoom:'%',titleSize:'px',storySize:'px',storyLine:'',identityImageOpacity:'%',identityImageBlur:'px',identityVeil:'%',outerX:'%',outerY:'%',outerOverlay:'%'};
  for(const [id,unit] of Object.entries(units))$(id+'Out').textContent=$(id).value+unit;
  $('preview').innerHTML=card();$('out').value=exported();checkBackgroundImage();checkIdentityImage();
 }
 let saveHandle;
-function save(){try{localStorage.setItem(storageKey,JSON.stringify({fields:Object.fromEntries(ids.map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML)}));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่อนุญาตบันทึกข้อมูล'}}
+function save(){try{localStorage.setItem(storageKey,JSON.stringify({fields:Object.fromEntries(ids.map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML),modules:activeModules,favoriteColors}));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่อนุญาตบันทึกข้อมูล'}}
 function update(){render();clearTimeout(saveHandle);saveHandle=setTimeout(save,350)}
 ids.forEach(id=>$(id).addEventListener('input',update));
 $('outerImage').addEventListener('input',()=>{
@@ -221,14 +225,32 @@ document.querySelectorAll('[data-outer-mode]').forEach(b=>b.addEventListener('cl
 const outerPresets={cream:{outerMode:'solid',outerBg:'#faf5ee'},rose:{outerMode:'solid',outerBg:'#f2dfe7'},brown:{outerMode:'solid',outerBg:'#e3d3c5'},blend:{outerMode:'gradient',outerBg:'#e8d0d9',outerEnd:'#fff1f5'}};
 $('outerPreset').addEventListener('change',()=>{const preset=outerPresets[$('outerPreset').value];if(preset){for(const [id,val] of Object.entries(preset))$(id).value=val;update()}});
 
-document.querySelectorAll('[data-theme-choice]').forEach(b=>b.addEventListener('click',()=>{$('pinkTheme').value=b.dataset.themeChoice;update()}));
-document.querySelectorAll('[data-look]').forEach(b=>b.addEventListener('click',()=>{$('frameStyle').value=b.dataset.look;update()}));
+
+document.querySelectorAll('[data-pan]').forEach(b=>b.addEventListener('click',()=>{
+ const [dx,dy]=b.dataset.pan.split(',').map(Number);
+ if(dx===0&&dy===0){$('portraitX').value='50';$('portraitY').value='50'}
+ else{$('portraitX').value=String(Math.min(100,Math.max(0,Number($('portraitX').value)+dx)));$('portraitY').value=String(Math.min(100,Math.max(0,Number($('portraitY').value)+dy)))}
+ update();
+}));
+let activeModules=[],favoriteColors=['#a8728c','#765866','#c38b9b'];
+function showModules(){
+ document.querySelectorAll('#optionalModules [data-module]').forEach(el=>{const on=activeModules.includes(el.dataset.module);el.classList.toggle('module-on',on);if(!on)el.open=false});
+ Array.from($('moduleChoice').options).forEach(o=>o.disabled=activeModules.includes(o.value));
+ const available=Array.from($('moduleChoice').options).find(o=>!o.disabled);if(available)$('moduleChoice').value=available.value;
+ $('addModule').disabled=!available;
+}
+$('addModule').onclick=()=>{const m=$('moduleChoice').value;if(activeModules.includes(m))return;activeModules.push(m);showModules();document.querySelector('[data-module="'+m+'"]').open=true;update()};
+document.querySelectorAll('#optionalModules [data-module] summary').forEach(summary=>{
+ const btn=document.createElement('button');btn.type='button';btn.textContent='× นำออก';btn.className='remove-module';
+ btn.onclick=e=>{e.preventDefault();e.stopPropagation();activeModules=activeModules.filter(x=>x!==summary.parentElement.dataset.module);showModules();update()};
+ summary.appendChild(btn);
+});
 $('storyEditor').addEventListener('input',update);
 $('storyEditor').addEventListener('paste',e=>{e.preventDefault();document.execCommand('insertText',false,e.clipboardData.getData('text/plain'))});
 document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedown',e=>e.preventDefault());b.addEventListener('click',()=>{$('storyEditor').focus();document.execCommand(b.dataset.cmd,false,null);update()})});
 $('reset').onclick=()=>{if(!confirm('คืนค่าฟอร์มโรลเพลย์ทั้งหมดเป็นค่าเริ่มต้น?'))return;ids.forEach(id=>$(id).value=defaults[id]);$('storyEditor').innerHTML=initialStory;update()};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(exported());$('copy').textContent='✓ คัดลอกแล้ว';setTimeout(()=>$('copy').textContent='คัดลอกโค้ดสั้น',1500)}catch(e){$('out').focus();$('out').select();$('status').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
 $('download').onclick=()=>{const html='<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+stylesheet+'</head><body>'+card()+'</body></html>';const a=document.createElement('a'),blob=new Blob([html],{type:'text/html;charset=utf-8'});a.href=URL.createObjectURL(blob);a.download='rosewood-roleplay.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
-try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved){ids.forEach(id=>{if(typeof saved.fields?.[id]==='string')$(id).value=saved.fields[id]});if(!saved.fields?.pinkTheme && saved.fields?.portraitSize==='250'){$('portraitSize').value='350';$('portraitRatio').value='84';$('frameStyle').value='minimal'}if(typeof saved.story==='string')$('storyEditor').innerHTML=cleanStory(saved.story)}}catch(e){}
+try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved){ids.forEach(id=>{if(typeof saved.fields?.[id]==='string')$(id).value=saved.fields[id]});if(!saved.fields?.pinkTheme && saved.fields?.portraitSize==='250'){$('portraitSize').value='350'}if(typeof saved.story==='string')$('storyEditor').innerHTML=cleanStory(saved.story)}}catch(e){}
 render();window.addEventListener('pagehide',()=>{clearTimeout(saveHandle);save()});
 </script></body></html>
