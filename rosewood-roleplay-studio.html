@@ -40,9 +40,15 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <div class="actions"><button type="button" data-theme-choice="soft">♡ หวานละมุน</button><button type="button" data-theme-choice="luxury">✧ ชมพูหรู</button></div>
 </div></details>
 <details open><summary>✦ ตัวละครและรูปภาพ</summary><div class="detail">
-<label>ลวดลายข้างชื่อตัวละคร<select id="identityDecor"><option value="moonlit">Moonlit Lily · พระจันทร์และดอกลิลลี่</option><option value="none">ไม่ใช้ลวดลาย</option><option value="monogram">ตัวอักษรแรกของชื่อ (แบบเดิม)</option></select></label>
+<label>ลวดลายข้างชื่อตัวละคร<select id="identityDecor"><option value="moonlit">Moonlit Lily · พระจันทร์และดอกลิลลี่</option><option value="none">ไม่ใช้ลวดลาย</option><option value="monogram">ตัวอักษรแรกของชื่อ (แบบเดิม)</option><option value="custom">ใส่รูปตกแต่งเอง · PNG / GIF / WebP</option></select></label>
 <label>ความเข้มของลาย Moonlit Lily</label><div class="slide"><input id="lilyOpacity" type="range" min="10" max="100" value="62"><output id="lilyOpacityOut">62%</output></div>
 <p class="tip">ลายดอกลิลลี่อยู่หลังชื่อแบบจาง ๆ ไม่บังตัวหนังสือ คัดลอกโค้ดสั้นแล้วลายยังติดไปด้วย</p>
+<label>URL รูปตกแต่งหลังชื่อตัวละคร<input id="decorImage" type="url" placeholder="https://.../lily.png"></label>
+<p class="tip" id="decorImageStatus" aria-live="polite">ใส่ลิงก์ภาพโดยตรง แล้วระบบจะสลับไปใช้รูปของคุณให้อัตโนมัติ</p>
+<label>ความเข้ม–จางของรูปตกแต่ง</label><div class="slide"><input id="decorOpacity" type="range" min="0" max="100" value="55"><output id="decorOpacityOut">55%</output></div>
+<label>ขนาดรูปตกแต่ง</label><div class="slide"><input id="decorSize" type="range" min="20" max="120" value="64"><output id="decorSizeOut">64%</output></div>
+<label>ตำแหน่งรูปแนวนอน</label><div class="slide"><input id="decorX" type="range" min="0" max="100" value="78"><output id="decorXOut">78%</output></div>
+<label>ตำแหน่งรูปแนวตั้ง</label><div class="slide"><input id="decorY" type="range" min="0" max="100" value="50"><output id="decorYOut">50%</output></div>
 <label>ชื่อตัวละคร<input id="name" value="Tristian S. Kennedy"></label>
 <label>ชื่อรอง / คำอธิบายตัวละคร<input id="subtitle" value="ทริสเตียน · บ้านที่อบอุ่น"></label>
 <label>ข้อมูลใต้ชื่อ<input id="meta" value="A PRIVATE STORY · 01"></label>
@@ -101,7 +107,7 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const ids=['pinkTheme','identityDecor','lilyOpacity','name','subtitle','meta','portrait','layout','frameStyle','portraitSize','portraitRatio','portraitX','portraitY','headerMode','eyebrow','title','caption','titleSize','storySize','storyLine','outerMode','outerBg','outerEnd','outerImage','outerImageSize','outerPreset','outerX','outerY','outerOverlay','paper','inner','ink','rule','footerLeft','footerRight'];
+const ids=['pinkTheme','identityDecor','lilyOpacity','decorImage','decorOpacity','decorSize','decorX','decorY','name','subtitle','meta','portrait','layout','frameStyle','portraitSize','portraitRatio','portraitX','portraitY','headerMode','eyebrow','title','caption','titleSize','storySize','storyLine','outerMode','outerBg','outerEnd','outerImage','outerImageSize','outerPreset','outerX','outerY','outerOverlay','paper','inner','ink','rule','footerLeft','footerRight'];
 const defaults=Object.fromEntries(ids.map(id=>[id,$(id).value]));
 const initialStory=$('storyEditor').innerHTML;
 const storageKey='rosewood-roleplay-studio-v1';
@@ -126,17 +132,34 @@ function card(){
  const header=['compact','normal','none'].includes($('headerMode').value)?$('headerMode').value:'compact';
  const frameStyle=['ornate','arch','cinematic','minimal'].includes($('frameStyle').value)?$('frameStyle').value:'minimal';
  const pinkTheme=$('pinkTheme').value==='soft'?'soft':'luxury';
- const identityDecor=['moonlit','none','monogram'].includes($('identityDecor').value)?$('identityDecor').value:'moonlit';
+ const identityDecor=['moonlit','none','monogram','custom'].includes($('identityDecor').value)?$('identityDecor').value:'moonlit';
  const outerMode=['solid','gradient','image'].includes($('outerMode').value)?$('outerMode').value:'solid';
  const bgURL=safeURL($('outerImage').value);
+ const decorURL=safeURL($('decorImage').value);
  const outerBackground=';--rp-outer:'+safeColor($('outerBg').value,'#f2dfe7')+';--rp-outer-end:'+safeColor($('outerEnd').value,'#f8e9ef')+';--rp-outer-image:'+(bgURL?'url(&quot;'+esc(bgURL)+'&quot;)':'none')+';--rp-bg-x:'+num('outerX',0,100)+'%;--rp-bg-y:'+num('outerY',0,100)+'%;--rp-bg-overlay:'+(num('outerOverlay',0,90)/100)+';--rp-bg-size:'+($('outerImageSize').value==='contain'?'contain':'cover');
- const vars='--rp-paper:'+safeColor($('paper').value,'#fff9fb')+';--rp-inner:'+safeColor($('inner').value,'#fff3f7')+';--rp-ink:'+safeColor($('ink').value,'#765866')+';--rp-rule:'+safeColor($('rule').value,'#ebd2dd')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',180,480)+'px;--rp-aspect:'+(num('portraitRatio',55,135)/100)+';--rp-photo-x:'+num('portraitX',0,100)+'%;--rp-photo-y:'+num('portraitY',0,100)+'%;--rp-title-size:'+num('titleSize',16,40)+'px;--rp-lily-opacity:'+(num('lilyOpacity',10,100)/100)+outerBackground;
+ const vars='--rp-paper:'+safeColor($('paper').value,'#fff9fb')+';--rp-inner:'+safeColor($('inner').value,'#fff3f7')+';--rp-ink:'+safeColor($('ink').value,'#765866')+';--rp-rule:'+safeColor($('rule').value,'#ebd2dd')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',180,480)+'px;--rp-aspect:'+(num('portraitRatio',55,135)/100)+';--rp-photo-x:'+num('portraitX',0,100)+'%;--rp-photo-y:'+num('portraitY',0,100)+'%;--rp-title-size:'+num('titleSize',16,40)+'px;--rp-lily-opacity:'+(num('lilyOpacity',10,100)/100)+';--rp-decor-opacity:'+(num('decorOpacity',0,100)/100)+';--rp-decor-width:'+num('decorSize',20,120)+'%;--rp-decor-x:'+num('decorX',0,100)+'%;--rp-decor-y:'+num('decorY',0,100)+'%'+outerBackground;
  const nameInitial=esc(($('name').value.trim().match(/[A-Za-zก-๙]/)||['R'])[0].toUpperCase());
  const img=esc(safeURL($('portrait').value));
+ const customDecor=identityDecor==='custom'&&decorURL?'<img class="rp-custom-decor" src="'+esc(decorURL)+'" alt="" aria-hidden="true">':'';
  const backdrop=outerMode==='image'&&bgURL?'<div class="rp-outer-photo" aria-hidden="true"><img src="'+esc(bgURL)+'" alt=""><span class="rp-outer-veil"></span></div>':'';
- return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" data-frame="'+frameStyle+'" data-theme="'+pinkTheme+'" data-identity-decor="'+identityDecor+'" data-outer="'+outerMode+'" style="'+vars+'">'+backdrop+'<div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity" data-initial="'+nameInitial+'"><div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
+ return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" data-frame="'+frameStyle+'" data-theme="'+pinkTheme+'" data-identity-decor="'+identityDecor+'" data-outer="'+outerMode+'" style="'+vars+'">'+backdrop+'<div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity" data-initial="'+nameInitial+'">'+customDecor+'<div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
 }
 function exported(){return stylesheet+'<div style="display:block;width:100%;max-width:100%;margin:0 auto;">'+card()+'</div>'}
+let decorCheckToken=0;
+let lastDecorSource='';
+function checkDecorImage(){
+ const status=$('decorImageStatus'),src=safeURL($('decorImage').value);
+ if($('identityDecor').value!=='custom'){decorCheckToken++;lastDecorSource='';status.textContent='เลือก “ใส่รูปตกแต่งเอง” หรือวาง URL เพื่อใช้ภาพของคุณ';return}
+ if(!src){decorCheckToken++;lastDecorSource='';status.textContent='กรุณาใส่ลิงก์รูปภาพโดยตรง เช่น .png, .webp หรือ .gif';return}
+ if(lastDecorSource===src)return;
+ lastDecorSource=src;
+ const token=++decorCheckToken;
+ status.textContent='กำลังตรวจสอบภาพตกแต่ง...';
+ const picture=new Image();
+ picture.onload=()=>{if(token===decorCheckToken)status.textContent='✓ ภาพตกแต่งโหลดสำเร็จ ปรับความจาง ขนาด และตำแหน่งได้เลย'};
+ picture.onerror=()=>{if(token===decorCheckToken)status.textContent='⚠ โหลดภาพไม่ได้ ลองใช้ลิงก์รูปโดยตรงที่อนุญาตให้ฝังภาพ'};
+ picture.src=src;
+}
 let bgLoadCounter=0;
 let lastBgKey='';
 function checkBackgroundImage(){
@@ -157,11 +180,15 @@ function checkBackgroundImage(){
  picture.onerror=()=>{if(token===bgLoadCounter&&$('outerMode').value==='image')status.textContent='⚠ โหลดรูปไม่ได้ ลองลิงก์รูปภาพโดยตรง (.jpg/.png/.webp/.gif) ไม่ใช่หน้าบน Pinterest หรือเว็บที่บล็อกการฝังรูป'};
  picture.src=src;
 }
-function render(){for(const id of ['portraitSize','portraitRatio','portraitX','portraitY','titleSize','storySize','storyLine','lilyOpacity','outerX','outerY','outerOverlay'])$(id+'Out').textContent=$(id).value+({'portraitSize':'px','portraitRatio':'%','portraitX':'%','portraitY':'%','titleSize':'px','storySize':'px','storyLine':'','lilyOpacity':'%','outerX':'%','outerY':'%','outerOverlay':'%'}[id]);$('preview').innerHTML=card();$('out').value=exported();checkBackgroundImage()}
+function render(){for(const id of ['portraitSize','portraitRatio','portraitX','portraitY','titleSize','storySize','storyLine','lilyOpacity','decorOpacity','decorSize','decorX','decorY','outerX','outerY','outerOverlay'])$(id+'Out').textContent=$(id).value+({'portraitSize':'px','portraitRatio':'%','portraitX':'%','portraitY':'%','titleSize':'px','storySize':'px','storyLine':'','lilyOpacity':'%','decorOpacity':'%','decorSize':'%','decorX':'%','decorY':'%','outerX':'%','outerY':'%','outerOverlay':'%'}[id]);$('preview').innerHTML=card();$('out').value=exported();checkBackgroundImage();checkDecorImage()}
 let saveHandle;
 function save(){try{localStorage.setItem(storageKey,JSON.stringify({fields:Object.fromEntries(ids.map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML)}));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่อนุญาตบันทึกข้อมูล'}}
 function update(){render();clearTimeout(saveHandle);saveHandle=setTimeout(save,350)}
 ids.forEach(id=>$(id).addEventListener('input',update));
+$('decorImage').addEventListener('input',()=>{
+ if(safeURL($('decorImage').value))$('identityDecor').value='custom';
+ update();
+});
 $('outerImage').addEventListener('input',()=>{
  if(safeURL($('outerImage').value))$('outerMode').value='image';
  update();
