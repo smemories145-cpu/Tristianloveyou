@@ -136,7 +136,9 @@ input[type=color]{height:37px;padding:4px;cursor:pointer}.type-grid{display:grid
 </div></details>
 <details class="fieldgroup" open><summary>✧ ข้อความและข้อมูลบ้าน</summary><div>
 <div class="two"><label>ชื่อบ้าน<input id="house" value="THE ROSEWOOD HOUSE"></label><label>ชื่อห้อง (ฟอนต์ตัวเขียน)<input id="room" value="The Bedroom"></label></div>
-<div class="two"><label>ชื่อห้องภาษาไทย<input id="thai" value="ห้องนอน · พื้นที่ส่วนตัว"></label><label>เลขห้อง<input id="number" value="01"></label></div>
+<label>ข้อความหัวกระทู้บรรทัดบน (แก้ไขได้ทั้งข้อความ เลข และสัญลักษณ์)<input id="journalLine" value="✿ HOUSE JOURNAL / 01" placeholder="✿ HOUSE JOURNAL / 01"></label>
+<div class="minihelp">ตัวอย่าง: ✿ MY PRIVATE HOUSE / 02 · ✧ THE ROSEWOOD DIARY · ❦ WELCOME HOME</div>
+<label>ชื่อห้องภาษาไทย<input id="thai" value="ห้องนอน · พื้นที่ส่วนตัว"></label>
 
 <div class="section-sub">ROOM LETTERING / งานตัวอักษรชื่อห้อง</div>
 <p class="minihelp">เปลี่ยนผิวสีและรูปทรงของตัวอักษรโดยตรง ไม่ใช่แอนิเมชันลอยหรือประกายรอบตัวอักษร</p>
@@ -190,7 +192,7 @@ input[type=color]{height:37px;padding:4px;cursor:pointer}.type-grid{display:grid
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const fields=["floralWidth","floralHeight","imageX","imageY","glowOpacity","lightX","lightY","heroSoftness","imageBrightness","imageSaturation","shadowDepth","shadowBlur","shadowOpacity","photoShadow","house","room","thai","number","bgImage","mainImage","description","floor","houseFont","roomFont","thaiFont","descAlign","houseColor","roomColor","thaiColor","descColor","houseSize","roomSize","thaiSize","houseSpacing","roomSpacing","descSize","descLeading","roomLetterStyle","roomFoilAngle","roomFoilContrast"];
+const fields=["floralWidth","floralHeight","imageX","imageY","glowOpacity","lightX","lightY","heroSoftness","imageBrightness","imageSaturation","shadowDepth","shadowBlur","shadowOpacity","photoShadow","house","room","thai","journalLine","bgImage","mainImage","description","floor","houseFont","roomFont","thaiFont","descAlign","houseColor","roomColor","thaiColor","descColor","houseSize","roomSize","thaiSize","houseSpacing","roomSpacing","descSize","descLeading","roomLetterStyle","roomFoilAngle","roomFoilContrast"];
 const key='rose_gold_header_generator_draft_v1';
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const url=s=>/^https:\/\/[^\s"'<>]+$/i.test(String(s).trim())?String(s).trim():'';
@@ -214,7 +216,7 @@ function content(){
  const letterSettings=';--foil-angle:'+num('roomFoilAngle',0,360)+'deg;--foil-contrast:'+(num('roomFoilContrast',70,160)/100);
  const variables='--floral-width:'+w+'%;--floral-height:'+h+'px;--image-x:'+x+'%;--image-y:'+y+'%;--light-x:'+lx+'%;--light-y:'+ly+'%;--glow-opacity:'+glow+';--hero-softness:'+soft+';--image-brightness:'+bright+';--image-saturation:'+sat+';--outer-shadow-y:'+depth+'px;--outer-shadow-blur:'+blur+'px;--outer-shadow-alpha:'+shade+';--photo-shadow-alpha:'+photoShadow;
  const bg=esc(url($('bgImage').value)||defaults.bgImage),p=esc(url($('mainImage').value)||defaults.mainImage);
- return '<article class="hgcard hg11" data-letterstyle="'+letterStyle+'" style="'+variables+typo+letterSettings+'"><div class="inner"><div class="hero" style="background-image:url(&quot;'+bg+'&quot;)"></div><div class="heading"><div class="overline">✿ HOUSE JOURNAL / '+v('number')+'</div><div class="housename">'+v('house')+'</div><div class="roomname">'+v('room')+'</div><div class="thainame">'+v('thai')+'</div></div><div class="body"><img class="frame-img roomphoto" alt="room" src="'+p+'"><div class="description">'+sanitizeRich($('description').value)+'</div><div class="foot"><span>'+v('floor')+'</span><span>ROSE GOLD DAYS</span></div></div></div></article>';
+ return '<article class="hgcard hg11" data-letterstyle="'+letterStyle+'" style="'+variables+typo+letterSettings+'"><div class="inner"><div class="hero" style="background-image:url(&quot;'+bg+'&quot;)"></div><div class="heading"><div class="overline">'+v('journalLine')+'</div><div class="housename">'+v('house')+'</div><div class="roomname">'+v('room')+'</div><div class="thainame">'+v('thai')+'</div></div><div class="body"><img class="frame-img roomphoto" alt="room" src="'+p+'"><div class="description">'+sanitizeRich($('description').value)+'</div><div class="foot"><span>'+v('floor')+'</span><span>ROSE GOLD DAYS</span></div></div></div></article>';
 }
 
 function sanitizeRich(html){
@@ -269,7 +271,7 @@ $('description').value=initialRich;
 $('richEditor').addEventListener('input',syncRich);
 $('richEditor').addEventListener('paste',e=>{e.preventDefault();document.execCommand('insertText',false,e.clipboardData.getData('text/plain'))});
 document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedown',e=>e.preventDefault());b.addEventListener('click',()=>{$('richEditor').focus();document.execCommand(b.dataset.cmd,false,null);syncRich()})});
-try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&typeof saved==='object')fields.forEach(id=>{if(typeof saved[id]==='string')$(id).value=saved[id]})}catch(e){}
+try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&typeof saved==='object'){fields.forEach(id=>{if(typeof saved[id]==='string')$(id).value=saved[id]});if(typeof saved.journalLine!=='string'&&typeof saved.number==='string')$('journalLine').value='✿ HOUSE JOURNAL / '+saved.number}}catch(e){}
 $('richEditor').innerHTML=sanitizeRich($('description').value.includes('<')?$('description').value:'<p>'+esc($('description').value)+'</p>');$('description').value=sanitizeRich($('richEditor').innerHTML);
 render();window.addEventListener('pagehide',()=>{clearTimeout(saveTimer);save()});
 </script></body></html>
