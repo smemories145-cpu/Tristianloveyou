@@ -72,7 +72,8 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <p class="tip">เลือกสีเรียบ สีไล่เฉด หรือรูปภาพเป็นพื้นหลังด้านนอกของการ์ด</p>
 <label>รูปแบบพื้นหลัง<select id="outerMode"><option value="solid">สีพื้นเรียบ</option><option value="gradient">สีไล่เฉด</option><option value="image">รูปภาพ</option></select></label>
 <div class="two"><label>สีพื้นหลังชั้นนอก<input id="outerBg" type="color" value="#f2dfe7"></label><label>สีปลายทางไล่เฉด<input id="outerEnd" type="color" value="#f8e9ef"></label></div>
-<label>ลิงก์รูปพื้นหลัง<input id="outerImage" type="url" placeholder="https://.../background.jpg"></label>
+<label>ลิงก์รูปพื้นหลัง<input id="outerImage" type="url" placeholder="https://i.pinimg.com/.../photo.jpg"></label>
+<p id="bgImageStatus" class="tip" aria-live="polite">เลือก “รูปภาพ” แล้ววางลิงก์ภาพโดยตรง เช่น i.pinimg.com/...jpg</p>
 <div class="two"><label>ขนาดรูป<select id="outerImageSize"><option value="cover">เต็มกรอบ</option><option value="contain">แสดงรูปครบ</option></select></label><label>สีสำเร็จรูป<select id="outerPreset"><option value="custom">กำหนดเอง</option><option value="cream">ขาวครีม</option><option value="rose">ชมพูกุหลาบ</option><option value="brown">น้ำตาลนู้ด</option><option value="blend">ชมพูไล่เฉด</option></select></label></div>
 <label>เลื่อนภาพแนวนอน</label><div class="slide"><input id="outerX" type="range" min="0" max="100" value="50"><output id="outerXOut">50%</output></div>
 <label>เลื่อนภาพแนวตั้ง</label><div class="slide"><input id="outerY" type="range" min="0" max="100" value="50"><output id="outerYOut">50%</output></div>
@@ -130,7 +131,24 @@ function card(){
  return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" data-frame="'+frameStyle+'" data-theme="'+pinkTheme+'" data-outer="'+outerMode+'" style="'+vars+'"><div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity"><div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
 }
 function exported(){return stylesheet+'<div style="display:block;width:100%;max-width:100%;margin:0 auto;">'+card()+'</div>'}
-function render(){for(const id of ['portraitSize','portraitRatio','portraitX','portraitY','titleSize','storySize','storyLine','outerX','outerY','outerOverlay'])$(id+'Out').textContent=$(id).value+({'portraitSize':'px','portraitRatio':'%','portraitX':'%','portraitY':'%','titleSize':'px','storySize':'px','storyLine':'','outerX':'%','outerY':'%','outerOverlay':'%'}[id]);$('preview').innerHTML=card();$('out').value=exported()}
+let bgLoadCounter=0;
+let lastBgKey='';
+function checkBackgroundImage(){
+ const active=$('outerMode').value==='image';
+ const src=safeURL($('outerImage').value);
+ const status=$('bgImageStatus');
+ if(!active){bgLoadCounter++;status.textContent='เลือกรูปภาพเพื่อใช้พื้นหลัง หรือใช้สีเรียบ / ไล่เฉดได้';lastBgKey='';return}
+ if(!src){bgLoadCounter++;status.textContent='ยังไม่มีลิงก์รูปภาพ — ใส่ URL รูปโดยตรง (เช่น https://i.pinimg.com/....jpg)';lastBgKey='';return}
+ if(src===lastBgKey)return;
+ lastBgKey=src;
+ const token=++bgLoadCounter;
+ status.textContent='กำลังตรวจสอบรูปพื้นหลัง...';
+ const picture=new Image();
+ picture.onload=()=>{if(token===bgLoadCounter&&$('outerMode').value==='image')status.textContent='✓ โหลดรูปสำเร็จแล้ว พื้นหลังจะแสดงรอบกรอบและจาง ๆ ผ่านพื้นการ์ด'};
+ picture.onerror=()=>{if(token===bgLoadCounter&&$('outerMode').value==='image')status.textContent='⚠ โหลดรูปไม่ได้ ลองลิงก์รูปภาพโดยตรง (.jpg/.png/.webp/.gif) ไม่ใช่หน้าบน Pinterest หรือเว็บที่บล็อกการฝังรูป'};
+ picture.src=src;
+}
+function render(){for(const id of ['portraitSize','portraitRatio','portraitX','portraitY','titleSize','storySize','storyLine','outerX','outerY','outerOverlay'])$(id+'Out').textContent=$(id).value+({'portraitSize':'px','portraitRatio':'%','portraitX':'%','portraitY':'%','titleSize':'px','storySize':'px','storyLine':'','outerX':'%','outerY':'%','outerOverlay':'%'}[id]);$('preview').innerHTML=card();$('out').value=exported();checkBackgroundImage()}
 let saveHandle;
 function save(){try{localStorage.setItem(storageKey,JSON.stringify({fields:Object.fromEntries(ids.map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML)}));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่อนุญาตบันทึกข้อมูล'}}
 function update(){render();clearTimeout(saveHandle);saveHandle=setTimeout(save,350)}
