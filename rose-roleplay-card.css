@@ -157,3 +157,18 @@
 .rp-rose .rp-identity-bg img{position:absolute;inset:-5%;width:110%;height:110%;max-width:none;display:block;object-fit:cover;object-position:center;opacity:var(--rp-identity-opacity,.7);filter:blur(var(--rp-identity-blur,2px));transform:scale(1.015)}
 .rp-rose .rp-identity-veil{position:absolute;display:block;inset:0;background:rgba(255,251,253,var(--rp-identity-veil,.55));box-shadow:inset 0 0 38px #fff7fb80;pointer-events:none}
 .rp-rose .rp-identity>.rp-character,.rp-rose .rp-identity>.rp-character-thai,.rp-rose .rp-identity>.rp-meta{position:relative;z-index:1}
+
+/* Soft elevation and contrast for a name panel with a photographic background */
+.rp-rose .rp-person .rp-identity{
+  box-shadow:0 12px 30px rgba(118,77,98,.17),0 3px 10px rgba(118,77,98,.09),inset 0 0 0 1px rgba(255,255,255,.62);
+}
+.rp-rose .rp-identity-bg .rp-identity-veil{
+  background:linear-gradient(180deg,rgba(255,255,255,.33),rgba(255,250,253,var(--rp-identity-veil,.55)));
+  box-shadow:inset 0 0 48px rgba(255,249,252,.75);
+}
+.rp-rose .rp-identity>.rp-character{
+  text-shadow:0 1px 0 rgba(255,255,255,.95),0 2px 9px rgba(255,255,255,.9),0 0 20px rgba(255,255,255,.78),0 1px 2px rgba(105,65,82,.23);
+}
+.rp-rose .rp-identity>.rp-character-thai,.rp-rose .rp-identity>.rp-meta{
+  text-shadow:0 1px 1px rgba(255,255,255,.98),0 0 9px rgba(255,255,255,.94),0 0 17px rgba(255,255,255,.62);
+}
