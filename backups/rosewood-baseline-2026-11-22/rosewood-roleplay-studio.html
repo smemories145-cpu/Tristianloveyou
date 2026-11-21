@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rosewood · Roleplay Card Studio</title>
+<link rel="stylesheet" href="rose-roleplay-card.css?v=luminousportrait8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600&display=swap');
+*{box-sizing:border-box}body{margin:0;background:#211d1b;color:#e9dcd0;font:12px/1.8 'Noto Serif Thai',serif}
+a{color:#edcbb4;text-decoration:none}header{background:#312925;border-bottom:1px solid #66554c;padding:20px}
+.wrap{max-width:1240px;margin:auto}header .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+header h1{font:500 30px/1.2 Georgia,serif;margin:0;color:#f2dfcb}header p{color:#c7afa2;margin:4px 0 0}
+main{max-width:1240px;margin:auto;padding:20px;display:grid;grid-template-columns:minmax(310px,390px) minmax(0,1fr);gap:18px;align-items:start}
+.panel{background:#302824;border:1px solid #665247;border-radius:12px;padding:17px;min-width:0}
+.panel h2{font:600 12px 'DM Sans',sans-serif;color:#e5c3aa;letter-spacing:1.6px;margin:0 0 12px}
+details{border:1px solid #6c584c;border-radius:8px;margin:9px 0;overflow:hidden}
+summary{list-style:none;cursor:pointer;padding:12px 13px;color:#e8cdb9;font-weight:600;display:flex;align-items:center;justify-content:space-between}
+summary::-webkit-details-marker{display:none}summary::after{content:"⌄"}details[open] summary::after{content:"⌃"}
+.detail{padding:8px 13px 15px;border-top:1px solid #594940}
+label{display:block;margin:9px 0 0;color:#d9c7b8;font-size:11px}
+input,textarea,select{display:block;width:100%;margin-top:5px;background:#201b19;color:#f6ebde;border:1px solid #786053;border-radius:6px;padding:9px;font:12px/1.7 'Noto Serif Thai',serif}
+textarea{min-height:110px;resize:vertical}input[type=range]{padding:0;accent-color:#cba58c}
+input[type=color]{height:38px;padding:4px;cursor:pointer}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.slide{display:grid;grid-template-columns:1fr 52px;gap:10px;align-items:center}.slide output{text-align:right;color:#e9c4a6}
+button{background:#594139;color:#fff0de;border:1px solid #987564;padding:9px 11px;cursor:pointer;border-radius:7px;font:600 11px 'Noto Serif Thai',serif}button:hover{background:#755448}
+button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.tip{color:#bfa99b;font-size:11px;margin:7px 0}
+.editor{position:relative}.editable{margin-top:8px;background:#201b19;color:#f6ebde;border:1px solid #786053;border-radius:6px;padding:13px;min-height:260px;max-height:500px;overflow:auto;font:15px/2 'Noto Serif Thai',serif;outline:none}
+.editable:focus{border-color:#d2aa90}.editable p{margin:0 0 1em}
+.toolbar{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}.toolbar button{min-width:32px}
+#preview{padding:10px;min-width:0}#preview .rp-rose{margin:0 auto}#status{color:#d7be9d;min-height:18px;font-size:11px}
+#out{font:11px/1.5 Consolas,monospace;min-height:100px}
+@media(min-width:880px){.editpanel{max-height:calc(100vh - 45px);overflow:auto;position:sticky;top:12px}}
+@media(max-width:879px){main{grid-template-columns:1fr}}
+@media(max-width:440px){main{padding:9px}.panel{padding:12px}.two{grid-template-columns:1fr}}
+
+/* Compact editing controls and on-demand modules */
+.image-move{display:flex;gap:6px;justify-content:center;margin:8px 0}.image-move button{min-width:38px;font-size:16px;padding:5px 9px}.tool-divider{height:25px;border-left:1px solid #80695e;margin:1px 4px}.color-controls{display:grid;grid-template-columns:60px minmax(90px,1fr) auto auto;gap:6px;align-items:end;margin-top:12px}.color-controls label{margin:0}.color-controls input{margin-top:3px}.color-controls button{padding:7px 9px;min-height:36px}.color-favorites{display:flex;align-items:center;gap:9px;margin-top:8px;color:#c8b5a7}.color-swatches{display:flex;flex-wrap:wrap;gap:6px}.color-swatches button{width:26px;height:26px;min-width:0;padding:0;border:2px solid #e6d1c1;border-radius:50%}.module-manager{margin-top:14px;padding:12px;border:1px dashed #8a695b;border-radius:10px;background:#382b27}.module-manager .actions select{flex:1;min-width:120px;width:auto;margin:0}.optional-modules details:not(.module-on){display:none}.optional-modules details .detail{padding-bottom:15px}.editable a{color:#d9abcc;text-decoration:underline}.editable s{text-decoration:line-through}@media(max-width:440px){.color-controls{grid-template-columns:55px 1fr}.color-controls button{min-width:0}}
+
+/* Optional features are grouped inside one collapsible section at the end. */
+.extra-features{margin-top:16px;border-color:#97725e;background:#372a25}
+.extra-features>summary{background:#413029;font-size:12px}
+.extra-count{margin-left:auto;margin-right:10px;color:#c8ab9b;font:400 10px 'Noto Serif Thai',serif}
+.extra-features>.detail{padding:12px}
+.extra-features .module-manager{margin-top:0;background:transparent;border:0;padding:3px 0 10px}
+.extra-features .module-manager>strong{font-size:11px;color:#edcdb9}
+.extra-features .optional-modules details{margin:9px 0;border-color:#786051;background:#2c2421}
+.extra-features .optional-modules summary{font-size:11px}
+.extra-features .remove-module{margin-left:8px;padding:3px 6px;font-size:10px;flex-shrink:0}
+</style></head><body>
+<header><div class="wrap"><div><h1>Rosewood · Roleplay Studio</h1><p>เขียนโรลเพลย์ · ปรับรูปตัวละคร · จัดรูปแบบข้อความ · บันทึกอัตโนมัติ</p></div><a href="rose-gold-header-generator.html">← กลับ Rose Gold Generator</a></div></header>
+<main><section class="panel editpanel"><h2>01 / EDIT YOUR ROLEPLAY</h2>
+<details open><summary>01 · ตัวละครและรูปภาพ</summary><div class="detail">
+<label>ชื่อตัวละคร<input id="name" value="Tristian S. Kennedy"></label>
+<label>ชื่อรอง / คำอธิบายตัวละคร<input id="subtitle" value="ทริสเตียน · บ้านที่อบอุ่น"></label>
+<label>ข้อมูลใต้ชื่อ<input id="meta" value="A PRIVATE STORY · 01"></label>
+<label>URL ภาพตัวละคร<input id="portrait" value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=85"></label>
+<label>ขนาดรูปตัวละคร</label><div class="slide"><input id="portraitSize" type="range" min="180" max="480" value="350"><output id="portraitSizeOut">350px</output></div>
+<p class="tip">เลื่อนรูปได้ด้วยปุ่มลูกศร และซูมรูปได้โดยไม่ต้องเปลี่ยนสัดส่วนกรอบ</p>
+<div class="image-move">
+ <button type="button" data-pan="0,-10" title="ขยับขึ้น">↑</button>
+ <button type="button" data-pan="-10,0" title="ขยับซ้าย">←</button>
+ <button type="button" data-pan="0,0" title="วางกลาง">◎</button>
+ <button type="button" data-pan="10,0" title="ขยับขวา">→</button>
+ <button type="button" data-pan="0,10" title="ขยับลง">↓</button>
+</div>
+<label>ซูมรูปภาพ</label><div class="slide"><input id="portraitZoom" type="range" min="100" max="190" value="100" step="5"><output id="portraitZoomOut">100%</output></div>
+<input type="hidden" id="portraitX" value="50"><input type="hidden" id="portraitY" value="50">
+</div></details>
+<details open><summary>02 · เนื้อเรื่องโรลเพลย์</summary><div class="detail">
+<p class="tip">เลือกข้อความก่อนกดจัดรูปแบบ หรือตั้งสีก่อนพิมพ์ได้</p>
+<div class="toolbar" role="toolbar" aria-label="จัดรูปแบบข้อความ">
+ <button type="button" data-cmd="bold" title="ตัวหนา"><b>B</b></button>
+ <button type="button" data-cmd="italic" title="ตัวเอียง"><i>I</i></button>
+ <button type="button" data-cmd="underline" title="ขีดเส้นใต้"><u>U</u></button>
+ <button type="button" data-cmd="strikeThrough" title="ขีดฆ่า"><s>S</s></button>
+ <button type="button" id="insertLink" title="ใส่ลิงก์">🔗</button>
+ <span class="tool-divider"></span>
+ <button type="button" data-cmd="justifyLeft" title="ชิดซ้าย">≡</button>
+ <button type="button" data-cmd="justifyCenter" title="กึ่งกลาง">☰</button>
+ <button type="button" data-cmd="justifyRight" title="ชิดขวา">≡⇥</button>
+ <button type="button" data-cmd="justifyFull" title="จัดเต็มบรรทัด">☷</button>
+ <span class="tool-divider"></span>
+ <button type="button" data-cmd="removeFormat" title="ล้างรูปแบบ">Tx</button>
+</div>
+<div class="color-controls">
+ <label>สีข้อความ <input id="editorColorPicker" type="color" value="#a8728c"></label>
+ <label>รหัสสี HEX <input id="editorColorHex" type="text" value="#a8728c" maxlength="7" placeholder="#a8728c"></label>
+ <button type="button" id="applyTextColor">ใช้สี</button>
+ <button type="button" id="saveFavoriteColor" title="บันทึกสีโปรด">♡ เก็บสี</button>
+</div>
+<div class="color-favorites"><span>สีโปรด</span><div id="favoriteColors" class="color-swatches"></div></div>
+<div id="storyEditor" class="editable" contenteditable="true" role="textbox" aria-multiline="true" aria-label="เนื้อหาโรลเพลย์"><p>ทริสเตียนวางหนังสือเล่มเล็กลงบนโต๊ะไม้ ก่อนจะหันไปมองแสงอาทิตย์ที่ลอดผ่านม่านสีครีมเข้ามาในห้อง บรรยากาศยามบ่ายสงบจนได้ยินเสียงลมอ่อน ๆ จากนอกหน้าต่าง</p><p><strong>“วันนี้อากาศดีจังเลยนะครับ”</strong></p><p>เขาเอ่ยด้วยรอยยิ้มบางเบา แล้วขยับเก้าอี้ให้คนตรงหน้าได้นั่งอย่างสะดวก</p></div>
+<label>ขนาดข้อความโรล</label><div class="slide"><input id="storySize" type="range" min="14" max="21" value="16"><output id="storySizeOut">16px</output></div>
+<label>ระยะบรรทัด</label><div class="slide"><input id="storyLine" type="range" min="1.5" max="2.5" step=".05" value="2"><output id="storyLineOut">2</output></div>
+</div></details>
+<details><summary>03 · หมายเหตุท้ายโรล</summary><div class="detail">
+<p class="tip">ไม่ใส่ก็ได้ หากเว้นว่างกล่องหมายเหตุจะไม่แสดงบนการ์ด</p>
+<label>หมายเหตุ<textarea id="note" rows="3" placeholder="เช่น ขอบคุณที่ร่วมโรลด้วยกันนะ ♡"></textarea></label>
+</div></details>
+<details><summary>04 · หัวเรื่อง</summary><div class="detail">
+<label>รูปแบบหัวเรื่อง<select id="headerMode"><option value="compact">หัวเรื่องเล็ก (แนะนำ)</option><option value="normal">หัวเรื่องปกติ</option><option value="none">ซ่อนหัวเรื่อง</option></select></label>
+<label>ข้อความบรรทัดบน<input id="eyebrow" value="✿ A PRIVATE FILM / ROLEPLAY"></label>
+<label>ชื่อหัวเรื่อง<input id="title" value="The Quiet Afternoon"></label>
+<label>ข้อความรองหัวเรื่อง<input id="caption" value="บางช่วงเวลาที่เก็บไว้ในความทรงจำ"></label>
+<label>ขนาดชื่อหัวเรื่อง</label><div class="slide"><input id="titleSize" type="range" min="16" max="40" value="27"><output id="titleSizeOut">27px</output></div>
+</div></details>
+<details><summary>07 · ข้อความท้ายการ์ด</summary><div class="detail"><div class="two">
+<label>ข้อความซ้าย<input id="footerLeft" value="TRISTIAN · PRIVATE SCENE"></label>
+<label>ข้อความขวา<input id="footerRight" value="TO BE CONTINUED ♡"></label>
+</div></div></details>
+<details id="extraFeatures" class="extra-features"><summary>✦ ฟังก์ชันเสริม <span class="extra-count" id="extraCount">เลือกเพิ่มตามต้องการ</span></summary><div class="detail">
+<div class="module-manager"><strong>✦ เพิ่มฟังก์ชันเสริม</strong>
+<p class="tip">ฟังก์ชันที่ไม่ใช้จะไม่รบกวนหน้าฟอร์ม เมื่อเพิ่มแล้วจะปรากฏเป็นหมวดที่เปิด–ปิดได้</p>
+<div class="actions"><select id="moduleChoice" aria-label="เลือกฟังก์ชันเสริม"><option value="identity">รูปพื้นหลังกล่องชื่อ</option><option value="theme">ปรับธีมสีชมพู</option><option value="outer">05 · พื้นหลังชั้นนอก</option><option value="colors">06 · สีพื้นการ์ดและตัวหนังสือ</option></select><button id="addModule" type="button">＋ เพิ่มหัวข้อ</button></div>
+</div>
+<div id="optionalModules" class="optional-modules">
+<details id="optionalIdentity" data-module="identity"><summary>รูปพื้นหลังกล่องชื่อ <small style="color:#c9ab9c;font-weight:400">ฟังก์ชันเสริม</small></summary><div class="detail">
+<p class="tip">จะใส่หรือไม่ใส่รูปก็ได้ ภาพที่ใส่จะมีม่านขาวนวลทับ เพื่อให้ชื่อตัวละครเด่น</p>
+<label>URL รูปในกล่องชื่อ (ไม่บังคับ)<input id="identityImage" type="url" placeholder="https://.../photo.jpg"></label>
+<p class="tip" id="identityImageStatus" aria-live="polite">ไม่ใส่รูปจะใช้พื้นชมพูครีม</p>
+<label>ความเข้มของภาพ</label><div class="slide"><input id="identityImageOpacity" type="range" min="0" max="100" value="70"><output id="identityImageOpacityOut">70%</output></div>
+<label>ความเบลอของภาพ</label><div class="slide"><input id="identityImageBlur" type="range" min="0" max="12" step=".5" value="2"><output id="identityImageBlurOut">2px</output></div>
+<label>ม่านสีขาวทับภาพ (ยิ่งมาก ภาพยิ่งจาง)</label><div class="slide"><input id="identityVeil" type="range" min="0" max="95" value="55"><output id="identityVeilOut">55%</output></div>
+</div></details>
+
+<details id="optionalTheme" data-module="theme"><summary>ปรับธีมสีชมพู <small style="color:#c9ab9c;font-weight:400">ฟังก์ชันเสริม</small></summary><div class="detail">
+<label>ธีมการ์ด<select id="pinkTheme"><option value="luxury">Clean Luxury</option><option value="soft">Soft Rose</option></select></label>
+</div></details>
+<details id="optionalOuter" data-module="outer"><summary>05 · พื้นหลังชั้นนอก <small style="color:#c9ab9c;font-weight:400">ฟังก์ชันเสริม</small></summary><div class="detail">
+<p class="tip">เลือกสีเรียบ สีไล่เฉด หรือรูปภาพเป็นพื้นหลังด้านนอกของการ์ด</p>
+<label>รูปแบบพื้นหลัง<select id="outerMode"><option value="solid">สีพื้นเรียบ</option><option value="gradient">สีไล่เฉด</option><option value="image">รูปภาพ</option></select></label>
+<div class="two"><label>สีพื้นหลังชั้นนอก<input id="outerBg" type="color" value="#f2dfe7"></label><label>สีปลายทางไล่เฉด<input id="outerEnd" type="color" value="#f8e9ef"></label></div>
+<label>ลิงก์รูปพื้นหลัง<input id="outerImage" type="url" placeholder="https://i.pinimg.com/.../photo.jpg"></label>
+<p id="bgImageStatus" class="tip" aria-live="polite">เลือก “รูปภาพ” แล้ววางลิงก์ภาพโดยตรง เช่น i.pinimg.com/...jpg</p>
+<div class="two"><label>ขนาดรูป<select id="outerImageSize"><option value="cover">เต็มกรอบ</option><option value="contain">แสดงรูปครบ</option></select></label><label>สีสำเร็จรูป<select id="outerPreset"><option value="custom">กำหนดเอง</option><option value="cream">ขาวครีม</option><option value="rose">ชมพูกุหลาบ</option><option value="brown">น้ำตาลนู้ด</option><option value="blend">ชมพูไล่เฉด</option></select></label></div>
+<label>เลื่อนภาพแนวนอน</label><div class="slide"><input id="outerX" type="range" min="0" max="100" value="50"><output id="outerXOut">50%</output></div>
+<label>เลื่อนภาพแนวตั้ง</label><div class="slide"><input id="outerY" type="range" min="0" max="100" value="50"><output id="outerYOut">50%</output></div>
+<label>ม่านสีครีมทับภาพ</label><div class="slide"><input id="outerOverlay" type="range" min="0" max="90" value="18"><output id="outerOverlayOut">18%</output></div>
+<div class="actions"><button type="button" data-outer-mode="solid">สีเรียบ</button><button type="button" data-outer-mode="gradient">ไล่เฉด</button><button type="button" data-outer-mode="image">รูปภาพ</button></div>
+<p class="tip">ใช้ลิงก์ภาพสาธารณะ JPG, PNG หรือ GIF</p></div></details>
+<details id="optionalColors" data-module="colors"><summary>06 · สีพื้นการ์ดและตัวหนังสือ <small style="color:#c9ab9c;font-weight:400">ฟังก์ชันเสริม</small></summary><div class="detail"><div class="two">
+<label>สีพื้นหลังการ์ด<input id="paper" type="color" value="#fff9fb"></label>
+<label>พื้นหลังโรล<input id="inner" type="color" value="#fff3f7"></label>
+<label>สีข้อความ<input id="ink" type="color" value="#765866"></label>
+<label>สีเส้นและกรอบ<input id="rule" type="color" value="#ebd2dd"></label>
+</div></div></details>
+</div>
+</div></details>
+<div class="actions"><button type="button" id="reset">คืนค่าตั้งต้น</button></div><p id="status">ระบบบันทึกข้อความและการตั้งค่าในเบราว์เซอร์นี้</p>
+</section>
+<section class="panel"><h2>02 / LIVE PREVIEW</h2><div class="actions"><button class="primary" type="button" id="copy">คัดลอกโค้ดสั้น</button><button type="button" id="download">ดาวน์โหลด HTML</button></div>
+<p class="tip">โค้ดสั้นเรียก CSS จาก GitHub Pages พื้นที่นำไปวางต้องรองรับ CSS ภายนอก</p>
+<div id="preview"></div><label>โค้ดสำหรับนำไปวาง<textarea id="out" readonly></textarea></label>
+</section></main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const ids=["pinkTheme","identityImage","identityImageOpacity","identityImageBlur","identityVeil","name","subtitle","meta","portrait","portraitSize","portraitZoom","portraitX","portraitY","headerMode","eyebrow","title","caption","titleSize","storySize","storyLine","note","outerMode","outerBg","outerEnd","outerImage","outerImageSize","outerPreset","outerX","outerY","outerOverlay","paper","inner","ink","rule","footerLeft","footerRight"];
+const defaults=Object.fromEntries(ids.map(id=>[id,$(id).value]));
+const initialStory=$('storyEditor').innerHTML;
+const storageKey='rosewood-roleplay-studio-v1';
+const esc=x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const safeURL=x=>/^https?:\/\/[^\s<>"']+$/i.test(x.trim())?x.trim():'';
+const safeColor=(x,fb)=>/^#[0-9a-f]{6}$/i.test(x)?x:fb;
+const stylesheet='<link rel="stylesheet" href="https://smemories145-cpu.github.io/Tristianloveyou/rose-roleplay-card.css?v=luminousportrait8">';
+function cleanStory(raw){
+ const doc=new DOMParser().parseFromString('<main>'+raw+'</main>','text/html');
+ const ok=new Set(['P','DIV','BR','STRONG','B','EM','I','U','S','STRIKE','DEL','A','FONT','BLOCKQUOTE','UL','OL','LI','SPAN']);
+ function clean(n){if(n.nodeType===3)return document.createTextNode(n.textContent);if(n.nodeType!==1)return document.createDocumentFragment();
+ if(['SCRIPT','STYLE','IFRAME','SVG','OBJECT','IMG','FORM','INPUT','AUDIO','VIDEO'].includes(n.tagName))return document.createDocumentFragment();
+ const el=document.createElement(n.tagName==='FONT'?'span':(ok.has(n.tagName)?n.tagName:'span'));
+ if(n.tagName==='A'){const href=n.getAttribute('href')||'';if(/^(https?:\/\/|mailto:)/i.test(href.trim())){el.setAttribute('href',href.trim());el.setAttribute('target','_blank');el.setAttribute('rel','noopener noreferrer nofollow')}}
+ if(n.style){const align=n.style.textAlign;if(['left','center','right','justify'].includes(align))el.style.textAlign=align;const color=n.style.color;if(/^#[0-9a-f]{3,8}$/i.test(color)||/^rgba?\([\d\s.,%]+\)$/i.test(color))el.style.color=color;}
+ if(n.tagName==='FONT'){const clr=n.getAttribute('color')||'';if(/^#[0-9a-f]{3,8}$/i.test(clr)||/^rgba?\([\d\s.,%]+\)$/i.test(clr))el.style.color=clr;}
+ const attrAlign=n.getAttribute('align')||'';if(['left','center','right','justify'].includes(attrAlign))el.style.textAlign=attrAlign;
+ for(const child of Array.from(n.childNodes))el.appendChild(clean(child));return el;}
+ const box=document.createElement('div');for(const n of Array.from(doc.querySelector('main').childNodes))box.appendChild(clean(n));
+ return box.innerHTML;
+}
+function card(){
+ const get=id=>esc($(id).value),num=(id,min,max)=>Math.min(max,Math.max(min,Number($(id).value)||0));
+ const header=['compact','normal','none'].includes($('headerMode').value)?$('headerMode').value:'compact';
+ const pinkTheme=activeModules.includes('theme')&&$('pinkTheme').value==='soft'?'soft':'luxury';
+ const identityURL=activeModules.includes('identity')?safeURL($('identityImage').value):'';
+ const outerMode=['solid','gradient','image'].includes($('outerMode').value)?$('outerMode').value:'solid';
+ const bgURL=safeURL($('outerImage').value);
+ const outerBackground=';--rp-outer:'+safeColor($('outerBg').value,'#f2dfe7')+';--rp-outer-end:'+safeColor($('outerEnd').value,'#f8e9ef')+';--rp-outer-image:'+(bgURL?'url(&quot;'+esc(bgURL)+'&quot;)':'none')+';--rp-bg-x:'+num('outerX',0,100)+'%;--rp-bg-y:'+num('outerY',0,100)+'%;--rp-bg-overlay:'+(num('outerOverlay',0,90)/100)+';--rp-bg-size:'+($('outerImageSize').value==='contain'?'contain':'cover');
+ const vars='--rp-paper:'+safeColor($('paper').value,'#fff9fb')+';--rp-inner:'+safeColor($('inner').value,'#fff3f7')+';--rp-ink:'+safeColor($('ink').value,'#765866')+';--rp-rule:'+safeColor($('rule').value,'#ebd2dd')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',180,480)+'px;--rp-aspect:'+0.84+';--rp-photo-x:50%;--rp-photo-y:50%;--rp-photo-pan-x:'+((num('portraitX',0,100)-50)/2)+'%;--rp-photo-pan-y:'+((num('portraitY',0,100)-50)/2)+'%;--rp-photo-zoom:'+(num('portraitZoom',100,190)/100)+';--rp-title-size:'+num('titleSize',16,40)+'px;--rp-identity-opacity:'+(num('identityImageOpacity',0,100)/100)+';--rp-identity-blur:'+num('identityImageBlur',0,12)+'px;--rp-identity-veil:'+(num('identityVeil',0,95)/100)+outerBackground;
+ const img=esc(safeURL($('portrait').value));
+ const identityBg=identityURL?'<div class="rp-identity-bg" aria-hidden="true"><img src="'+esc(identityURL)+'" alt=""><span class="rp-identity-veil"></span></div>':'';
+ const backdrop=outerMode==='image'&&bgURL?'<div class="rp-outer-photo" aria-hidden="true"><img src="'+esc(bgURL)+'" alt=""><span class="rp-outer-veil"></span></div>':'';
+ return '<article class="rp-rose" data-layout="left" data-header="'+header+'" data-frame="minimal" data-theme="'+pinkTheme+'" data-outer="'+outerMode+'" style="'+vars+'">'+backdrop+'<div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity">'+identityBg+'<div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div>'+($('note').value.trim()?'<aside class="rp-note"><span class="rp-note-label">NOTE</span><div>'+esc($('note').value.trim()).replace(/\n/g,'<br>')+'</div></aside>':'')+'<div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
+}
+function exported(){return stylesheet+'<div style="display:block;width:100%;max-width:100%;margin:0 auto;">'+card()+'</div>'}
+let identityToken=0,lastIdentityURL='';
+function checkIdentityImage(){
+ const src=safeURL($('identityImage').value),status=$('identityImageStatus');
+ if(!src){identityToken++;lastIdentityURL='';status.textContent='ไม่ใส่รูปก็ได้ — ใช้พื้นชมพูครีมเรียบ ๆ';return}
+ if(src===lastIdentityURL)return;
+ lastIdentityURL=src;const token=++identityToken;status.textContent='กำลังตรวจรูป...';
+ const image=new Image();
+ image.onload=()=>{if(token===identityToken)status.textContent='✓ รูปโหลดสำเร็จ ปรับภาพและม่านสีขาวได้เลย'};
+ image.onerror=()=>{if(token===identityToken)status.textContent='⚠ รูปโหลดไม่ได้ ลอง URL รูปโดยตรงที่เปิดสาธารณะ'};
+ image.src=src;
+}
+let bgLoadCounter=0;
+let lastBgKey='';
+function checkBackgroundImage(){
+ const active=$('outerMode').value==='image';
+ const src=safeURL($('outerImage').value);
+ const status=$('bgImageStatus');
+ if(!active){bgLoadCounter++;status.textContent='เลือกรูปภาพเพื่อใช้พื้นหลัง หรือใช้สีเรียบ / ไล่เฉดได้';lastBgKey='';return}
+ if(!src){bgLoadCounter++;status.textContent='ยังไม่มีลิงก์รูปภาพ — ใส่ URL รูปโดยตรง (เช่น https://i.pinimg.com/....jpg)';lastBgKey='';return}
+ if(src===lastBgKey)return;
+ lastBgKey=src;
+ const token=++bgLoadCounter;
+ status.textContent='กำลังตรวจสอบรูปพื้นหลัง...';
+ const rendered=$('preview').querySelector('.rp-outer-photo img');
+ if(!rendered){status.textContent='ยังไม่พบชั้นรูปภาพในพรีวิว';return}
+ rendered.addEventListener('error',()=>{if(token===bgLoadCounter)status.textContent='⚠ พรีวิวโหลดภาพไม่ได้ ลองใช้ลิงก์รูปโดยตรง หรือเว็บฝากรูปที่อนุญาตให้ฝังภาพ'},{once:true});
+ const picture=new Image();
+ picture.onload=()=>{if(token===bgLoadCounter&&$('outerMode').value==='image')status.textContent='✓ โหลดรูปสำเร็จแล้ว พื้นหลังจะแสดงรอบกรอบและจาง ๆ ผ่านพื้นการ์ด'};
+ picture.onerror=()=>{if(token===bgLoadCounter&&$('outerMode').value==='image')status.textContent='⚠ โหลดรูปไม่ได้ ลองลิงก์รูปภาพโดยตรง (.jpg/.png/.webp/.gif) ไม่ใช่หน้าบน Pinterest หรือเว็บที่บล็อกการฝังรูป'};
+ picture.src=src;
+}
+function render(){
+ const units={portraitSize:'px',portraitZoom:'%',titleSize:'px',storySize:'px',storyLine:'',identityImageOpacity:'%',identityImageBlur:'px',identityVeil:'%',outerX:'%',outerY:'%',outerOverlay:'%'};
+ for(const [id,unit] of Object.entries(units))$(id+'Out').textContent=$(id).value+unit;
+ $('preview').innerHTML=card();$('out').value=exported();checkBackgroundImage();checkIdentityImage();
+}
+let saveHandle;
+function save(){try{localStorage.setItem(storageKey,JSON.stringify({fields:Object.fromEntries(ids.map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML),modules:activeModules,favoriteColors}));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่อนุญาตบันทึกข้อมูล'}}
+function update(){render();clearTimeout(saveHandle);saveHandle=setTimeout(save,350)}
+ids.forEach(id=>$(id).addEventListener('input',update));
+$('outerImage').addEventListener('input',()=>{
+ if(safeURL($('outerImage').value))$('outerMode').value='image';
+ update();
+});
+document.querySelectorAll('[data-outer-mode]').forEach(b=>b.addEventListener('click',()=>{$('outerMode').value=b.dataset.outerMode;update()}));
+const outerPresets={cream:{outerMode:'solid',outerBg:'#faf5ee'},rose:{outerMode:'solid',outerBg:'#f2dfe7'},brown:{outerMode:'solid',outerBg:'#e3d3c5'},blend:{outerMode:'gradient',outerBg:'#e8d0d9',outerEnd:'#fff1f5'}};
+$('outerPreset').addEventListener('change',()=>{const preset=outerPresets[$('outerPreset').value];if(preset){for(const [id,val] of Object.entries(preset))$(id).value=val;update()}});
+
+
+document.querySelectorAll('[data-pan]').forEach(b=>b.addEventListener('click',()=>{
+ const [dx,dy]=b.dataset.pan.split(',').map(Number);
+ if(dx===0&&dy===0){$('portraitX').value='50';$('portraitY').value='50'}
+ else{if(Number($('portraitZoom').value)<115)$('portraitZoom').value='115';$('portraitX').value=String(Math.min(100,Math.max(0,Number($('portraitX').value)+dx)));$('portraitY').value=String(Math.min(100,Math.max(0,Number($('portraitY').value)+dy)))}
+ update();
+}));
+let activeModules=[],favoriteColors=['#a8728c','#765866','#c38b9b'];
+function showModules(){
+ document.querySelectorAll('#optionalModules [data-module]').forEach(el=>{const on=activeModules.includes(el.dataset.module);el.classList.toggle('module-on',on);if(!on)el.open=false});
+ Array.from($('moduleChoice').options).forEach(o=>o.disabled=activeModules.includes(o.value));
+ const available=Array.from($('moduleChoice').options).find(o=>!o.disabled);if(available)$('moduleChoice').value=available.value;
+ $('addModule').disabled=!available;
+ $('extraCount').textContent=activeModules.length?activeModules.length+' หัวข้อที่เพิ่มแล้ว':'เลือกเพิ่มตามต้องการ';
+}
+$('addModule').onclick=()=>{const m=$('moduleChoice').value;if(activeModules.includes(m))return;activeModules.push(m);showModules();document.querySelector('[data-module="'+m+'"]').open=true;update()};
+document.querySelectorAll('#optionalModules [data-module] summary').forEach(summary=>{
+ const btn=document.createElement('button');btn.type='button';btn.textContent='× นำออก';btn.className='remove-module';
+ btn.onclick=e=>{e.preventDefault();e.stopPropagation();activeModules=activeModules.filter(x=>x!==summary.parentElement.dataset.module);showModules();update()};
+ summary.appendChild(btn);
+});
+$('storyEditor').addEventListener('input',update);
+// Rich-text toolbar. Retain the selection when the user interacts with color controls.
+let savedSelection=null;
+function rememberSelection(){
+ const sel=window.getSelection();if(!sel||!sel.rangeCount)return;
+ const range=sel.getRangeAt(0),editor=$('storyEditor');
+ if(editor.contains(range.commonAncestorContainer))savedSelection=range.cloneRange();
+}
+function restoreSelection(){
+ $('storyEditor').focus();
+ if(!savedSelection)return;
+ const sel=window.getSelection();sel.removeAllRanges();try{sel.addRange(savedSelection)}catch(e){}
+}
+$('storyEditor').addEventListener('mouseup',rememberSelection);
+$('storyEditor').addEventListener('keyup',rememberSelection);
+function formatSelection(cmd,value=null){restoreSelection();document.execCommand(cmd,false,value);rememberSelection();update()}
+document.querySelectorAll('[data-cmd]').forEach(b=>{
+ b.addEventListener('mousedown',e=>e.preventDefault());
+ b.addEventListener('click',()=>formatSelection(b.dataset.cmd));
+});
+$('insertLink').addEventListener('mousedown',e=>e.preventDefault());
+$('insertLink').onclick=()=>{
+ rememberSelection();const url=prompt('ใส่ URL ลิงก์ (https://...)');if(url===null)return;
+ const safe=safeURL(url);if(!safe){$('status').textContent='⚠ ลิงก์ต้องขึ้นต้นด้วย https:// หรือ http://';return}
+ formatSelection('createLink',safe);
+};
+const normalizeHex=x=>/^#[0-9a-f]{6}$/i.test(x.trim())?x.trim().toLowerCase():null;
+$('editorColorPicker').addEventListener('input',()=>{$('editorColorHex').value=$('editorColorPicker').value});
+$('editorColorHex').addEventListener('input',()=>{const c=normalizeHex($('editorColorHex').value);if(c)$('editorColorPicker').value=c});
+function applyColor(hex){
+ const c=normalizeHex(hex);if(!c){$('status').textContent='⚠ กรุณาใส่สี HEX เช่น #b08098';return}
+ $('editorColorPicker').value=c;$('editorColorHex').value=c;
+ formatSelection('foreColor',c);
+}
+$('applyTextColor').addEventListener('mousedown',e=>e.preventDefault());
+$('applyTextColor').onclick=()=>applyColor($('editorColorHex').value);
+function renderFavoriteColors(){
+ const root=$('favoriteColors');root.innerHTML='';
+ favoriteColors.forEach(c=>{
+ const b=document.createElement('button');b.type='button';b.style.backgroundColor=c;b.title='ใช้สี '+c+' (คลิกขวาเพื่อลบ)';
+ b.setAttribute('aria-label','ใช้สี '+c);
+ b.addEventListener('mousedown',e=>e.preventDefault());
+ b.onclick=()=>applyColor(c);
+ b.oncontextmenu=e=>{e.preventDefault();favoriteColors=favoriteColors.filter(x=>x!==c);renderFavoriteColors();update()};
+ root.appendChild(b);
+ });
+}
+$('saveFavoriteColor').onclick=()=>{
+ const c=normalizeHex($('editorColorHex').value);if(!c)return;
+ favoriteColors=[c,...favoriteColors.filter(x=>x!==c)].slice(0,14);
+ renderFavoriteColors();update();
+};
+$('editorColorPicker').addEventListener('mousedown',rememberSelection);
+$('editorColorHex').addEventListener('focus',rememberSelection);
+$('storyEditor').addEventListener('paste',e=>{
+ e.preventDefault();
+ const html=e.clipboardData.getData('text/html');
+ if(html){const cleaned=cleanStory(html);restoreSelection();document.execCommand('insertHTML',false,cleaned)}
+ else document.execCommand('insertText',false,e.clipboardData.getData('text/plain'));
+ update();
+});
+$('reset').onclick=()=>{if(!confirm('คืนค่าฟอร์มโรลเพลย์ทั้งหมดเป็นค่าเริ่มต้น?'))return;ids.forEach(id=>$(id).value=defaults[id]);$('storyEditor').innerHTML=initialStory;activeModules=[];favoriteColors=['#a8728c','#765866','#c38b9b'];renderFavoriteColors();showModules();update()};
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(exported());$('copy').textContent='✓ คัดลอกแล้ว';setTimeout(()=>$('copy').textContent='คัดลอกโค้ดสั้น',1500)}catch(e){$('out').focus();$('out').select();$('status').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
+$('download').onclick=()=>{const html='<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+stylesheet+'</head><body>'+card()+'</body></html>';const a=document.createElement('a'),blob=new Blob([html],{type:'text/html;charset=utf-8'});a.href=URL.createObjectURL(blob);a.download='rosewood-roleplay.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
+try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved){ids.forEach(id=>{if(typeof saved.fields?.[id]==='string')$(id).value=saved.fields[id]});if(!saved.fields?.pinkTheme && saved.fields?.portraitSize==='250'){$('portraitSize').value='350'}if(typeof saved.story==='string')$('storyEditor').innerHTML=cleanStory(saved.story);activeModules=Array.isArray(saved.modules)?saved.modules.filter(x=>['identity','theme','outer','colors'].includes(x)):(saved.fields?.identityImage?['identity']:[]);if(Array.isArray(saved.favoriteColors))favoriteColors=saved.favoriteColors.filter(x=>normalizeHex(x)).slice(0,14)}}catch(e){}
+showModules();renderFavoriteColors();render();window.addEventListener('pagehide',()=>{clearTimeout(saveHandle);save()});
+</script></body></html>
