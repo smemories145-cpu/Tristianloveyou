@@ -173,3 +173,12 @@
   -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
   filter:blur(var(--rp-decor-blur,1px));
 }
+
+/* Fade controls work in BOTH Moonlit Lily and custom image mode.
+   Set 0% for a hard left edge; 90% for a long feathered fade. */
+.rp-rose[data-identity-decor="moonlit"] .rp-identity::after{
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 var(--rp-decor-feather,48%),#000 100%);
+  mask-image:linear-gradient(to right,transparent 0%,#000 var(--rp-decor-feather,48%),#000 100%);
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  filter:blur(var(--rp-decor-blur,1px));
+}
