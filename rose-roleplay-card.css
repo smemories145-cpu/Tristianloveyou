@@ -228,3 +228,21 @@
  .rp-rose .rp-photo-frame,.rp-rose[data-layout="right"] .rp-photo-frame{width:100%!important;max-width:100%!important;aspect-ratio:1.25!important}
  .rp-rose .rp-identity,.rp-rose[data-layout="right"] .rp-identity{width:100%!important;min-height:190px;align-items:flex-start!important;text-align:left!important}
 }
+
+/* Editor revision — portrait crop/zoom and discreet roleplay notes */
+.rp-rose .rp-photo-frame{overflow:hidden!important}
+.rp-rose .rp-photo-frame .rp-portrait{
+  object-position:center center!important;
+  transform:translate(var(--rp-photo-pan-x,0%),var(--rp-photo-pan-y,0%)) scale(var(--rp-photo-zoom,1))!important;
+  transform-origin:center center;transition:transform .14s ease-out;
+}
+.rp-rose .rp-note{
+  margin-top:15px;padding:14px 19px;border-left:2px solid #d3a6b8;
+  background:rgba(255,250,252,.82);color:var(--rp-ink);
+  font:400 12px/1.9 'Noto Serif Thai',serif;border-radius:0 8px 8px 0;
+  overflow-wrap:anywhere;
+}
+.rp-rose .rp-note-label{display:block;font:600 9px/1.5 'DM Sans',sans-serif;letter-spacing:2px;color:#b5879d;margin-bottom:5px}
+.rp-rose .rp-story a{color:#a75c86!important;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+.rp-rose .rp-story s,.rp-rose .rp-story strike,.rp-rose .rp-story del{text-decoration:line-through}
+
