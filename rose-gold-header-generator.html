@@ -200,7 +200,7 @@ input[type=color]{height:37px;padding:4px;cursor:pointer}.type-grid{display:grid
 </div></details>
 <div class="controls"><button type="button" id="restore">คืนค่าเริ่มต้นทุกหมวด</button></div><p id="feedback" aria-live="polite">บันทึกอัตโนมัติในเบราว์เซอร์นี้</p>
 </section>
-<section class="panel preview-panel"><div class="copybar"><h2>02 / LIVE PREVIEW</h2><div class="controls"><button type="button" class="primary" id="copy">คัดลอก HTML</button><button type="button" id="download">โหลดโค้ด</button></div></div><div id="preview"></div><label>โค้ดสำหรับคัดลอก (พร้อม CSS)</label><textarea id="code" readonly></textarea></section>
+<section class="panel preview-panel"><div class="copybar"><h2>02 / LIVE PREVIEW</h2><div class="controls"><button type="button" class="primary" id="copy">คัดลอกแบบฝังเว็บ</button><button type="button" id="copyCSS">HTML + CSS</button><button type="button" id="download">โหลด HTML</button></div></div><div id="preview"></div><p class="preview-note">แบบฝังเว็บจะคัดลอกสไตล์จากพรีวิวไว้กับแต่ละองค์ประกอบ ลดปัญหาธีมเว็บปลายทางทำให้กรอบและฟอนต์หลุด</p><label>โค้ดสำหรับนำไปวางในหน้าเว็บ</label><textarea id="code" readonly></textarea></section>
 </main>
 <script>
 'use strict';
@@ -250,7 +250,60 @@ function sanitizeRich(html){
  const root=document.createElement('div');for(const node of Array.from(doc.querySelector('main').childNodes))root.appendChild(clean(node));return root.innerHTML;
 }
 function syncRich(){ $('description').value=sanitizeRich($('richEditor').innerHTML);changed()}
-function result(){return font+'<style>'+cardCSS+'</style>'+content()}
+function cssResult(){return font+'<style>'+cardCSS+'</style>'+content()}
+/* Copy computed, final styling into each DOM element. This survives hosts which strip <style>
+   or load their own CSS after pasted markup. No JavaScript is required in the output. */
+const embedProperties=[
+ 'display','position','box-sizing','width','max-width','min-width','height','min-height','max-height',
+ 'margin','margin-top','margin-right','margin-bottom','margin-left','padding','padding-top','padding-right','padding-bottom','padding-left',
+ 'border','border-width','border-style','border-color','border-radius','border-top','border-bottom',
+ 'background','background-color','background-image','background-size','background-position','background-repeat','background-clip','-webkit-background-clip',
+ 'color','-webkit-text-fill-color','-webkit-text-stroke','-webkit-text-stroke-width','-webkit-text-stroke-color',
+ 'font-family','font-size','font-style','font-weight','line-height','letter-spacing','text-align','text-transform','text-decoration','text-shadow',
+ 'box-shadow','filter','opacity','isolation','z-index','overflow','overflow-wrap','white-space','object-fit','object-position',
+ 'flex','flex-wrap','flex-direction','align-items','justify-content','gap','transform','transform-origin','vertical-align','list-style-type'
+];
+function embedResult(){
+ const root=$('preview').querySelector('.hgcard');
+ if(!root)return cssResult();
+ const clone=root.cloneNode(true);
+ const originals=[root,...root.querySelectorAll('*')];
+ const copies=[clone,...clone.querySelectorAll('*')];
+ originals.forEach((el,i)=>{
+  const target=copies[i],computed=getComputedStyle(el),parts=[];
+  embedProperties.forEach(prop=>{const value=computed.getPropertyValue(prop);if(value&&value.trim())parts.push(prop+':'+value.trim())});
+  target.removeAttribute('style');
+  target.setAttribute('style',parts.join(';')+';');
+  /* Avoid effects being overridden by source-site CSS which matches common class names. */
+  if(target.classList.contains('roomname')){
+   const effect=getComputedStyle(el);
+   if(effect.getPropertyValue('-webkit-text-fill-color').trim()==='transparent'){
+    target.style.setProperty('-webkit-text-fill-color','transparent','important');
+    target.style.setProperty('background-clip','text','important');
+    target.style.setProperty('-webkit-background-clip','text','important');
+   }
+  }
+ });
+ /* Decorative pseudo-elements are not part of the DOM, so recreate the two heading stars. */
+ const heading=clone.querySelector('.heading');
+ if(heading){
+  const realHeading=root.querySelector('.heading');
+  for(const side of ['before','after']){
+   const style=getComputedStyle(realHeading,'::'+side);
+   const value=style.getPropertyValue('content');
+   if(value&&value!=='none'&&value!=='normal'){
+    const star=document.createElement('span');
+    star.setAttribute('aria-hidden','true');
+    const css=side==='before'?'left:4px;':'right:4px;';
+    star.setAttribute('style','position:absolute;top:55px;'+css+'color:#c2a281;font:12px Georgia,serif;pointer-events:none');
+    star.textContent=value.replace(/^["']|["']$/g,'');
+    heading.appendChild(star);
+   }
+  }
+ }
+ return font+clone.outerHTML;
+}
+function result(){return embedResult()}
 let saveTimer;
 const displayUnits={photoWidth:"%",photoHeight:"px",photoX:"%",photoY:"%",roomFoilAngle:"°",roomFoilContrast:"%",houseSize:'px',roomSize:'px',thaiSize:'px',houseSpacing:'px',roomSpacing:'px',descSize:'px',descLeading:'',floralWidth:'%',floralHeight:'px',imageX:'%',imageY:'%',glowOpacity:'%',lightX:'%',lightY:'%',heroSoftness:'%',imageBrightness:'%',imageSaturation:'%',shadowDepth:'px',shadowBlur:'px',shadowOpacity:'%',photoShadow:'%'};
 function render(){Object.keys(displayUnits).forEach(id=>$(id+'Text').textContent=$(id).value+displayUnits[id]);$('preview').innerHTML=content();$('code').value=result()}
@@ -285,8 +338,10 @@ const photoPresets={
 };
 document.querySelectorAll('[data-photopreset]').forEach(b=>b.addEventListener('click',()=>setBatch(photoPresets[b.dataset.photopreset])));
 $('restore').onclick=()=>{if(!confirm('คืนค่าฟอร์ม Rose Gold เป็นค่าเริ่มต้น?'))return;fields.forEach(id=>{$(id).value=defaults[id]});$('richEditor').innerHTML=initialRich;syncRich()};
-$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(result());$('copy').textContent='✓ คัดลอกแล้ว';setTimeout(()=>$('copy').textContent='คัดลอก HTML',1800)}catch(e){$('code').focus();$('code').select();$('feedback').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
-$('download').onclick=()=>{const b=new Blob([result()],{type:'text/html;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='rose-gold-header.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
+async function copyResult(value,button,label){try{await navigator.clipboard.writeText(value);button.textContent='✓ คัดลอกแล้ว';setTimeout(()=>button.textContent=label,1700)}catch(e){$('code').value=value;$('code').focus();$('code').select();$('feedback').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}}
+$('copy').onclick=()=>copyResult(embedResult(),$('copy'),'คัดลอกแบบฝังเว็บ');
+$('copyCSS').onclick=()=>copyResult(cssResult(),$('copyCSS'),'HTML + CSS');
+$('download').onclick=()=>{const b=new Blob(['<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>'+embedResult()+'</body></html>'],{type:'text/html;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='rose-gold-header.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
 
 const initialRich=$('richEditor').innerHTML;
 $('description').value=initialRich;
