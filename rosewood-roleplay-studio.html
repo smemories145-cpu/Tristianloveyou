@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rosewood · Roleplay Card Studio</title>
+<link rel="stylesheet" href="rose-roleplay-card.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600&display=swap');
+*{box-sizing:border-box}body{margin:0;background:#211d1b;color:#e9dcd0;font:12px/1.8 'Noto Serif Thai',serif}
+a{color:#edcbb4;text-decoration:none}header{background:#312925;border-bottom:1px solid #66554c;padding:20px}
+.wrap{max-width:1240px;margin:auto}header .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+header h1{font:500 30px/1.2 Georgia,serif;margin:0;color:#f2dfcb}header p{color:#c7afa2;margin:4px 0 0}
+main{max-width:1240px;margin:auto;padding:20px;display:grid;grid-template-columns:minmax(310px,390px) minmax(0,1fr);gap:18px;align-items:start}
+.panel{background:#302824;border:1px solid #665247;border-radius:12px;padding:17px;min-width:0}
+.panel h2{font:600 12px 'DM Sans',sans-serif;color:#e5c3aa;letter-spacing:1.6px;margin:0 0 12px}
+details{border:1px solid #6c584c;border-radius:8px;margin:9px 0;overflow:hidden}
+summary{list-style:none;cursor:pointer;padding:12px 13px;color:#e8cdb9;font-weight:600;display:flex;align-items:center;justify-content:space-between}
+summary::-webkit-details-marker{display:none}summary::after{content:"⌄"}details[open] summary::after{content:"⌃"}
+.detail{padding:8px 13px 15px;border-top:1px solid #594940}
+label{display:block;margin:9px 0 0;color:#d9c7b8;font-size:11px}
+input,textarea,select{display:block;width:100%;margin-top:5px;background:#201b19;color:#f6ebde;border:1px solid #786053;border-radius:6px;padding:9px;font:12px/1.7 'Noto Serif Thai',serif}
+textarea{min-height:110px;resize:vertical}input[type=range]{padding:0;accent-color:#cba58c}
+input[type=color]{height:38px;padding:4px;cursor:pointer}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.slide{display:grid;grid-template-columns:1fr 52px;gap:10px;align-items:center}.slide output{text-align:right;color:#e9c4a6}
+button{background:#594139;color:#fff0de;border:1px solid #987564;padding:9px 11px;cursor:pointer;border-radius:7px;font:600 11px 'Noto Serif Thai',serif}button:hover{background:#755448}
+button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.tip{color:#bfa99b;font-size:11px;margin:7px 0}
+.editor{position:relative}.editable{margin-top:8px;background:#201b19;color:#f6ebde;border:1px solid #786053;border-radius:6px;padding:13px;min-height:260px;max-height:500px;overflow:auto;font:15px/2 'Noto Serif Thai',serif;outline:none}
+.editable:focus{border-color:#d2aa90}.editable p{margin:0 0 1em}
+.toolbar{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}.toolbar button{min-width:32px}
+#preview{padding:10px;min-width:0}#preview .rp-rose{margin:0 auto}#status{color:#d7be9d;min-height:18px;font-size:11px}
+#out{font:11px/1.5 Consolas,monospace;min-height:100px}
+@media(min-width:880px){.editpanel{max-height:calc(100vh - 45px);overflow:auto;position:sticky;top:12px}}
+@media(max-width:879px){main{grid-template-columns:1fr}}
+@media(max-width:440px){main{padding:9px}.panel{padding:12px}.two{grid-template-columns:1fr}}
+</style></head><body>
+<header><div class="wrap"><div><h1>Rosewood · Roleplay Studio</h1><p>ครีมอุ่น · น้ำตาลนุ่ม · โรลเพลย์ 16px · ฟอร์มแยกจากการ์ดห้อง</p></div><a href="rose-gold-header-generator.html">← กลับ Rose Gold Generator</a></div></header>
+<main><section class="panel editpanel"><h2>01 / EDIT YOUR ROLEPLAY</h2>
+<details open><summary>✦ ตัวละครและรูปภาพ</summary><div class="detail">
+<label>ชื่อตัวละคร<input id="name" value="Tristian S. Kennedy"></label>
+<label>ชื่อรอง / คำอธิบายตัวละคร<input id="subtitle" value="ทริสเตียน · บ้านที่อบอุ่น"></label>
+<label>ข้อมูลใต้ชื่อ<input id="meta" value="A PRIVATE STORY · 01"></label>
+<label>URL ภาพตัวละคร<input id="portrait" value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=85"></label>
+<label>ตำแหน่งภาพและชื่อ<select id="layout"><option value="left">รูปอยู่ซ้าย</option><option value="right">รูปอยู่ขวา</option><option value="center">กึ่งกลางแนวตั้ง</option></select></label>
+<label>ขนาดรูปตัวละคร</label><div class="slide"><input id="portraitSize" type="range" min="70" max="230" value="118"><output id="portraitSizeOut">118px</output></div>
+<label>ปรับจุดโฟกัสภาพแนวนอน</label><div class="slide"><input id="portraitX" type="range" min="0" max="100" value="50"><output id="portraitXOut">50%</output></div>
+<label>ปรับจุดโฟกัสภาพแนวตั้ง</label><div class="slide"><input id="portraitY" type="range" min="0" max="100" value="50"><output id="portraitYOut">50%</output></div>
+</div></details>
+<details><summary>❦ หัวเรื่องแบบไม่แย่งสายตา</summary><div class="detail">
+<label>รูปแบบหัวเรื่อง<select id="headerMode"><option value="compact">หัวเรื่องเล็ก (แนะนำ)</option><option value="normal">หัวเรื่องปกติ</option><option value="none">ซ่อนหัวเรื่อง</option></select></label>
+<label>ข้อความบรรทัดบน<input id="eyebrow" value="✿ A PRIVATE FILM / ROLEPLAY"></label>
+<label>ชื่อหัวเรื่อง<input id="title" value="The Quiet Afternoon"></label>
+<label>ข้อความรองหัวเรื่อง<input id="caption" value="บางช่วงเวลาที่เก็บไว้ในความทรงจำ"></label>
+<label>ขนาดชื่อหัวเรื่อง</label><div class="slide"><input id="titleSize" type="range" min="16" max="40" value="27"><output id="titleSizeOut">27px</output></div>
+</div></details>
+<details open><summary>✎ เนื้อเรื่องโรลเพลย์</summary><div class="detail">
+<p class="tip">คลิกพิมพ์ได้โดยตรง กด Enter เพื่อขึ้นย่อหน้าใหม่ เลือกข้อความแล้วกดตัวหนา/ตัวเอียงได้</p>
+<div class="toolbar"><button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button><button type="button" data-cmd="underline"><u>U</u></button><button type="button" data-cmd="removeFormat">Tx</button></div>
+<div id="storyEditor" class="editable" contenteditable="true" role="textbox" aria-multiline="true" aria-label="เนื้อหาโรลเพลย์"><p>ทริสเตียนวางหนังสือเล่มเล็กลงบนโต๊ะไม้ ก่อนจะหันไปมองแสงอาทิตย์ที่ลอดผ่านม่านสีครีมเข้ามาในห้อง บรรยากาศยามบ่ายสงบจนได้ยินเสียงลมอ่อน ๆ จากนอกหน้าต่าง</p><p><strong>“วันนี้อากาศดีจังเลยนะครับ”</strong></p><p>เขาเอ่ยด้วยรอยยิ้มบางเบา แล้วขยับเก้าอี้ให้คนตรงหน้าได้นั่งอย่างสะดวก</p></div>
+<label>ขนาดข้อความโรล</label><div class="slide"><input id="storySize" type="range" min="14" max="21" value="16"><output id="storySizeOut">16px</output></div>
+<label>ระยะบรรทัด</label><div class="slide"><input id="storyLine" type="range" min="1.5" max="2.5" step=".05" value="2"><output id="storyLineOut">2</output></div>
+</div></details>
+<details><summary>☕ สีพื้นหลังและข้อความ</summary><div class="detail"><div class="two">
+<label>สีพื้นหลังการ์ด<input id="paper" type="color" value="#fffdfa"></label>
+<label>พื้นหลังโรล<input id="inner" type="color" value="#faf7f2"></label>
+<label>สีข้อความ<input id="ink" type="color" value="#604f45"></label>
+<label>สีเส้นและกรอบ<input id="rule" type="color" value="#e2d3c5"></label>
+</div></div></details>
+<details><summary>✧ ข้อความท้ายการ์ด</summary><div class="detail"><div class="two">
+<label>ข้อความซ้าย<input id="footerLeft" value="TRISTIAN · PRIVATE SCENE"></label>
+<label>ข้อความขวา<input id="footerRight" value="TO BE CONTINUED ♡"></label>
+</div></div></details>
+<div class="actions"><button type="button" id="reset">คืนค่าตั้งต้น</button></div><p id="status">ระบบบันทึกข้อความและการตั้งค่าในเบราว์เซอร์นี้</p>
+</section>
+<section class="panel"><h2>02 / LIVE PREVIEW</h2><div class="actions"><button class="primary" type="button" id="copy">คัดลอกโค้ดสั้น</button><button type="button" id="download">ดาวน์โหลด HTML</button></div>
+<p class="tip">โค้ดสั้นเรียก CSS จาก GitHub Pages พื้นที่นำไปวางต้องรองรับ CSS ภายนอก</p>
+<div id="preview"></div><label>โค้ดสำหรับนำไปวาง<textarea id="out" readonly></textarea></label>
+</section></main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const ids=['name','subtitle','meta','portrait','layout','portraitSize','portraitX','portraitY','headerMode','eyebrow','title','caption','titleSize','storySize','storyLine','paper','inner','ink','rule','footerLeft','footerRight'];
+const defaults=Object.fromEntries(ids.map(id=>[id,$(id).value]));
+const initialStory=$('storyEditor').innerHTML;
+const storageKey='rosewood-roleplay-studio-v1';
+const esc=x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const safeURL=x=>/^https?:\/\/[^\s<>"']+$/i.test(x.trim())?x.trim():'';
+const safeColor=(x,fb)=>/^#[0-9a-f]{6}$/i.test(x)?x:fb;
+const stylesheet='<link rel="stylesheet" href="https://smemories145-cpu.github.io/Tristianloveyou/rose-roleplay-card.css">';
+function cleanStory(raw){
+ const doc=new DOMParser().parseFromString('<main>'+raw+'</main>','text/html');
+ const ok=new Set(['P','DIV','BR','STRONG','B','EM','I','U','BLOCKQUOTE','UL','OL','LI','SPAN']);
+ function clean(n){if(n.nodeType===3)return document.createTextNode(n.textContent);if(n.nodeType!==1)return document.createDocumentFragment();
+ if(['SCRIPT','STYLE','IFRAME','SVG','OBJECT','IMG','FORM','INPUT','AUDIO','VIDEO'].includes(n.tagName))return document.createDocumentFragment();
+ const el=document.createElement(ok.has(n.tagName)?n.tagName:'span');
+ if(n.style){const align=n.style.textAlign;if(['left','center','right'].includes(align))el.style.textAlign=align;}
+ for(const child of Array.from(n.childNodes))el.appendChild(clean(child));return el;}
+ const box=document.createElement('div');for(const n of Array.from(doc.querySelector('main').childNodes))box.appendChild(clean(n));
+ return box.innerHTML;
+}
+function card(){
+ const get=id=>esc($(id).value),num=(id,min,max)=>Math.min(max,Math.max(min,Number($(id).value)||0));
+ const layout=['left','right','center'].includes($('layout').value)?$('layout').value:'left';
+ const header=['compact','normal','none'].includes($('headerMode').value)?$('headerMode').value:'compact';
+ const vars='--rp-paper:'+safeColor($('paper').value,'#fffdfa')+';--rp-inner:'+safeColor($('inner').value,'#faf7f2')+';--rp-ink:'+safeColor($('ink').value,'#604f45')+';--rp-rule:'+safeColor($('rule').value,'#e2d3c5')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',70,230)+'px;--rp-photo-x:'+num('portraitX',0,100)+'%;--rp-photo-y:'+num('portraitY',0,100)+'%;--rp-title-size:'+num('titleSize',16,40)+'px';
+ const img=esc(safeURL($('portrait').value));
+ return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" style="'+vars+'"><div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><img class="rp-portrait" src="'+img+'" alt="Character portrait"><div class="rp-identity"><div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
+}
+function exported(){return stylesheet+'<div style="display:block;width:100%;max-width:100%;margin:0 auto;">'+card()+'</div>'}
+function render(){for(const id of ['portraitSize','portraitX','portraitY','titleSize','storySize','storyLine'])$(id+'Out').textContent=$(id).value+({'portraitSize':'px','portraitX':'%','portraitY':'%','titleSize':'px','storySize':'px','storyLine':''}[id]);$('preview').innerHTML=card();$('out').value=exported()}
+let saveHandle;
+function save(){try{localStorage.setItem(storageKey,JSON.stringify({fields:Object.fromEntries(ids.map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML)}));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่อนุญาตบันทึกข้อมูล'}}
+function update(){render();clearTimeout(saveHandle);saveHandle=setTimeout(save,350)}
+ids.forEach(id=>$(id).addEventListener('input',update));
+$('storyEditor').addEventListener('input',update);
+$('storyEditor').addEventListener('paste',e=>{e.preventDefault();document.execCommand('insertText',false,e.clipboardData.getData('text/plain'))});
+document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedown',e=>e.preventDefault());b.addEventListener('click',()=>{$('storyEditor').focus();document.execCommand(b.dataset.cmd,false,null);update()})});
+$('reset').onclick=()=>{if(!confirm('คืนค่าฟอร์มโรลเพลย์ทั้งหมดเป็นค่าเริ่มต้น?'))return;ids.forEach(id=>$(id).value=defaults[id]);$('storyEditor').innerHTML=initialStory;update()};
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(exported());$('copy').textContent='✓ คัดลอกแล้ว';setTimeout(()=>$('copy').textContent='คัดลอกโค้ดสั้น',1500)}catch(e){$('out').focus();$('out').select();$('status').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
+$('download').onclick=()=>{const html='<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+stylesheet+'</head><body>'+card()+'</body></html>';const a=document.createElement('a'),blob=new Blob([html],{type:'text/html;charset=utf-8'});a.href=URL.createObjectURL(blob);a.download='rosewood-roleplay.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
+try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved){ids.forEach(id=>{if(typeof saved.fields?.[id]==='string')$(id).value=saved.fields[id]});if(typeof saved.story==='string')$('storyEditor').innerHTML=cleanStory(saved.story)}}catch(e){}
+render();window.addEventListener('pagehide',()=>{clearTimeout(saveHandle);save()});
+</script></body></html>
