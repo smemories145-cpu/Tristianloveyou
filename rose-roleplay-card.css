@@ -148,3 +148,12 @@
 .rp-rose[data-outer="image"] .rp-shell{background:#fff9fbe3!important}
 .rp-rose[data-outer="image"][data-theme="soft"] .rp-shell{background:#fffafbe0!important}
 @media(max-width:680px){.rp-rose .rp-person,.rp-rose[data-layout="right"] .rp-person{flex-direction:column;align-items:center;padding:12px;gap:13px}.rp-rose .rp-photo-frame,.rp-rose[data-layout="right"] .rp-photo-frame,.rp-rose[data-frame="minimal"] .rp-photo-frame{flex:none;align-self:center;width:min(var(--rp-portrait),100%);max-width:100%}.rp-rose .rp-identity,.rp-rose[data-layout="right"] .rp-identity{align-items:center;text-align:center;width:100%;padding:18px}.rp-rose .rp-meta,.rp-rose[data-layout="right"] .rp-meta{align-self:center}.rp-rose .rp-shell{padding:20px 15px}.rp-rose .rp-story{padding:20px 18px}}
+
+/* Moonlit Lily: original crescent and lily art, hosted as a small reusable SVG */
+.rp-rose[data-identity-decor="moonlit"] .rp-identity{isolation:isolate;min-height:260px;background:linear-gradient(120deg,#fffafdF2,#fff5f9e0)!important}
+.rp-rose[data-identity-decor="moonlit"] .rp-identity::before{display:none!important;content:none!important}
+.rp-rose[data-identity-decor="moonlit"] .rp-identity::after{content:"";display:block;position:absolute;z-index:0;right:-8px;top:0;bottom:0;width:69%;background-image:url("https://smemories145-cpu.github.io/Tristianloveyou/rose-moonlit-lily.svg");background-repeat:no-repeat;background-position:right center;background-size:contain;opacity:var(--rp-lily-opacity,.62);pointer-events:none}
+.rp-rose[data-identity-decor="moonlit"] .rp-identity>*{position:relative;z-index:1}
+.rp-rose[data-identity-decor="none"] .rp-identity::before,.rp-rose[data-identity-decor="none"] .rp-identity::after{display:none!important;content:none!important}
+.rp-rose[data-identity-decor="monogram"] .rp-identity::after{display:none!important;content:none!important}
+@media(max-width:680px){.rp-rose[data-identity-decor="moonlit"] .rp-identity{min-height:230px}.rp-rose[data-identity-decor="moonlit"] .rp-identity::after{width:62%;opacity:calc(var(--rp-lily-opacity,.62) * .85)}}
