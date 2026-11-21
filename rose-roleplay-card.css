@@ -91,3 +91,9 @@
 .rp-rose[data-frame="minimal"] .rp-photo-frame .rp-portrait{border-radius:4px}
 @media(max-width:540px){.rp-rose .rp-photo-frame{flex:0 0 min(var(--rp-portrait),48%);width:min(var(--rp-portrait),48%);max-width:48%}.rp-rose .rp-shell{padding:19px 16px}.rp-rose .rp-person{gap:15px}.rp-rose .rp-character{font-size:clamp(28px,7vw,42px)}}
 @media(max-width:390px){.rp-rose .rp-person,.rp-rose[data-layout="right"] .rp-person{flex-direction:column}.rp-rose .rp-photo-frame,.rp-rose[data-layout="right"] .rp-photo-frame{flex:none;width:min(var(--rp-portrait),100%);max-width:100%}.rp-rose .rp-identity{text-align:center}}
+
+/* Editable outermost card background: solid, gradient, or image. Keep it scoped to rp-rose only. */
+.rp-rose{--rp-outer:#f2dfe7;--rp-outer-end:#f8e9ef;--rp-outer-image:none;--rp-bg-x:50%;--rp-bg-y:50%;--rp-bg-overlay:.18;--rp-bg-size:cover;background-color:var(--rp-outer)!important}
+.rp-rose[data-outer="solid"]{background-image:none!important;background-color:var(--rp-outer)!important}
+.rp-rose[data-outer="gradient"]{background-image:linear-gradient(135deg,var(--rp-outer),var(--rp-outer-end))!important;background-color:var(--rp-outer)!important}
+.rp-rose[data-outer="image"]{background-image:linear-gradient(rgba(255,249,251,var(--rp-bg-overlay)),rgba(255,249,251,var(--rp-bg-overlay))),var(--rp-outer-image)!important;background-color:var(--rp-outer)!important;background-size:100% 100%,var(--rp-bg-size)!important;background-position:center,var(--rp-bg-x) var(--rp-bg-y)!important;background-repeat:no-repeat!important}
