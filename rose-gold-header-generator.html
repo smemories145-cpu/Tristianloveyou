@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rose Gold Conservatory · Header Generator</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+Thai:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Alex+Brush&family=Charmonman:wght@400;700&family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Italianno&family=Mali:wght@400;500&family=Noto+Serif+Thai:wght@400;500&family=Parisienne&family=Pinyon+Script&family=Pridi:wght@400;500&family=Srisakdi:wght@400;700&family=Thasadith:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}body{margin:0;background:#211b1c;color:#f2e9df;font:13px/1.65 'Noto Serif Thai',serif}
 header{border-bottom:1px solid #66524c;background:#302526;padding:19px 20px}
@@ -41,6 +41,15 @@ details.fieldgroup>div{border-top:1px solid #57443f;padding:6px 13px 14px}
 .presets button{padding:7px 9px;font-size:10px}
 .preview-note{font-size:11px;color:#c4aca2;margin:10px 0 0}
 .editor{scrollbar-color:#725b52 #2b2425}
+
+select{margin-top:5px;width:100%;padding:9px;background:#1a1717;border:1px solid #705d53;border-radius:6px;color:#f5e9db;font:12px 'Noto Serif Thai',serif}
+input[type=color]{height:37px;padding:4px;cursor:pointer}.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.type-grid label{margin:4px 0}
+.section-sub{font:600 11px 'DM Sans',sans-serif;letter-spacing:1px;color:#e6c4ab;margin:15px 0 7px;border-top:1px solid #665148;padding-top:13px}
+.richbar{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0 0;border:1px solid #69554d;padding:7px;border-radius:7px;background:#201b1c}
+.richbar button{padding:7px 9px;min-width:33px;font:600 12px Arial}
+.richtext{margin-top:6px;min-height:155px;max-height:350px;overflow:auto;background:#1a1717;color:#f5e9db;border:1px solid #715b50;border-radius:8px;padding:12px;outline:none;font:13px/1.9 'Noto Serif Thai',serif;overflow-wrap:anywhere}
+.richtext:focus{border-color:#d4b19e}.richtext p,.richtext div{margin:0 0 .7em}.richtext ul,.richtext ol{padding-left:23px}
+@media(max-width:430px){.type-grid{grid-template-columns:1fr}}
 </style>
 <style>
 .hgcard,.hgcard *{box-sizing:border-box}
@@ -74,6 +83,13 @@ details.fieldgroup>div{border-top:1px solid #57443f;padding:6px 13px 14px}
 .hg11 .body{position:relative;z-index:1}
 .hg11 .roomphoto{box-shadow:0 6px 18px rgb(117 79 72 / var(--photo-shadow-alpha,.12))}
 @media(prefers-reduced-motion:reduce){.hg11 .hero{transition:none!important}}
+.hg11{--hf:'Cormorant Garamond';--rf:'Great Vibes';--tf:'Noto Serif Thai';--hs:19px;--rs:72px;--ts:13px;--ds:13px;--hspace:3px;--rspace:0px;--hc:#8f756c;--rc:#9c686e;--tc:#997d7b;--dc:#685e59;--dalign:left;--dline:1.95}
+.hg11 .housename{font-family:var(--hf),serif!important;font-size:var(--hs)!important;letter-spacing:var(--hspace)!important;color:var(--hc)!important}
+.hg11 .roomname{font-family:var(--rf),cursive!important;font-size:var(--rs)!important;letter-spacing:var(--rspace)!important;color:var(--rc)!important;line-height:1.18}
+.hg11 .thainame{font-family:var(--tf),serif!important;font-size:var(--ts)!important;color:var(--tc)!important}
+.hg11 .description{font-family:var(--tf),serif!important;font-size:var(--ds)!important;line-height:var(--dline)!important;text-align:var(--dalign);color:var(--dc)!important;overflow-wrap:anywhere}
+.hg11 .description p{margin:0 0 .7em}.hg11 .description p:last-child{margin-bottom:0}.hg11 .description ul,.hg11 .description ol{padding-left:23px}
+
 
 </style>
 </head><body>
@@ -108,7 +124,33 @@ details.fieldgroup>div{border-top:1px solid #57443f;padding:6px 13px 14px}
 <details class="fieldgroup" open><summary>✧ ข้อความและข้อมูลบ้าน</summary><div>
 <div class="two"><label>ชื่อบ้าน<input id="house" value="THE ROSEWOOD HOUSE"></label><label>ชื่อห้อง (ฟอนต์ตัวเขียน)<input id="room" value="The Bedroom"></label></div>
 <div class="two"><label>ชื่อห้องภาษาไทย<input id="thai" value="ห้องนอน · พื้นที่ส่วนตัว"></label><label>เลขห้อง<input id="number" value="01"></label></div>
-<label>คำบรรยาย<textarea id="description">ห้องนอนที่แสงแดดอุ่น ๆ สาดผ่านม่านบาง เฟอร์นิเจอร์สีไม้เข้มตัดกับผ้าปูเตียงสีครีม และดอกไม้สดในแจกันเล็ก ๆ ทำให้ทุกเช้าเริ่มต้นอย่างสงบ</textarea></label>
+
+<div class="section-sub">TYPOGRAPHY / ฟอนต์และการจัดตัวอักษร</div>
+<div class="type-grid">
+<label>ฟอนต์ชื่อบ้าน<select id="houseFont"><option>Cormorant Garamond</option><option>Charmonman</option><option>Pridi</option><option>Thasadith</option><option>Pinyon Script</option></select></label>
+<label>ฟอนต์ชื่อห้อง<select id="roomFont"><option>Great Vibes</option><option>Pinyon Script</option><option>Alex Brush</option><option>Allura</option><option>Italianno</option><option>Parisienne</option><option>Cormorant Garamond</option><option>Charmonman</option><option>Srisakdi</option><option>Mali</option></select></label>
+<label>ฟอนต์ภาษาไทย<select id="thaiFont"><option>Noto Serif Thai</option><option>Charmonman</option><option>Srisakdi</option><option>Mali</option><option>Thasadith</option><option>Pridi</option></select></label>
+<label>แนวจัดบรรยาย<select id="descAlign"><option value="left">ชิดซ้าย</option><option value="center">กึ่งกลาง</option><option value="right">ชิดขวา</option><option value="justify">เต็มบรรทัด</option></select></label>
+<label>สีชื่อบ้าน<input id="houseColor" type="color" value="#8f756c"></label>
+<label>สีชื่อห้อง<input id="roomColor" type="color" value="#9c686e"></label>
+<label>สีข้อความไทย<input id="thaiColor" type="color" value="#997d7b"></label>
+<label>สีบรรยาย<input id="descColor" type="color" value="#685e59"></label>
+</div>
+<label>ขนาดชื่อบ้าน</label><div class="slider-row"><input id="houseSize" type="range" min="12" max="46" value="19"><output id="houseSizeText">19px</output></div>
+<label>ขนาดชื่อห้องตัวเขียน</label><div class="slider-row"><input id="roomSize" type="range" min="30" max="115" value="72"><output id="roomSizeText">72px</output></div>
+<label>ขนาดข้อความไทย</label><div class="slider-row"><input id="thaiSize" type="range" min="10" max="32" value="13"><output id="thaiSizeText">13px</output></div>
+<label>ระยะห่างตัวอักษรชื่อบ้าน</label><div class="slider-row"><input id="houseSpacing" type="range" min="0" max="10" step=".5" value="3"><output id="houseSpacingText">3px</output></div>
+<label>ระยะห่างตัวอักษรชื่อห้อง</label><div class="slider-row"><input id="roomSpacing" type="range" min="-2" max="8" step=".5" value="0"><output id="roomSpacingText">0px</output></div>
+<div class="section-sub">DESCRIPTION / พิมพ์และจัดรูปแบบคำบรรยาย</div>
+<div class="richbar" id="richbar" role="toolbar" aria-label="เครื่องมือจัดข้อความ">
+<button type="button" data-cmd="bold" title="ตัวหนา"><b>B</b></button><button type="button" data-cmd="italic" title="ตัวเอียง"><i>I</i></button><button type="button" data-cmd="underline" title="ขีดเส้นใต้"><u>U</u></button>
+<button type="button" data-cmd="insertUnorderedList" title="รายการจุด">• ≡</button><button type="button" data-cmd="insertOrderedList" title="รายการลำดับ">1. ≡</button>
+<button type="button" data-cmd="justifyLeft" title="ชิดซ้าย">≡⇤</button><button type="button" data-cmd="justifyCenter" title="กลาง">≡</button><button type="button" data-cmd="justifyRight" title="ชิดขวา">⇥≡</button><button type="button" data-cmd="removeFormat" title="ล้างฟอร์แมต">Tx</button>
+</div>
+<div id="richEditor" class="richtext" contenteditable="true" role="textbox" aria-multiline="true" aria-label="บรรยายห้อง"><p>ห้องนอนที่แสงแดดอุ่น ๆ สาดผ่านม่านบาง เฟอร์นิเจอร์สีไม้เข้มตัดกับผ้าปูเตียงสีครีม และดอกไม้สดในแจกันเล็ก ๆ ทำให้ทุกเช้าเริ่มต้นอย่างสงบ</p></div>
+<textarea id="description" hidden></textarea>
+<label>ขนาดตัวอักษรบรรยาย</label><div class="slider-row"><input id="descSize" type="range" min="10" max="23" value="13"><output id="descSizeText">13px</output></div>
+<label>ระยะห่างบรรทัด</label><div class="slider-row"><input id="descLeading" type="range" min="1.2" max="2.8" step=".05" value="1.95"><output id="descLeadingText">1.95</output></div>
 <label>ตำแหน่งในบ้าน<input id="floor" value="SECOND FLOOR"></label>
 </div></details>
 <details class="fieldgroup"><summary>▣ รูปห้องด้านล่าง</summary><div>
@@ -121,13 +163,13 @@ details.fieldgroup>div{border-top:1px solid #57443f;padding:6px 13px 14px}
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const fields=['floralWidth','floralHeight','imageX','imageY','glowOpacity','lightX','lightY','heroSoftness','imageBrightness','imageSaturation','shadowDepth','shadowBlur','shadowOpacity','photoShadow','house','room','thai','number','bgImage','mainImage','description','floor'];
+const fields=["floralWidth","floralHeight","imageX","imageY","glowOpacity","lightX","lightY","heroSoftness","imageBrightness","imageSaturation","shadowDepth","shadowBlur","shadowOpacity","photoShadow","house","room","thai","number","bgImage","mainImage","description","floor","houseFont","roomFont","thaiFont","descAlign","houseColor","roomColor","thaiColor","descColor","houseSize","roomSize","thaiSize","houseSpacing","roomSpacing","descSize","descLeading"];
 const key='rose_gold_header_generator_draft_v1';
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const url=s=>/^https:\/\/[^\s"'<>]+$/i.test(String(s).trim())?String(s).trim():'';
 const defaults=Object.fromEntries(fields.map(id=>[id,$(id).value]));
-const font='<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+Thai:wght@400;500&display=swap" rel="stylesheet">';
-const cardCSS="\n.hgcard,.hgcard *{box-sizing:border-box}\n.hgcard{max-width:610px;width:100%;margin:0 auto;overflow:hidden;position:relative;font-family:'Cormorant Garamond',Georgia,serif}\n.hgcard .overline{text-transform:uppercase;font:600 10px/1.5 'DM Sans',Arial,sans-serif;letter-spacing:2.7px}\n.hgcard .housename{font:500 19px/1.25 'Cormorant Garamond',Georgia,serif;letter-spacing:3px;text-align:center;text-transform:uppercase}\n.hgcard .roomname{font:400 clamp(45px,10vw,72px)/1.17 'Great Vibes','Brush Script MT',cursive;text-align:center;overflow-wrap:anywhere}\n.hgcard .description{font:13px/1.95 'Noto Serif Thai',serif;overflow-wrap:anywhere}\n.hgcard .thainame{font:13px/1.8 'Noto Serif Thai',serif}\n.hgcard .frame-img{width:100%;display:block;object-fit:cover}\n.hgcard .foot{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font:600 10px/1.7 'DM Sans',sans-serif;letter-spacing:1.4px}\n.hg11{background:#eee4d9;color:#564d4b;border:1px solid #d5bdaf;border-radius:17px;box-shadow:0 14px 35px #75635830;padding:13px}\n.hg11 .inner{background:#fcf9f3;border:1px solid #e2cbbf;border-radius:11px;padding:14px 19px 20px}\n.hg11 .hero{height:145px;background-position:center;background-size:cover;border-radius:5px;width:var(--floral-width,78%);margin-left:auto;margin-right:auto}\n.hg11 .heading{padding:16px 8px 13px;text-align:center;position:relative}\n.hg11 .heading:before,.hg11 .heading:after{content:\"✦\";position:absolute;top:55px;color:#c2a281;font:12px Georgia,serif}\n.hg11 .heading:before{left:4px}.hg11 .heading:after{right:4px}\n.hg11 .overline{color:#a78381}.hg11 .housename{color:#8f756c;margin:10px 0 3px}\n.hg11 .roomname{color:#9c686e;text-shadow:0 3px 15px #d8a4a63b}\n.hg11 .thainame{color:#997d7b}.hg11 .body{background:#f8f2eb;border:1px solid #e8d7c9;border-radius:6px;padding:13px}\n.hg11 .roomphoto{height:177px;border-radius:3px}\n.hg11 .description{margin:15px 5px;color:#685e59}\n.hg11 .foot{padding-top:11px;border-top:1px solid #dcc9bb;color:#967a75}\n@media(max-width:490px){.hg11 .inner{padding:12px}.hg11 .heading:before,.hg11 .heading:after{display:none}.hgcard .roomname{font-size:clamp(43px,12vw,64px)}}\n\n.hg11{--outer-shadow-y:14px;--outer-shadow-blur:35px;--outer-shadow-alpha:.19;--light-x:80%;--light-y:5%;--glow-opacity:.24;--hero-softness:.15;--image-brightness:1;--image-saturation:1;--photo-shadow-alpha:.12}\n.hg11{box-shadow:0 var(--outer-shadow-y) var(--outer-shadow-blur) rgb(117 99 88 / var(--outer-shadow-alpha))}\n.hg11 .hero{position:relative;isolation:isolate;height:var(--floral-height,145px);background-position:var(--image-x,50%) var(--image-y,50%);filter:brightness(var(--image-brightness,1)) saturate(var(--image-saturation,1));transition:width .2s ease,height .2s ease;background-clip:padding-box}\n.hg11 .hero:after{content:\"\";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(252,249,243,var(--hero-softness,.15)),rgba(252,249,243,calc(var(--hero-softness,.15) * .45)))}\n.hg11 .inner{position:relative;isolation:isolate;background:radial-gradient(ellipse at var(--light-x,80%) var(--light-y,5%),rgb(255 226 189 / var(--glow-opacity,.24)),transparent 62%),#fcf9f3}\n.hg11 .heading{position:relative;z-index:1}\n.hg11 .body{position:relative;z-index:1}\n.hg11 .roomphoto{box-shadow:0 6px 18px rgb(117 79 72 / var(--photo-shadow-alpha,.12))}\n@media(prefers-reduced-motion:reduce){.hg11 .hero{transition:none!important}}\n";
+const font='<link href="https://fonts.googleapis.com/css2?family=Allura&family=Alex+Brush&family=Charmonman:wght@400;700&family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Italianno&family=Mali:wght@400;500&family=Noto+Serif+Thai:wght@400;500&family=Parisienne&family=Pinyon+Script&family=Pridi:wght@400;500&family=Srisakdi:wght@400;700&family=Thasadith:wght@400;700&display=swap" rel="stylesheet">';
+const cardCSS="\n.hgcard,.hgcard *{box-sizing:border-box}\n.hgcard{max-width:610px;width:100%;margin:0 auto;overflow:hidden;position:relative;font-family:'Cormorant Garamond',Georgia,serif}\n.hgcard .overline{text-transform:uppercase;font:600 10px/1.5 'DM Sans',Arial,sans-serif;letter-spacing:2.7px}\n.hgcard .housename{font:500 19px/1.25 'Cormorant Garamond',Georgia,serif;letter-spacing:3px;text-align:center;text-transform:uppercase}\n.hgcard .roomname{font:400 clamp(45px,10vw,72px)/1.17 'Great Vibes','Brush Script MT',cursive;text-align:center;overflow-wrap:anywhere}\n.hgcard .description{font:13px/1.95 'Noto Serif Thai',serif;overflow-wrap:anywhere}\n.hgcard .thainame{font:13px/1.8 'Noto Serif Thai',serif}\n.hgcard .frame-img{width:100%;display:block;object-fit:cover}\n.hgcard .foot{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font:600 10px/1.7 'DM Sans',sans-serif;letter-spacing:1.4px}\n.hg11{background:#eee4d9;color:#564d4b;border:1px solid #d5bdaf;border-radius:17px;box-shadow:0 14px 35px #75635830;padding:13px}\n.hg11 .inner{background:#fcf9f3;border:1px solid #e2cbbf;border-radius:11px;padding:14px 19px 20px}\n.hg11 .hero{height:145px;background-position:center;background-size:cover;border-radius:5px;width:var(--floral-width,78%);margin-left:auto;margin-right:auto}\n.hg11 .heading{padding:16px 8px 13px;text-align:center;position:relative}\n.hg11 .heading:before,.hg11 .heading:after{content:\"✦\";position:absolute;top:55px;color:#c2a281;font:12px Georgia,serif}\n.hg11 .heading:before{left:4px}.hg11 .heading:after{right:4px}\n.hg11 .overline{color:#a78381}.hg11 .housename{color:#8f756c;margin:10px 0 3px}\n.hg11 .roomname{color:#9c686e;text-shadow:0 3px 15px #d8a4a63b}\n.hg11 .thainame{color:#997d7b}.hg11 .body{background:#f8f2eb;border:1px solid #e8d7c9;border-radius:6px;padding:13px}\n.hg11 .roomphoto{height:177px;border-radius:3px}\n.hg11 .description{margin:15px 5px;color:#685e59}\n.hg11 .foot{padding-top:11px;border-top:1px solid #dcc9bb;color:#967a75}\n@media(max-width:490px){.hg11 .inner{padding:12px}.hg11 .heading:before,.hg11 .heading:after{display:none}.hgcard .roomname{font-size:clamp(43px,12vw,64px)}}\n\n.hg11{--outer-shadow-y:14px;--outer-shadow-blur:35px;--outer-shadow-alpha:.19;--light-x:80%;--light-y:5%;--glow-opacity:.24;--hero-softness:.15;--image-brightness:1;--image-saturation:1;--photo-shadow-alpha:.12}\n.hg11{box-shadow:0 var(--outer-shadow-y) var(--outer-shadow-blur) rgb(117 99 88 / var(--outer-shadow-alpha))}\n.hg11 .hero{position:relative;isolation:isolate;height:var(--floral-height,145px);background-position:var(--image-x,50%) var(--image-y,50%);filter:brightness(var(--image-brightness,1)) saturate(var(--image-saturation,1));transition:width .2s ease,height .2s ease;background-clip:padding-box}\n.hg11 .hero:after{content:\"\";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(252,249,243,var(--hero-softness,.15)),rgba(252,249,243,calc(var(--hero-softness,.15) * .45)))}\n.hg11 .inner{position:relative;isolation:isolate;background:radial-gradient(ellipse at var(--light-x,80%) var(--light-y,5%),rgb(255 226 189 / var(--glow-opacity,.24)),transparent 62%),#fcf9f3}\n.hg11 .heading{position:relative;z-index:1}\n.hg11 .body{position:relative;z-index:1}\n.hg11 .roomphoto{box-shadow:0 6px 18px rgb(117 79 72 / var(--photo-shadow-alpha,.12))}\n@media(prefers-reduced-motion:reduce){.hg11 .hero{transition:none!important}}\n\n.hg11{--hf:'Cormorant Garamond';--rf:'Great Vibes';--tf:'Noto Serif Thai';--hs:19px;--rs:72px;--ts:13px;--ds:13px;--hspace:3px;--rspace:0px;--hc:#8f756c;--rc:#9c686e;--tc:#997d7b;--dc:#685e59;--dalign:left;--dline:1.95}\n.hg11 .housename{font-family:var(--hf),serif!important;font-size:var(--hs)!important;letter-spacing:var(--hspace)!important;color:var(--hc)!important}\n.hg11 .roomname{font-family:var(--rf),cursive!important;font-size:var(--rs)!important;letter-spacing:var(--rspace)!important;color:var(--rc)!important;line-height:1.18}\n.hg11 .thainame{font-family:var(--tf),serif!important;font-size:var(--ts)!important;color:var(--tc)!important}\n.hg11 .description{font-family:var(--tf),serif!important;font-size:var(--ds)!important;line-height:var(--dline)!important;text-align:var(--dalign);color:var(--dc)!important;overflow-wrap:anywhere}\n.hg11 .description p{margin:0 0 .7em}.hg11 .description p:last-child{margin-bottom:0}.hg11 .description ul,.hg11 .description ol{padding-left:23px}\n";
 function content(){
  const v=id=>esc($(id).value);
  const num=(id,low,high)=>Math.min(high,Math.max(low,Number($(id).value)||0));
@@ -135,13 +177,35 @@ function content(){
  const glow=num('glowOpacity',0,80)/100,lx=num('lightX',0,100),ly=num('lightY',0,100),soft=num('heroSoftness',0,85)/100;
  const bright=num('imageBrightness',55,145)/100,sat=num('imageSaturation',0,170)/100;
  const depth=num('shadowDepth',0,35),blur=num('shadowBlur',0,75),shade=num('shadowOpacity',0,65)/100,photoShadow=num('photoShadow',0,65)/100;
+
+ const fonts={houseFont:['Cormorant Garamond','Charmonman','Pridi','Thasadith','Pinyon Script'],roomFont:['Great Vibes','Pinyon Script','Alex Brush','Allura','Italianno','Parisienne','Cormorant Garamond','Charmonman','Srisakdi','Mali'],thaiFont:['Noto Serif Thai','Charmonman','Srisakdi','Mali','Thasadith','Pridi']};
+ const chosen=id=>fonts[id].includes($(id).value)?$(id).value:fonts[id][0];
+ const color=id=>/^#[0-9a-f]{6}$/i.test($(id).value)?$(id).value:'#685e59';
+ const typo=';--hf:"'+chosen('houseFont')+'";--rf:"'+chosen('roomFont')+'";--tf:"'+chosen('thaiFont')+'";--hs:'+num('houseSize',12,46)+'px;--rs:'+num('roomSize',30,115)+'px;--ts:'+num('thaiSize',10,32)+'px;--hspace:'+num('houseSpacing',0,10)+'px;--rspace:'+Math.min(8,Math.max(-2,Number($('roomSpacing').value)||0))+'px;--hc:'+color('houseColor')+';--rc:'+color('roomColor')+';--tc:'+color('thaiColor')+';--dc:'+color('descColor')+';--ds:'+num('descSize',10,23)+'px;--dline:'+Math.min(2.8,Math.max(1.2,Number($('descLeading').value)||1.95))+';--dalign:'+(['left','center','right','justify'].includes($('descAlign').value)?$('descAlign').value:'left');
  const variables='--floral-width:'+w+'%;--floral-height:'+h+'px;--image-x:'+x+'%;--image-y:'+y+'%;--light-x:'+lx+'%;--light-y:'+ly+'%;--glow-opacity:'+glow+';--hero-softness:'+soft+';--image-brightness:'+bright+';--image-saturation:'+sat+';--outer-shadow-y:'+depth+'px;--outer-shadow-blur:'+blur+'px;--outer-shadow-alpha:'+shade+';--photo-shadow-alpha:'+photoShadow;
  const bg=esc(url($('bgImage').value)||defaults.bgImage),p=esc(url($('mainImage').value)||defaults.mainImage);
- return '<article class="hgcard hg11" style="'+variables+'"><div class="inner"><div class="hero" style="background-image:url(&quot;'+bg+'&quot;)"></div><div class="heading"><div class="overline">✿ HOUSE JOURNAL / '+v('number')+'</div><div class="housename">'+v('house')+'</div><div class="roomname">'+v('room')+'</div><div class="thainame">'+v('thai')+'</div></div><div class="body"><img class="frame-img roomphoto" alt="room" src="'+p+'"><div class="description">'+v('description')+'</div><div class="foot"><span>'+v('floor')+'</span><span>ROSE GOLD DAYS</span></div></div></div></article>';
+ return '<article class="hgcard hg11" style="'+variables+typo+'"><div class="inner"><div class="hero" style="background-image:url(&quot;'+bg+'&quot;)"></div><div class="heading"><div class="overline">✿ HOUSE JOURNAL / '+v('number')+'</div><div class="housename">'+v('house')+'</div><div class="roomname">'+v('room')+'</div><div class="thainame">'+v('thai')+'</div></div><div class="body"><img class="frame-img roomphoto" alt="room" src="'+p+'"><div class="description">'+sanitizeRich($('description').value)'</div><div class="foot"><span>'+v('floor')+'</span><span>ROSE GOLD DAYS</span></div></div></div></article>';
 }
+
+function sanitizeRich(html){
+ const doc=new DOMParser().parseFromString('<main>'+String(html)+'</main>','text/html');
+ const allowed=new Set(['P','DIV','BR','STRONG','B','EM','I','U','UL','OL','LI','SPAN']);
+ function clean(node){
+  if(node.nodeType===3)return document.createTextNode(node.textContent);
+  if(node.nodeType!==1)return document.createDocumentFragment();
+  if(['SCRIPT','STYLE','IFRAME','SVG','OBJECT','FORM','INPUT','IMG','VIDEO','AUDIO'].includes(node.tagName))return document.createDocumentFragment();
+  const el=document.createElement(allowed.has(node.tagName)?node.tagName:'span');
+  const al=node.style?.textAlign||node.getAttribute('align');
+  if(['left','center','right','justify'].includes(al))el.style.textAlign=al;
+  if(node.style){if(node.style.fontWeight==='bold'||Number(node.style.fontWeight)>=600)el.style.fontWeight='bold';if(node.style.fontStyle==='italic')el.style.fontStyle='italic';if(node.style.textDecoration.includes('underline'))el.style.textDecoration='underline'}
+  for(const child of Array.from(node.childNodes))el.appendChild(clean(child));return el;
+ }
+ const root=document.createElement('div');for(const node of Array.from(doc.querySelector('main').childNodes))root.appendChild(clean(node));return root.innerHTML;
+}
+function syncRich(){ $('description').value=sanitizeRich($('richEditor').innerHTML);changed()}
 function result(){return font+'<style>'+cardCSS+'</style>'+content()}
 let saveTimer;
-const displayUnits={floralWidth:'%',floralHeight:'px',imageX:'%',imageY:'%',glowOpacity:'%',lightX:'%',lightY:'%',heroSoftness:'%',imageBrightness:'%',imageSaturation:'%',shadowDepth:'px',shadowBlur:'px',shadowOpacity:'%',photoShadow:'%'};
+const displayUnits={houseSize:'px',roomSize:'px',thaiSize:'px',houseSpacing:'px',roomSpacing:'px',descSize:'px',descLeading:'',floralWidth:'%',floralHeight:'px',imageX:'%',imageY:'%',glowOpacity:'%',lightX:'%',lightY:'%',heroSoftness:'%',imageBrightness:'%',imageSaturation:'%',shadowDepth:'px',shadowBlur:'px',shadowOpacity:'%',photoShadow:'%'};
 function render(){Object.keys(displayUnits).forEach(id=>$(id+'Text').textContent=$(id).value+displayUnits[id]);$('preview').innerHTML=content();$('code').value=result()}
 function save(){try{localStorage.setItem(key,JSON.stringify(Object.fromEntries(fields.map(id=>[id,$(id).value]))));$('feedback').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('feedback').textContent='ไม่สามารถบันทึกข้อมูลในเบราว์เซอร์นี้ได้'}}
 function changed(){render();clearTimeout(saveTimer);saveTimer=setTimeout(save,400)}
@@ -166,9 +230,16 @@ const shadowPresets={
 document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>setBatch(sizePresets[b.dataset.preset])));
 document.querySelectorAll('[data-light]').forEach(b=>b.addEventListener('click',()=>setBatch(lightPresets[b.dataset.light])));
 document.querySelectorAll('[data-shadow]').forEach(b=>b.addEventListener('click',()=>setBatch(shadowPresets[b.dataset.shadow])));
-$('restore').onclick=()=>{if(!confirm('คืนค่าฟอร์ม Rose Gold เป็นค่าเริ่มต้น?'))return;fields.forEach(id=>{$(id).value=defaults[id]});changed()};
+$('restore').onclick=()=>{if(!confirm('คืนค่าฟอร์ม Rose Gold เป็นค่าเริ่มต้น?'))return;fields.forEach(id=>{$(id).value=defaults[id]});$('richEditor').innerHTML=initialRich;syncRich()};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(result());$('copy').textContent='✓ คัดลอกแล้ว';setTimeout(()=>$('copy').textContent='คัดลอก HTML',1800)}catch(e){$('code').focus();$('code').select();$('feedback').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
 $('download').onclick=()=>{const b=new Blob([result()],{type:'text/html;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='rose-gold-header.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
+
+const initialRich=$('richEditor').innerHTML;
+$('description').value=initialRich;
+$('richEditor').addEventListener('input',syncRich);
+$('richEditor').addEventListener('paste',e=>{e.preventDefault();document.execCommand('insertText',false,e.clipboardData.getData('text/plain'))});
+document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedown',e=>e.preventDefault());b.addEventListener('click',()=>{$('richEditor').focus();document.execCommand(b.dataset.cmd,false,null);syncRich()})});
 try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&typeof saved==='object')fields.forEach(id=>{if(typeof saved[id]==='string')$(id).value=saved[id]})}catch(e){}
+$('richEditor').innerHTML=sanitizeRich($('description').value.includes('<')?$('description').value:'<p>'+esc($('description').value)+'</p>');$('description').value=sanitizeRich($('richEditor').innerHTML);
 render();window.addEventListener('pagehide',()=>{clearTimeout(saveTimer);save()});
 </script></body></html>
