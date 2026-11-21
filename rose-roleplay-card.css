@@ -165,3 +165,11 @@
 .rp-rose[data-identity-decor="custom"] .rp-custom-decor{display:block;position:absolute!important;z-index:0!important;left:var(--rp-decor-x,78%);top:var(--rp-decor-y,50%);width:var(--rp-decor-width,64%);height:100%;max-width:none;transform:translate(-50%,-50%);opacity:var(--rp-decor-opacity,.55);object-fit:contain;pointer-events:none;filter:none}
 .rp-rose[data-identity-decor="custom"] .rp-identity>.rp-character,.rp-rose[data-identity-decor="custom"] .rp-identity>.rp-character-thai,.rp-rose[data-identity-decor="custom"] .rp-identity>.rp-meta{position:relative;z-index:1}
 @media(max-width:680px){.rp-rose[data-identity-decor="custom"] .rp-identity{min-height:220px}}
+
+/* Feather the left edge of a custom name decoration into the card background. */
+.rp-rose[data-identity-decor="custom"] .rp-custom-decor{
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 var(--rp-decor-feather,48%),#000 100%);
+  mask-image:linear-gradient(to right,transparent 0%,#000 var(--rp-decor-feather,48%),#000 100%);
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  filter:blur(var(--rp-decor-blur,1px));
+}
