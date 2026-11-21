@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rosewood · Roleplay Card Studio</title>
-<link rel="stylesheet" href="rose-roleplay-card.css">
+<link rel="stylesheet" href="rose-roleplay-card.css?v=moonlitfade3">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600&display=swap');
 *{box-sizing:border-box}body{margin:0;background:#211d1b;color:#e9dcd0;font:12px/1.8 'Noto Serif Thai',serif}
@@ -46,9 +46,10 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <label>URL รูปตกแต่งหลังชื่อตัวละคร<input id="decorImage" type="url" placeholder="https://.../lily.png"></label>
 <p class="tip" id="decorImageStatus" aria-live="polite">ใส่ลิงก์ภาพโดยตรง แล้วระบบจะสลับไปใช้รูปของคุณให้อัตโนมัติ</p>
 <label>ความเข้ม–จางของรูปตกแต่ง</label><div class="slide"><input id="decorOpacity" type="range" min="0" max="100" value="55"><output id="decorOpacityOut">55%</output></div>
-<label>ความฟุ้งไล่จางจากขอบซ้าย</label><div class="slide"><input id="decorFeather" type="range" min="0" max="90" value="48"><output id="decorFeatherOut">48%</output></div>
+<label>ความฟุ้งไล่จางจากขอบซ้าย (Moonlit Lily และรูปที่ใส่เอง)</label><div class="slide"><input id="decorFeather" type="range" min="0" max="90" value="48"><output id="decorFeatherOut">48%</output></div>
 <label>เบลอขอบภาพตกแต่ง</label><div class="slide"><input id="decorBlur" type="range" min="0" max="8" step=".5" value="1"><output id="decorBlurOut">1px</output></div>
-<p class="tip">ภาพตกแต่งจะค่อย ๆ จางจากซ้ายไปขวา ปรับความฟุ้งได้ตามใจ</p>
+<p class="tip">ใช้ได้ทั้งลาย Moonlit Lily และรูปที่ใส่เอง ลองกด 0% เทียบกับ 85% จะเห็นความต่างชัดขึ้น</p>
+<div class="actions"><button type="button" data-feather-preset="0">ขอบชัด 0%</button><button type="button" data-feather-preset="85">ฟุ้งมาก 85%</button></div>
 <label>ขนาดรูปตกแต่ง</label><div class="slide"><input id="decorSize" type="range" min="20" max="120" value="64"><output id="decorSizeOut">64%</output></div>
 <label>ตำแหน่งรูปแนวนอน</label><div class="slide"><input id="decorX" type="range" min="0" max="100" value="78"><output id="decorXOut">78%</output></div>
 <label>ตำแหน่งรูปแนวตั้ง</label><div class="slide"><input id="decorY" type="range" min="0" max="100" value="50"><output id="decorYOut">50%</output></div>
@@ -117,7 +118,7 @@ const storageKey='rosewood-roleplay-studio-v1';
 const esc=x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const safeURL=x=>/^https?:\/\/[^\s<>"']+$/i.test(x.trim())?x.trim():'';
 const safeColor=(x,fb)=>/^#[0-9a-f]{6}$/i.test(x)?x:fb;
-const stylesheet='<link rel="stylesheet" href="https://smemories145-cpu.github.io/Tristianloveyou/rose-roleplay-card.css">';
+const stylesheet='<link rel="stylesheet" href="https://smemories145-cpu.github.io/Tristianloveyou/rose-roleplay-card.css?v=moonlitfade3">';
 function cleanStory(raw){
  const doc=new DOMParser().parseFromString('<main>'+raw+'</main>','text/html');
  const ok=new Set(['P','DIV','BR','STRONG','B','EM','I','U','BLOCKQUOTE','UL','OL','LI','SPAN']);
@@ -188,6 +189,7 @@ let saveHandle;
 function save(){try{localStorage.setItem(storageKey,JSON.stringify({fields:Object.fromEntries(ids.map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML)}));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่อนุญาตบันทึกข้อมูล'}}
 function update(){render();clearTimeout(saveHandle);saveHandle=setTimeout(save,350)}
 ids.forEach(id=>$(id).addEventListener('input',update));
+document.querySelectorAll('[data-feather-preset]').forEach(b=>b.addEventListener('click',()=>{$('decorFeather').value=b.dataset.featherPreset;update()}));
 $('decorImage').addEventListener('input',()=>{
  if(safeURL($('decorImage').value))$('identityDecor').value='custom';
  update();
