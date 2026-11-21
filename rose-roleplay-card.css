@@ -157,3 +157,11 @@
 .rp-rose[data-identity-decor="none"] .rp-identity::before,.rp-rose[data-identity-decor="none"] .rp-identity::after{display:none!important;content:none!important}
 .rp-rose[data-identity-decor="monogram"] .rp-identity::after{display:none!important;content:none!important}
 @media(max-width:680px){.rp-rose[data-identity-decor="moonlit"] .rp-identity{min-height:230px}.rp-rose[data-identity-decor="moonlit"] .rp-identity::after{width:62%;opacity:calc(var(--rp-lily-opacity,.62) * .85)}}
+
+/* Custom decorative image beside character name: no image URL escaping through CSS vars. */
+.rp-rose .rp-custom-decor{display:none}
+.rp-rose[data-identity-decor="custom"] .rp-identity{isolation:isolate;min-height:260px}
+.rp-rose[data-identity-decor="custom"] .rp-identity::before,.rp-rose[data-identity-decor="custom"] .rp-identity::after{display:none!important;content:none!important}
+.rp-rose[data-identity-decor="custom"] .rp-custom-decor{display:block;position:absolute!important;z-index:0!important;left:var(--rp-decor-x,78%);top:var(--rp-decor-y,50%);width:var(--rp-decor-width,64%);height:100%;max-width:none;transform:translate(-50%,-50%);opacity:var(--rp-decor-opacity,.55);object-fit:contain;pointer-events:none;filter:none}
+.rp-rose[data-identity-decor="custom"] .rp-identity>.rp-character,.rp-rose[data-identity-decor="custom"] .rp-identity>.rp-character-thai,.rp-rose[data-identity-decor="custom"] .rp-identity>.rp-meta{position:relative;z-index:1}
+@media(max-width:680px){.rp-rose[data-identity-decor="custom"] .rp-identity{min-height:220px}}
