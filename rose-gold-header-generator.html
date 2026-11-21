@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rose Gold Conservatory · Header Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+Thai:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#211b1c;color:#f2e9df;font:13px/1.65 'Noto Serif Thai',serif}
+header{border-bottom:1px solid #66524c;background:#302526;padding:19px 20px}
+header .wrap{max-width:1220px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{font:500 29px/1.3 'Cormorant Garamond',Georgia,serif;color:#efdac9;margin:0}header p{margin:4px 0 0;color:#c9b3ae;font-size:12px}a{color:#eed0bd;text-decoration:none}
+main{max-width:1220px;margin:0 auto;padding:19px;display:grid;grid-template-columns:minmax(320px,390px) minmax(0,1fr);gap:18px;align-items:start}
+.panel{border:1px solid #574842;background:#2b2425;border-radius:12px;padding:17px;min-width:0}
+.panel h2{font:600 13px 'DM Sans',sans-serif;letter-spacing:1.4px;color:#dfc3b1;margin:0 0 7px}.helper{font-size:11px;color:#c7b3a9;margin:2px 0 14px}
+label{display:block;margin:10px 0 0;color:#e1cec2;font-size:11px}
+input,textarea{margin-top:5px;width:100%;border:1px solid #705d53;background:#1a1717;color:#f5e9db;border-radius:6px;padding:9px 10px;font:12px/1.6 'Noto Serif Thai',serif}
+textarea{min-height:90px;resize:vertical}
+input[type=range]{accent-color:#d7ab9a;padding:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.controls{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 0}
+button{border:1px solid #947365;background:#56403c;color:#ffeadb;padding:10px 12px;border-radius:7px;cursor:pointer;font:600 11px 'Noto Serif Thai',serif}
+button:hover{background:#70534d}button.primary{background:#dfb8a4;color:#281c1b;border-color:#dfb8a4}
+.copybar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+#preview{background:#211b1c;padding:12px;min-width:0}
+#preview .hgcard{margin:0 auto}
+#code{min-height:110px;font:11px/1.45 monospace}
+#feedback{min-height:19px;font-size:11px;color:#d5c69d;margin:8px 0}
+.info{padding:10px 12px;border:1px solid #665046;border-radius:7px;background:#352829;color:#d1beb3;font-size:11px}
+@media(min-width:851px){.preview-panel{position:sticky;top:12px}.editor{max-height:calc(100vh - 65px);overflow:auto;scrollbar-width:thin}}
+@media(max-width:850px){main{grid-template-columns:1fr}}
+@media(max-width:430px){main{padding:8px}.panel{padding:11px}.two{grid-template-columns:1fr}}
+</style>
+<style>
+.hgcard,.hgcard *{box-sizing:border-box}
+.hgcard{max-width:610px;width:100%;margin:0 auto;overflow:hidden;position:relative;font-family:'Cormorant Garamond',Georgia,serif}
+.hgcard .overline{text-transform:uppercase;font:600 10px/1.5 'DM Sans',Arial,sans-serif;letter-spacing:2.7px}
+.hgcard .housename{font:500 19px/1.25 'Cormorant Garamond',Georgia,serif;letter-spacing:3px;text-align:center;text-transform:uppercase}
+.hgcard .roomname{font:400 clamp(45px,10vw,72px)/1.17 'Great Vibes','Brush Script MT',cursive;text-align:center;overflow-wrap:anywhere}
+.hgcard .description{font:13px/1.95 'Noto Serif Thai',serif;overflow-wrap:anywhere}
+.hgcard .thainame{font:13px/1.8 'Noto Serif Thai',serif}
+.hgcard .frame-img{width:100%;display:block;object-fit:cover}
+.hgcard .foot{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font:600 10px/1.7 'DM Sans',sans-serif;letter-spacing:1.4px}
+.hg11{background:#eee4d9;color:#564d4b;border:1px solid #d5bdaf;border-radius:17px;box-shadow:0 14px 35px #75635830;padding:13px}
+.hg11 .inner{background:#fcf9f3;border:1px solid #e2cbbf;border-radius:11px;padding:14px 19px 20px}
+.hg11 .hero{height:145px;background-position:center;background-size:cover;border-radius:5px;width:var(--floral-width,78%);margin-left:auto;margin-right:auto}
+.hg11 .heading{padding:16px 8px 13px;text-align:center;position:relative}
+.hg11 .heading:before,.hg11 .heading:after{content:"✦";position:absolute;top:55px;color:#c2a281;font:12px Georgia,serif}
+.hg11 .heading:before{left:4px}.hg11 .heading:after{right:4px}
+.hg11 .overline{color:#a78381}.hg11 .housename{color:#8f756c;margin:10px 0 3px}
+.hg11 .roomname{color:#9c686e;text-shadow:0 3px 15px #d8a4a63b}
+.hg11 .thainame{color:#997d7b}.hg11 .body{background:#f8f2eb;border:1px solid #e8d7c9;border-radius:6px;padding:13px}
+.hg11 .roomphoto{height:177px;border-radius:3px}
+.hg11 .description{margin:15px 5px;color:#685e59}
+.hg11 .foot{padding-top:11px;border-top:1px solid #dcc9bb;color:#967a75}
+@media(max-width:490px){.hg11 .inner{padding:12px}.hg11 .heading:before,.hg11 .heading:after{display:none}.hgcard .roomname{font-size:clamp(43px,12vw,64px)}}
+</style>
+</head><body>
+<header><div class="wrap"><div><h1>✿ Rose Gold Conservatory</h1><p>แบบ 11 ต้นฉบับ · แยกฟอร์มใช้งาน · ปรับความกว้างรูปดอกไม้ด้านบนได้</p></div><a href="home-location-gallery-vol3.html">← กลับแกลเลอรี Vol. 3</a></div></header>
+<main>
+<section class="panel editor"><h2>01 / EDIT YOUR HEADER</h2><p class="helper">คงหน้าตา Rose Gold แบบเดิมทุกส่วน ยกเว้นความกว้างรูปด้านบนที่คุณเลือกปรับเองได้</p>
+<div class="info">🌷 ตั้งต้นรูปบนที่ 78% ของกรอบ แต่สามารถเลื่อนกลับเป็น 100% เพื่อเทียบกับแบบเดิมได้</div>
+<label for="floralWidth">ความกว้างภาพดอกไม้ด้านบน <strong id="widthText">78%</strong></label><input id="floralWidth" type="range" min="35" max="100" step="1" value="78">
+<div class="controls"><button type="button" id="originalWidth">ดูขนาดเดิม 100%</button><button type="button" id="suggestedWidth">กลับขนาดแนะนำ 78%</button></div>
+<div class="two"><label>ชื่อบ้าน<input id="house" value="THE ROSEWOOD HOUSE"></label><label>ชื่อห้อง (ฟอนต์ตัวเขียน)<input id="room" value="The Bedroom"></label></div>
+<div class="two"><label>ชื่อห้องภาษาไทย<input id="thai" value="ห้องนอน · พื้นที่ส่วนตัว"></label><label>เลขห้อง<input id="number" value="01"></label></div>
+<label>URL รูปดอกไม้ด้านบน<input id="bgImage" value="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1200&q=85"></label>
+<label>URL รูปห้องด้านล่าง<input id="mainImage" value="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=85"></label>
+<label>คำบรรยาย<textarea id="description">ห้องนอนที่แสงแดดอุ่น ๆ สาดผ่านม่านบาง เฟอร์นิเจอร์สีไม้เข้มตัดกับผ้าปูเตียงสีครีม และดอกไม้สดในแจกันเล็ก ๆ ทำให้ทุกเช้าเริ่มต้นอย่างสงบ</textarea></label>
+<label>ตำแหน่งในบ้าน<input id="floor" value="SECOND FLOOR"></label>
+<div class="controls"><button type="button" id="restore">คืนค่าเริ่มต้น</button></div><p id="feedback" aria-live="polite">บันทึกอัตโนมัติในเบราว์เซอร์นี้</p>
+</section>
+<section class="panel preview-panel"><div class="copybar"><h2>02 / LIVE PREVIEW</h2><div class="controls"><button type="button" class="primary" id="copy">คัดลอก HTML</button><button type="button" id="download">โหลดโค้ด</button></div></div><div id="preview"></div><label>โค้ดสำหรับคัดลอก (พร้อม CSS)</label><textarea id="code" readonly></textarea></section>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const fields=['floralWidth','house','room','thai','number','bgImage','mainImage','description','floor'];
+const key='rose_gold_header_generator_draft_v1';
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const url=s=>/^https:\/\/[^\s"'<>]+$/i.test(String(s).trim())?String(s).trim():'';
+const defaults=Object.fromEntries(fields.map(id=>[id,$(id).value]));
+const font='<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+Thai:wght@400;500&display=swap" rel="stylesheet">';
+const cardCSS="\n.hgcard,.hgcard *{box-sizing:border-box}\n.hgcard{max-width:610px;width:100%;margin:0 auto;overflow:hidden;position:relative;font-family:'Cormorant Garamond',Georgia,serif}\n.hgcard .overline{text-transform:uppercase;font:600 10px/1.5 'DM Sans',Arial,sans-serif;letter-spacing:2.7px}\n.hgcard .housename{font:500 19px/1.25 'Cormorant Garamond',Georgia,serif;letter-spacing:3px;text-align:center;text-transform:uppercase}\n.hgcard .roomname{font:400 clamp(45px,10vw,72px)/1.17 'Great Vibes','Brush Script MT',cursive;text-align:center;overflow-wrap:anywhere}\n.hgcard .description{font:13px/1.95 'Noto Serif Thai',serif;overflow-wrap:anywhere}\n.hgcard .thainame{font:13px/1.8 'Noto Serif Thai',serif}\n.hgcard .frame-img{width:100%;display:block;object-fit:cover}\n.hgcard .foot{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font:600 10px/1.7 'DM Sans',sans-serif;letter-spacing:1.4px}\n.hg11{background:#eee4d9;color:#564d4b;border:1px solid #d5bdaf;border-radius:17px;box-shadow:0 14px 35px #75635830;padding:13px}\n.hg11 .inner{background:#fcf9f3;border:1px solid #e2cbbf;border-radius:11px;padding:14px 19px 20px}\n.hg11 .hero{height:145px;background-position:center;background-size:cover;border-radius:5px;width:var(--floral-width,78%);margin-left:auto;margin-right:auto}\n.hg11 .heading{padding:16px 8px 13px;text-align:center;position:relative}\n.hg11 .heading:before,.hg11 .heading:after{content:\"✦\";position:absolute;top:55px;color:#c2a281;font:12px Georgia,serif}\n.hg11 .heading:before{left:4px}.hg11 .heading:after{right:4px}\n.hg11 .overline{color:#a78381}.hg11 .housename{color:#8f756c;margin:10px 0 3px}\n.hg11 .roomname{color:#9c686e;text-shadow:0 3px 15px #d8a4a63b}\n.hg11 .thainame{color:#997d7b}.hg11 .body{background:#f8f2eb;border:1px solid #e8d7c9;border-radius:6px;padding:13px}\n.hg11 .roomphoto{height:177px;border-radius:3px}\n.hg11 .description{margin:15px 5px;color:#685e59}\n.hg11 .foot{padding-top:11px;border-top:1px solid #dcc9bb;color:#967a75}\n@media(max-width:490px){.hg11 .inner{padding:12px}.hg11 .heading:before,.hg11 .heading:after{display:none}.hgcard .roomname{font-size:clamp(43px,12vw,64px)}}\n";
+function content(){
+ const v=id=>esc($(id).value),w=Math.min(100,Math.max(35,Number($('floralWidth').value)||78));
+ const bg=esc(url($('bgImage').value)||defaults.bgImage),p=esc(url($('mainImage').value)||defaults.mainImage);
+ return '<article class="hgcard hg11" style="--floral-width:'+w+'%"><div class="inner"><div class="hero" style="background-image:url(&quot;'+bg+'&quot;)"></div><div class="heading"><div class="overline">✿ HOUSE JOURNAL / '+v('number')+'</div><div class="housename">'+v('house')+'</div><div class="roomname">'+v('room')+'</div><div class="thainame">'+v('thai')+'</div></div><div class="body"><img class="frame-img roomphoto" alt="room" src="'+p+'"><div class="description">'+v('description')+'</div><div class="foot"><span>'+v('floor')+'</span><span>ROSE GOLD DAYS</span></div></div></div></article>';
+}
+function result(){return font+'<style>'+cardCSS+'</style>'+content()}
+let saveTimer;
+function render(){$('widthText').textContent=$('floralWidth').value+'%';$('preview').innerHTML=content();$('code').value=result()}
+function save(){try{localStorage.setItem(key,JSON.stringify(Object.fromEntries(fields.map(id=>[id,$(id).value]))));$('feedback').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('feedback').textContent='ไม่สามารถบันทึกข้อมูลในเบราว์เซอร์นี้ได้'}}
+function changed(){render();clearTimeout(saveTimer);saveTimer=setTimeout(save,400)}
+fields.forEach(id=>$(id).addEventListener('input',changed));
+$('originalWidth').onclick=()=>{$('floralWidth').value=100;changed()};
+$('suggestedWidth').onclick=()=>{$('floralWidth').value=78;changed()};
+$('restore').onclick=()=>{if(!confirm('คืนค่าฟอร์ม Rose Gold เป็นค่าเริ่มต้น?'))return;fields.forEach(id=>{$(id).value=defaults[id]});changed()};
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(result());$('copy').textContent='✓ คัดลอกแล้ว';setTimeout(()=>$('copy').textContent='คัดลอก HTML',1800)}catch(e){$('code').focus();$('code').select();$('feedback').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
+$('download').onclick=()=>{const b=new Blob([result()],{type:'text/html;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='rose-gold-header.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
+try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&typeof saved==='object')fields.forEach(id=>{if(typeof saved[id]==='string')$(id).value=saved[id]})}catch(e){}
+render();window.addEventListener('pagehide',()=>{clearTimeout(saveTimer);save()});
+</script></body></html>
