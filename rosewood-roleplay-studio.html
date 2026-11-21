@@ -32,7 +32,7 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 @media(max-width:879px){main{grid-template-columns:1fr}}
 @media(max-width:440px){main{padding:9px}.panel{padding:12px}.two{grid-template-columns:1fr}}
 </style></head><body>
-<header><div class="wrap"><div><h1>Rosewood · Roleplay Studio</h1><p>ครีมอุ่น · น้ำตาลนุ่ม · โรลเพลย์ 16px · ฟอร์มแยกจากการ์ดห้อง</p></div><a href="rose-gold-header-generator.html">← กลับ Rose Gold Generator</a></div></header>
+<header><div class="wrap"><div><h1>Rosewood · Roleplay Studio</h1><p>ครีมอุ่น · น้ำตาลนุ่ม · รูปตัวละครใหญ่ขึ้น · กรอบหรู 4 แบบ · โรลเพลย์ 16px</p></div><a href="rose-gold-header-generator.html">← กลับ Rose Gold Generator</a></div></header>
 <main><section class="panel editpanel"><h2>01 / EDIT YOUR ROLEPLAY</h2>
 <details open><summary>✦ ตัวละครและรูปภาพ</summary><div class="detail">
 <label>ชื่อตัวละคร<input id="name" value="Tristian S. Kennedy"></label>
@@ -40,7 +40,17 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <label>ข้อมูลใต้ชื่อ<input id="meta" value="A PRIVATE STORY · 01"></label>
 <label>URL ภาพตัวละคร<input id="portrait" value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=85"></label>
 <label>ตำแหน่งภาพและชื่อ<select id="layout"><option value="left">รูปอยู่ซ้าย</option><option value="right">รูปอยู่ขวา</option><option value="center">กึ่งกลางแนวตั้ง</option></select></label>
-<label>ขนาดรูปตัวละคร</label><div class="slide"><input id="portraitSize" type="range" min="70" max="230" value="118"><output id="portraitSizeOut">118px</output></div>
+<label>สไตล์กรอบภาพตัวละคร<select id="frameStyle">
+<option value="ornate">Vintage Gold · กรอบทองซ้อนและลายดาว</option>
+<option value="arch">Royal Arch · กรอบโค้งสไตล์วินเทจ</option>
+<option value="cinematic">Cinematic Film · ฟิล์มภาพยนตร์</option>
+<option value="minimal">Clean Portrait · ภาพเต็มกรอบเรียบหรู</option>
+</select></label>
+<label>ขนาดรูปตัวละคร</label><div class="slide"><input id="portraitSize" type="range" min="100" max="420" value="250"><output id="portraitSizeOut">250px</output></div>
+<label>สัดส่วนความสูงของภาพ</label><div class="slide"><input id="portraitRatio" type="range" min="55" max="135" value="79"><output id="portraitRatioOut">79%</output></div>
+<label>ความเด่นลายประดับ</label><div class="slide"><input id="detailOpacity" type="range" min="0" max="100" value="85"><output id="detailOpacityOut">85%</output></div>
+<label>ข้อความบนป้ายรูป<input id="portraitLabel" value="PRIVATE PORTRAIT"></label>
+<div class="actions"><button type="button" data-look="ornate">กรอบทอง</button><button type="button" data-look="arch">กรอบโค้ง</button><button type="button" data-look="cinematic">แถบฟิล์ม</button><button type="button" data-look="minimal">เรียบหรู</button></div>
 <label>ปรับจุดโฟกัสภาพแนวนอน</label><div class="slide"><input id="portraitX" type="range" min="0" max="100" value="50"><output id="portraitXOut">50%</output></div>
 <label>ปรับจุดโฟกัสภาพแนวตั้ง</label><div class="slide"><input id="portraitY" type="range" min="0" max="100" value="50"><output id="portraitYOut">50%</output></div>
 </div></details>
@@ -77,7 +87,7 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const ids=['name','subtitle','meta','portrait','layout','portraitSize','portraitX','portraitY','headerMode','eyebrow','title','caption','titleSize','storySize','storyLine','paper','inner','ink','rule','footerLeft','footerRight'];
+const ids=['name','subtitle','meta','portrait','layout','frameStyle','portraitSize','portraitRatio','detailOpacity','portraitLabel','portraitX','portraitY','headerMode','eyebrow','title','caption','titleSize','storySize','storyLine','paper','inner','ink','rule','footerLeft','footerRight'];
 const defaults=Object.fromEntries(ids.map(id=>[id,$(id).value]));
 const initialStory=$('storyEditor').innerHTML;
 const storageKey='rosewood-roleplay-studio-v1';
@@ -100,16 +110,18 @@ function card(){
  const get=id=>esc($(id).value),num=(id,min,max)=>Math.min(max,Math.max(min,Number($(id).value)||0));
  const layout=['left','right','center'].includes($('layout').value)?$('layout').value:'left';
  const header=['compact','normal','none'].includes($('headerMode').value)?$('headerMode').value:'compact';
- const vars='--rp-paper:'+safeColor($('paper').value,'#fffdfa')+';--rp-inner:'+safeColor($('inner').value,'#faf7f2')+';--rp-ink:'+safeColor($('ink').value,'#604f45')+';--rp-rule:'+safeColor($('rule').value,'#e2d3c5')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',70,230)+'px;--rp-photo-x:'+num('portraitX',0,100)+'%;--rp-photo-y:'+num('portraitY',0,100)+'%;--rp-title-size:'+num('titleSize',16,40)+'px';
+ const frameStyle=['ornate','arch','cinematic','minimal'].includes($('frameStyle').value)?$('frameStyle').value:'ornate';
+ const vars='--rp-paper:'+safeColor($('paper').value,'#fffdfa')+';--rp-inner:'+safeColor($('inner').value,'#faf7f2')+';--rp-ink:'+safeColor($('ink').value,'#604f45')+';--rp-rule:'+safeColor($('rule').value,'#e2d3c5')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',100,420)+'px;--rp-aspect:'+(num('portraitRatio',55,135)/100)+';--rp-detail:'+(num('detailOpacity',0,100)/100)+';--rp-photo-x:'+num('portraitX',0,100)+'%;--rp-photo-y:'+num('portraitY',0,100)+'%;--rp-title-size:'+num('titleSize',16,40)+'px';
  const img=esc(safeURL($('portrait').value));
- return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" style="'+vars+'"><div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><img class="rp-portrait" src="'+img+'" alt="Character portrait"><div class="rp-identity"><div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
+ return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" data-frame="'+frameStyle+'" style="'+vars+'"><div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"><span class="rp-portrait-label">'+get('portraitLabel')+'</span></div><div class="rp-identity"><div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
 }
 function exported(){return stylesheet+'<div style="display:block;width:100%;max-width:100%;margin:0 auto;">'+card()+'</div>'}
-function render(){for(const id of ['portraitSize','portraitX','portraitY','titleSize','storySize','storyLine'])$(id+'Out').textContent=$(id).value+({'portraitSize':'px','portraitX':'%','portraitY':'%','titleSize':'px','storySize':'px','storyLine':''}[id]);$('preview').innerHTML=card();$('out').value=exported()}
+function render(){for(const id of ['portraitSize','portraitRatio','detailOpacity','portraitX','portraitY','titleSize','storySize','storyLine'])$(id+'Out').textContent=$(id).value+({'portraitSize':'px','portraitRatio':'%','detailOpacity':'%','portraitX':'%','portraitY':'%','titleSize':'px','storySize':'px','storyLine':''}[id]);$('preview').innerHTML=card();$('out').value=exported()}
 let saveHandle;
 function save(){try{localStorage.setItem(storageKey,JSON.stringify({fields:Object.fromEntries(ids.map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML)}));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่อนุญาตบันทึกข้อมูล'}}
 function update(){render();clearTimeout(saveHandle);saveHandle=setTimeout(save,350)}
 ids.forEach(id=>$(id).addEventListener('input',update));
+document.querySelectorAll('[data-look]').forEach(b=>b.addEventListener('click',()=>{$('frameStyle').value=b.dataset.look;update()}));
 $('storyEditor').addEventListener('input',update);
 $('storyEditor').addEventListener('paste',e=>{e.preventDefault();document.execCommand('insertText',false,e.clipboardData.getData('text/plain'))});
 document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedown',e=>e.preventDefault());b.addEventListener('click',()=>{$('storyEditor').focus();document.execCommand(b.dataset.cmd,false,null);update()})});
