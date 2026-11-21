@@ -246,11 +246,69 @@ document.querySelectorAll('#optionalModules [data-module] summary').forEach(summ
  summary.appendChild(btn);
 });
 $('storyEditor').addEventListener('input',update);
-$('storyEditor').addEventListener('paste',e=>{e.preventDefault();document.execCommand('insertText',false,e.clipboardData.getData('text/plain'))});
-document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedown',e=>e.preventDefault());b.addEventListener('click',()=>{$('storyEditor').focus();document.execCommand(b.dataset.cmd,false,null);update()})});
-$('reset').onclick=()=>{if(!confirm('คืนค่าฟอร์มโรลเพลย์ทั้งหมดเป็นค่าเริ่มต้น?'))return;ids.forEach(id=>$(id).value=defaults[id]);$('storyEditor').innerHTML=initialStory;update()};
+// Rich-text toolbar. Retain the selection when the user interacts with color controls.
+let savedSelection=null;
+function rememberSelection(){
+ const sel=window.getSelection();if(!sel||!sel.rangeCount)return;
+ const range=sel.getRangeAt(0),editor=$('storyEditor');
+ if(editor.contains(range.commonAncestorContainer))savedSelection=range.cloneRange();
+}
+function restoreSelection(){
+ $('storyEditor').focus();
+ if(!savedSelection)return;
+ const sel=window.getSelection();sel.removeAllRanges();try{sel.addRange(savedSelection)}catch(e){}
+}
+$('storyEditor').addEventListener('mouseup',rememberSelection);
+$('storyEditor').addEventListener('keyup',rememberSelection);
+function formatSelection(cmd,value=null){restoreSelection();document.execCommand(cmd,false,value);rememberSelection();update()}
+document.querySelectorAll('[data-cmd]').forEach(b=>{
+ b.addEventListener('mousedown',e=>e.preventDefault());
+ b.addEventListener('click',()=>formatSelection(b.dataset.cmd));
+});
+$('insertLink').addEventListener('mousedown',e=>e.preventDefault());
+$('insertLink').onclick=()=>{
+ rememberSelection();const url=prompt('ใส่ URL ลิงก์ (https://...)');if(url===null)return;
+ const safe=safeURL(url);if(!safe){$('status').textContent='⚠ ลิงก์ต้องขึ้นต้นด้วย https:// หรือ http://';return}
+ formatSelection('createLink',safe);
+};
+const normalizeHex=x=>/^#[0-9a-f]{6}$/i.test(x.trim())?x.trim().toLowerCase():null;
+$('editorColorPicker').addEventListener('input',()=>{$('editorColorHex').value=$('editorColorPicker').value});
+$('editorColorHex').addEventListener('input',()=>{const c=normalizeHex($('editorColorHex').value);if(c)$('editorColorPicker').value=c});
+function applyColor(hex){
+ const c=normalizeHex(hex);if(!c){$('status').textContent='⚠ กรุณาใส่สี HEX เช่น #b08098';return}
+ $('editorColorPicker').value=c;$('editorColorHex').value=c;
+ formatSelection('foreColor',c);
+}
+$('applyTextColor').addEventListener('mousedown',e=>e.preventDefault());
+$('applyTextColor').onclick=()=>applyColor($('editorColorHex').value);
+function renderFavoriteColors(){
+ const root=$('favoriteColors');root.innerHTML='';
+ favoriteColors.forEach(c=>{
+ const b=document.createElement('button');b.type='button';b.style.backgroundColor=c;b.title='ใช้สี '+c+' (คลิกขวาเพื่อลบ)';
+ b.setAttribute('aria-label','ใช้สี '+c);
+ b.addEventListener('mousedown',e=>e.preventDefault());
+ b.onclick=()=>applyColor(c);
+ b.oncontextmenu=e=>{e.preventDefault();favoriteColors=favoriteColors.filter(x=>x!==c);renderFavoriteColors();update()};
+ root.appendChild(b);
+ });
+}
+$('saveFavoriteColor').onclick=()=>{
+ const c=normalizeHex($('editorColorHex').value);if(!c)return;
+ favoriteColors=[c,...favoriteColors.filter(x=>x!==c)].slice(0,14);
+ renderFavoriteColors();update();
+};
+$('editorColorPicker').addEventListener('mousedown',rememberSelection);
+$('editorColorHex').addEventListener('focus',rememberSelection);
+$('storyEditor').addEventListener('paste',e=>{
+ e.preventDefault();
+ const html=e.clipboardData.getData('text/html');
+ if(html){const cleaned=cleanStory(html);restoreSelection();document.execCommand('insertHTML',false,cleaned)}
+ else document.execCommand('insertText',false,e.clipboardData.getData('text/plain'));
+ update();
+});
+$('reset').onclick=()=>{if(!confirm('คืนค่าฟอร์มโรลเพลย์ทั้งหมดเป็นค่าเริ่มต้น?'))return;ids.forEach(id=>$(id).value=defaults[id]);$('storyEditor').innerHTML=initialStory;activeModules=[];showModules();update()};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(exported());$('copy').textContent='✓ คัดลอกแล้ว';setTimeout(()=>$('copy').textContent='คัดลอกโค้ดสั้น',1500)}catch(e){$('out').focus();$('out').select();$('status').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}};
 $('download').onclick=()=>{const html='<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+stylesheet+'</head><body>'+card()+'</body></html>';const a=document.createElement('a'),blob=new Blob([html],{type:'text/html;charset=utf-8'});a.href=URL.createObjectURL(blob);a.download='rosewood-roleplay.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
-try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved){ids.forEach(id=>{if(typeof saved.fields?.[id]==='string')$(id).value=saved.fields[id]});if(!saved.fields?.pinkTheme && saved.fields?.portraitSize==='250'){$('portraitSize').value='350'}if(typeof saved.story==='string')$('storyEditor').innerHTML=cleanStory(saved.story)}}catch(e){}
-render();window.addEventListener('pagehide',()=>{clearTimeout(saveHandle);save()});
+try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved){ids.forEach(id=>{if(typeof saved.fields?.[id]==='string')$(id).value=saved.fields[id]});if(!saved.fields?.pinkTheme && saved.fields?.portraitSize==='250'){$('portraitSize').value='350'}if(typeof saved.story==='string')$('storyEditor').innerHTML=cleanStory(saved.story);activeModules=Array.isArray(saved.modules)?saved.modules.filter(x=>['identity','theme'].includes(x)):(saved.fields?.identityImage?['identity']:[]);if(Array.isArray(saved.favoriteColors))favoriteColors=saved.favoriteColors.filter(x=>normalizeHex(x)).slice(0,14)}}catch(e){}
+showModules();renderFavoriteColors();render();window.addEventListener('pagehide',()=>{clearTimeout(saveHandle);save()});
 </script></body></html>
