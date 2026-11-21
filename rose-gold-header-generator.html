@@ -231,7 +231,7 @@ input[type=color]{height:37px;padding:4px;cursor:pointer}.type-grid{display:grid
 <label>ตำแหน่งกรอบรูป<select id="photoAlign"><option value="center">กึ่งกลาง</option><option value="left">ชิดซ้าย</option><option value="right">ชิดขวา</option></select></label>
 <div class="presets"><button type="button" data-photopreset="original">ขนาดเดิม</button><button type="button" data-photopreset="portrait">แนวตั้ง</button><button type="button" data-photopreset="wide">แนวนอนกว้าง</button><button type="button" data-photopreset="compact">รูปเล็กกึ่งกลาง</button></div>
 </div></details>
-<div class="controls"><button type="button" id="restore">คืนค่าเริ่มต้นทุกหมวด</button><button type="button" id="copyCurrentSetup" class="primary">คัดลอกการตั้งค่าปัจจุบัน</button></div><p class="tip">ต้องการให้ผู้เข้าชมทุกคนเห็นหน้าตาแบบเดียวกับที่กำลังตั้งอยู่? กดคัดลอกการตั้งค่าแล้วส่งข้อมูลนั้นในแชต เพื่อใช้เป็นค่าเริ่มต้นของเว็บ</p><p id="feedback" aria-live="polite">บันทึกอัตโนมัติในเบราว์เซอร์นี้</p>
+<div class="controls"><button type="button" id="restore">คืนค่าเริ่มต้นทุกหมวด</button><button type="button" id="copyCurrentSetup" class="primary">🔗 คัดลอกลิงก์แชร์ดีไซน์</button></div><p class="tip">กดคัดลอกลิงก์แชร์ดีไซน์ แล้วส่งให้ใครก็ได้ เมื่อเปิดลิงก์จะเห็นหน้าตาแบบที่คุณแต่งไว้ทันที หากต้องการให้กลายเป็นค่าเริ่มต้นของเว็บทุกครั้ง ให้ส่งลิงก์นั้นในแชตนี้</p><p id="feedback" aria-live="polite">บันทึกอัตโนมัติในเบราว์เซอร์นี้</p>
 </section>
 <section class="panel preview-panel"><div class="copybar"><h2>02 / LIVE PREVIEW</h2><div class="controls"><button type="button" class="primary" id="copy">คัดลอกโค้ดสั้น</button><button type="button" id="copyEmbed">คัดลอกแบบฝังเว็บ</button><button type="button" id="copyCSS">HTML + CSS</button><button type="button" id="download">โหลด HTML</button></div></div><div id="preview"></div><p class="preview-note">โค้ดสั้นจะโหลด CSS และลายตกแต่งจาก GitHub Pages อัตโนมัติ ใช้ได้กับเว็บที่อนุญาตลิงก์ CSS ภายนอก หากเว็บปลายทางไม่รองรับ ให้เลือกปุ่มคัดลอกแบบฝังเว็บ</p><label>โค้ดสำหรับนำไปวางในหน้าเว็บ</label><textarea id="code" readonly></textarea></section>
 </main>
@@ -409,14 +409,38 @@ $('richEditor').addEventListener('input',syncRich);
 $('richEditor').addEventListener('paste',e=>{e.preventDefault();document.execCommand('insertText',false,e.clipboardData.getData('text/plain'))});
 document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedown',e=>e.preventDefault());b.addEventListener('click',()=>{$('richEditor').focus();document.execCommand(b.dataset.cmd,false,null);syncRich()})});
 
+// Portable URL design snapshot: no account or back-end required.
+function encodeDesign(fieldsObject){
+ const bytes=new TextEncoder().encode(JSON.stringify({v:1,fields:fieldsObject}));
+ let binary='';for(const byte of bytes)binary+=String.fromCharCode(byte);
+ return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function decodeDesign(token){
+ if(!token||token.length>30000)return null;
+ const binary=atob(token.replace(/-/g,'+').replace(/_/g,'/'));
+ const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
+ const payload=JSON.parse(new TextDecoder().decode(bytes));
+ if(payload?.v!==1||!payload.fields||typeof payload.fields!=='object'||Array.isArray(payload.fields))return null;
+ return payload.fields;
+}
 $('copyCurrentSetup').onclick=async()=>{
  syncRich();
- const current={type:'rose-gold-header-generator-settings',version:1,fields:Object.fromEntries(fields.map(id=>[id,$(id).value]))};
- const text=JSON.stringify(current,null,2);
- try{await navigator.clipboard.writeText(text);$('feedback').textContent='✓ คัดลอกค่าปัจจุบันแล้ว นำมาวางในแชตได้เลย'}
- catch(e){const box=document.createElement('textarea');box.value=text;box.readOnly=true;box.style.cssText='width:100%;min-height:140px;margin-top:10px';$('feedback').after(box);box.focus();box.select();$('feedback').textContent='เลือกค่าปัจจุบันแล้ว กด Ctrl+C เพื่อคัดลอก'}
+ const state=Object.fromEntries(fields.map(id=>[id,$(id).value]));
+ const link=new URL(location.pathname,location.origin);
+ link.searchParams.set('design',encodeDesign(state));
+ const shareURL=link.toString();
+ try{await navigator.clipboard.writeText(shareURL);$('feedback').textContent='✓ คัดลอกลิงก์แล้ว! เปิดลิงก์นี้ที่เครื่องอื่นก็จะเห็นดีไซน์เดียวกัน'}
+ catch(e){let box=$('shareLinkFallback');if(!box){box=document.createElement('textarea');box.id='shareLinkFallback';box.readOnly=true;box.style.cssText='width:100%;min-height:90px;margin-top:10px';$('feedback').after(box)}box.value=shareURL;box.focus();box.select();$('feedback').textContent='เลือกลิงก์แล้ว กด Ctrl+C เพื่อคัดลอก'}
 };
 try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&typeof saved==='object'){fields.forEach(id=>{if(typeof saved[id]==='string')$(id).value=saved[id]});if(typeof saved.journalLine!=='string'&&typeof saved.number==='string')$('journalLine').value='✿ HOUSE JOURNAL / '+saved.number}}catch(e){}
+// A shared design overrides local autosave on this visit so recipients see exactly the shared design.
+try{
+ const token=new URLSearchParams(location.search).get('design');
+ if(token){const shared=decodeDesign(token);if(shared){
+  for(const id of fields)if(typeof shared[id]==='string')$(id).value=shared[id];
+  $('feedback').textContent='✓ โหลดดีไซน์จากลิงก์แชร์แล้ว';
+ }else $('feedback').textContent='⚠ ลิงก์แชร์ไม่ถูกต้อง'}
+}catch(e){$('feedback').textContent='⚠ ไม่สามารถอ่านลิงก์แชร์นี้ได้'}
 $('richEditor').innerHTML=sanitizeRich($('description').value.includes('<')?$('description').value:'<p>'+esc($('description').value)+'</p>');$('description').value=sanitizeRich($('richEditor').innerHTML);
 render();window.addEventListener('pagehide',()=>{clearTimeout(saveTimer);save()});
 </script></body></html>
