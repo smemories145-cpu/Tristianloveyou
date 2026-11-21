@@ -144,13 +144,6 @@ details.rg-addon-sub>summary::-webkit-details-marker{display:none}details.rg-add
 <header><div class="wrap"><div><h1>✿ Rose Gold Conservatory</h1><p>แบบ 11 ต้นฉบับ · แยกฟอร์มใช้งาน · ปรับขนาดภาพ แสง เงา และบรรยากาศได้แบบเรียลไทม์</p></div><a href="home-location-gallery-vol3.html">← กลับแกลเลอรี Vol. 3</a></div></header>
 <main>
 <section class="panel editor"><h2>01 / EDIT YOUR HEADER</h2><p class="helper">แบบ 11 ต้นฉบับ แบ่งหมวดให้กดเปิด–ปิดได้ ปรับแล้วเห็นผลที่พรีวิวทันที</p>
-<details class="fieldgroup"><summary>◈ เงาและมิติของกรอบ</summary><div>
-<label for="shadowDepth">ระยะเงากรอบ</label><div class="slider-row"><input id="shadowDepth" type="range" min="0" max="35" value="14"><output id="shadowDepthText">14px</output></div>
-<label for="shadowBlur">ความฟุ้งของเงากรอบ</label><div class="slider-row"><input id="shadowBlur" type="range" min="0" max="75" value="35"><output id="shadowBlurText">35px</output></div>
-<label for="shadowOpacity">ความเข้มเงากรอบ</label><div class="slider-row"><input id="shadowOpacity" type="range" min="0" max="65" value="19"><output id="shadowOpacityText">19%</output></div>
-<label for="photoShadow">เงาใต้รูปห้อง</label><div class="slider-row"><input id="photoShadow" type="range" min="0" max="65" value="12"><output id="photoShadowText">12%</output></div>
-<div class="presets"><button type="button" data-shadow="subtle">เงาบาง</button><button type="button" data-shadow="luxury">เงาลึกหรู</button><button type="button" data-shadow="none">ไม่มีเงา</button></div>
-</div></details>
 <details class="fieldgroup" open><summary>✧ ข้อความและข้อมูลบ้าน</summary><div>
 <div class="rg-add-manager"><div class="rg-add-title">✦ เพิ่มหัวข้อปรับแต่ง <span id="homeAddonCount" class="rg-module-count">ยังไม่ได้เพิ่ม</span></div><div class="rg-add-controls"><select id="homeAddonChoice"><option value="lettering">ROOM LETTERING / งานตัวอักษรชื่อห้อง</option><option value="flourish">DECORATIVE FLOURISH / ลายเส้นข้างชื่อห้อง</option><option value="spacing">SPACING / จัดระยะบรรทัดและชื่อห้อง</option><option value="typography">TYPOGRAPHY / ฟอนต์และการจัดตัวอักษร</option></select><button id="homeAddonAdd" type="button">＋ Add</button></div><p class="minihelp">เพิ่มเฉพาะหัวข้อที่ต้องการปรับ และนำออกจากฟอร์มได้โดยไม่ลบค่าที่ตั้งไว้</p></div><div class="two"><label>ชื่อบ้าน<input id="house" value="THE ROSEWOOD HOUSE"></label><label>ชื่อห้อง (ฟอนต์ตัวเขียน)<input id="room" value="The Bedroom"></label></div>
 <label>ข้อความหัวกระทู้บรรทัดบน (แก้ไขได้ทั้งข้อความ เลข และสัญลักษณ์)<input id="journalLine" value="✿ HOUSE JOURNAL / 01" placeholder="✿ HOUSE JOURNAL / 01"></label>
@@ -229,7 +222,14 @@ details.rg-addon-sub>summary::-webkit-details-marker{display:none}details.rg-add
 <label>ตำแหน่งกรอบรูป<select id="photoAlign"><option value="center">กึ่งกลาง</option><option value="left">ชิดซ้าย</option><option value="right">ชิดขวา</option></select></label>
 <div class="presets"><button type="button" data-photopreset="original">ขนาดเดิม</button><button type="button" data-photopreset="portrait">แนวตั้ง</button><button type="button" data-photopreset="wide">แนวนอนกว้าง</button><button type="button" data-photopreset="compact">รูปเล็กกึ่งกลาง</button></div>
 </div></details>
-<details class="fieldgroup rg-add-wrapper"><summary>✦ ฟังก์ชันเสริมเกี่ยวกับรูปด้านบน <small id="topAddonCount" class="rg-module-count">เพิ่มเมื่อจำเป็น</small></summary><div><p class="minihelp">เพิ่มหมวดที่ต้องการปรับเท่านั้น</p><div class="rg-add-controls"><select id="topAddonChoice"><option value="top">ขนาดและตำแหน่งภาพด้านบน</option><option value="light">แสงและโทนภาพ</option></select><button type="button" id="topAddonAdd">＋ Add</button></div><div id="topAddonPanel"><details class="fieldgroup rg-extra" data-addon="top"><summary>✿ ขนาดและตำแหน่งภาพด้านบน</summary><div>
+<details class="fieldgroup rg-add-wrapper"><summary>✦ ฟังก์ชันเสริมเกี่ยวกับรูปด้านบน <small id="topAddonCount" class="rg-module-count">เพิ่มเมื่อจำเป็น</small></summary><div><p class="minihelp">เพิ่มหมวดที่ต้องการปรับเท่านั้น</p><div class="rg-add-controls"><select id="topAddonChoice"><option value="top">ขนาดและตำแหน่งภาพด้านบน</option><option value="light">แสงและโทนภาพ</option><option value="shadow">เงาและมิติของกรอบ</option></select><button type="button" id="topAddonAdd">＋ Add</button></div><div id="topAddonPanel"><details class="fieldgroup rg-extra" data-addon="shadow"><summary>◈ เงาและมิติของกรอบ</summary><div>
+<label for="shadowDepth">ระยะเงากรอบ</label><div class="slider-row"><input id="shadowDepth" type="range" min="0" max="35" value="14"><output id="shadowDepthText">14px</output></div>
+<label for="shadowBlur">ความฟุ้งของเงากรอบ</label><div class="slider-row"><input id="shadowBlur" type="range" min="0" max="75" value="35"><output id="shadowBlurText">35px</output></div>
+<label for="shadowOpacity">ความเข้มเงากรอบ</label><div class="slider-row"><input id="shadowOpacity" type="range" min="0" max="65" value="19"><output id="shadowOpacityText">19%</output></div>
+<label for="photoShadow">เงาใต้รูปห้อง</label><div class="slider-row"><input id="photoShadow" type="range" min="0" max="65" value="12"><output id="photoShadowText">12%</output></div>
+<div class="presets"><button type="button" data-shadow="subtle">เงาบาง</button><button type="button" data-shadow="luxury">เงาลึกหรู</button><button type="button" data-shadow="none">ไม่มีเงา</button></div>
+</div></details>
+<details class="fieldgroup rg-extra" data-addon="top"><summary>✿ ขนาดและตำแหน่งภาพด้านบน</summary><div>
 <label for="floralWidth">ความกว้างรูปดอกไม้</label><div class="slider-row"><input id="floralWidth" type="range" min="25" max="100" step="1" value="78"><output id="floralWidthText">78%</output></div>
 <label for="floralHeight">ความสูงรูปดอกไม้</label><div class="slider-row"><input id="floralHeight" type="range" min="35" max="340" step="1" value="145"><output id="floralHeightText">145px</output></div>
 <label for="imageX">เลื่อนตำแหน่งภาพแนวนอน</label><div class="slider-row"><input id="imageX" type="range" min="0" max="100" value="50"><output id="imageXText">50%</output></div>
@@ -427,7 +427,7 @@ document.querySelectorAll('[data-cmd]').forEach(b=>{b.addEventListener('mousedow
 const groupModuleKey='rose_gold_header_modules_v2';
 const extraModules={top:[],house:[]};
 function redrawModuleGroup(kind){
- const top=kind==='top',panel=top?'#topAddonPanel':'.rg-add-manager';const names=top?['top','light']:['lettering','flourish','spacing','typography'];
+ const top=kind==='top',panel=top?'#topAddonPanel':'.rg-add-manager';const names=top?['top','light','shadow']:['lettering','flourish','spacing','typography'];
  const choice=$(top?'topAddonChoice':'homeAddonChoice'),add=$(top?'topAddonAdd':'homeAddonAdd'),selected=extraModules[kind];
  document.querySelectorAll(top?'[data-addon]':'[data-addonsub]').forEach(el=>{
   const visible=selected.includes(top?el.dataset.addon:el.dataset.addonsub);
@@ -462,7 +462,7 @@ document.querySelectorAll('[data-addon],[data-addonsub]').forEach(el=>{
 });
 try{
  const old=JSON.parse(localStorage.getItem(groupModuleKey)||'null');
- if(old){for(const kind of ['top','house'])if(Array.isArray(old[kind]))extraModules[kind]=old[kind].filter(x=>(kind==='top'?['top','light']:['lettering','flourish','spacing','typography']).includes(x))}
+ if(old){for(const kind of ['top','house'])if(Array.isArray(old[kind]))extraModules[kind]=old[kind].filter(x=>(kind==='top'?['top','light','shadow']:['lettering','flourish','spacing','typography']).includes(x))}
 }catch(e){}
 redrawModuleGroup('top');redrawModuleGroup('house');
 
