@@ -62,6 +62,15 @@ details.rg-addon-sub>summary{list-style:none;cursor:pointer;display:flex;align-i
 details.rg-addon-sub>summary::-webkit-details-marker{display:none}details.rg-addon-sub>summary:after{content:"⌄";margin-left:auto}details.rg-addon-sub[open]>summary:after{content:"⌃"}
 .rg-addon-content{padding:7px 12px 15px;border-top:1px solid #604b45}.rg-addon-sub .section-sub{display:none}
 .rg-remove{font-size:10px;padding:4px 6px;white-space:nowrap;order:3}
+
+/* Scrolling repair for long house panels and nested optional sections */
+@media(min-width:851px){.panel.editor{height:calc(100dvh - 45px);max-height:calc(100dvh - 45px);overflow-y:auto!important;overflow-x:hidden;overscroll-behavior-y:contain;scrollbar-gutter:stable}}
+.panel.editor{min-height:0;touch-action:pan-y;scroll-behavior:smooth}
+.panel.editor details.fieldgroup{overflow:visible}
+.panel.editor details.fieldgroup>div{min-width:0;overflow:visible}
+.panel.editor .rg-addon-content{overflow:visible}
+.panel.editor .rg-add-controls select{max-width:100%}
+@media(max-width:850px){.panel.editor{height:auto;max-height:none;overflow:visible;overscroll-behavior:auto}}
 </style>
 <style>
 .hgcard,.hgcard *{box-sizing:border-box}
@@ -449,6 +458,7 @@ function addGroupModule(kind){
  extraModules[kind].push(value);redrawModuleGroup(kind);storeModuleChoices();
  const el=document.querySelector(top?'[data-addon="'+value+'"]':'[data-addonsub="'+value+'"]');
  el.open=true;if(top)$('topAddonPanel').closest('.rg-add-wrapper').open=true;
+ requestAnimationFrame(()=>el.scrollIntoView({block:'nearest',behavior:'smooth'}));
 }
 $('topAddonAdd').onclick=()=>addGroupModule('top');
 $('homeAddonAdd').onclick=()=>addGroupModule('house');
