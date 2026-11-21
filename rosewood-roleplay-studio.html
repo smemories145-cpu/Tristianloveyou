@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rosewood · Roleplay Card Studio</title>
-<link rel="stylesheet" href="rose-roleplay-card.css?v=moonlitfade3">
+<link rel="stylesheet" href="rose-roleplay-card.css?v=identityphoto3">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600&display=swap');
 *{box-sizing:border-box}body{margin:0;background:#211d1b;color:#e9dcd0;font:12px/1.8 'Noto Serif Thai',serif}
@@ -34,25 +34,12 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 </style></head><body>
 <header><div class="wrap"><div><h1>Rosewood · Roleplay Studio</h1><p>ชมพูละมุน / ชมพูหรู · ภาพตัวละครใหญ่ 350px · โรลเพลย์ 16px</p></div><a href="rose-gold-header-generator.html">← กลับ Rose Gold Generator</a></div></header>
 <main><section class="panel editpanel"><h2>01 / EDIT YOUR ROLEPLAY</h2>
-<details open><summary>♡ เลือกโทนชมพูสองแบบ</summary><div class="detail">
+<details><summary>00 · เลือกธีม</summary><div class="detail">
 <p class="tip">สลับแบบเพื่อเปรียบเทียบกันได้ทันที ไม่เปลี่ยนข้อความและรูปที่แต่งไว้</p>
 <label>ธีมการ์ด<select id="pinkTheme"><option value="luxury">02 · Clean Luxury — ชมพูหรู เรียบสง่า</option><option value="soft">01 · Soft Rose — ชมพูหวานละมุน</option></select></label>
 <div class="actions"><button type="button" data-theme-choice="soft">♡ หวานละมุน</button><button type="button" data-theme-choice="luxury">✧ ชมพูหรู</button></div>
 </div></details>
-<details open><summary>✦ ตัวละครและรูปภาพ</summary><div class="detail">
-<label>ลวดลายข้างชื่อตัวละคร<select id="identityDecor"><option value="moonlit">Moonlit Lily · พระจันทร์และดอกลิลลี่</option><option value="none">ไม่ใช้ลวดลาย</option><option value="monogram">ตัวอักษรแรกของชื่อ (แบบเดิม)</option><option value="custom">ใส่รูปตกแต่งเอง · PNG / GIF / WebP</option></select></label>
-<label>ความเข้มของลาย Moonlit Lily</label><div class="slide"><input id="lilyOpacity" type="range" min="10" max="100" value="62"><output id="lilyOpacityOut">62%</output></div>
-<p class="tip">ลายดอกลิลลี่อยู่หลังชื่อแบบจาง ๆ ไม่บังตัวหนังสือ คัดลอกโค้ดสั้นแล้วลายยังติดไปด้วย</p>
-<label>URL รูปตกแต่งหลังชื่อตัวละคร<input id="decorImage" type="url" placeholder="https://.../lily.png"></label>
-<p class="tip" id="decorImageStatus" aria-live="polite">ใส่ลิงก์ภาพโดยตรง แล้วระบบจะสลับไปใช้รูปของคุณให้อัตโนมัติ</p>
-<label>ความเข้ม–จางของรูปตกแต่ง</label><div class="slide"><input id="decorOpacity" type="range" min="0" max="100" value="55"><output id="decorOpacityOut">55%</output></div>
-<label>ความฟุ้งไล่จางจากขอบซ้าย (Moonlit Lily และรูปที่ใส่เอง)</label><div class="slide"><input id="decorFeather" type="range" min="0" max="90" value="48"><output id="decorFeatherOut">48%</output></div>
-<label>เบลอขอบภาพตกแต่ง</label><div class="slide"><input id="decorBlur" type="range" min="0" max="8" step=".5" value="1"><output id="decorBlurOut">1px</output></div>
-<p class="tip">ใช้ได้ทั้งลาย Moonlit Lily และรูปที่ใส่เอง ลองกด 0% เทียบกับ 85% จะเห็นความต่างชัดขึ้น</p>
-<div class="actions"><button type="button" data-feather-preset="0">ขอบชัด 0%</button><button type="button" data-feather-preset="85">ฟุ้งมาก 85%</button></div>
-<label>ขนาดรูปตกแต่ง</label><div class="slide"><input id="decorSize" type="range" min="20" max="120" value="64"><output id="decorSizeOut">64%</output></div>
-<label>ตำแหน่งรูปแนวนอน</label><div class="slide"><input id="decorX" type="range" min="0" max="100" value="78"><output id="decorXOut">78%</output></div>
-<label>ตำแหน่งรูปแนวตั้ง</label><div class="slide"><input id="decorY" type="range" min="0" max="100" value="50"><output id="decorYOut">50%</output></div>
+<details open><summary>01 · ตัวละครและรูปหลัก</summary><div class="detail">
 <label>ชื่อตัวละคร<input id="name" value="Tristian S. Kennedy"></label>
 <label>ชื่อรอง / คำอธิบายตัวละคร<input id="subtitle" value="ทริสเตียน · บ้านที่อบอุ่น"></label>
 <label>ข้อมูลใต้ชื่อ<input id="meta" value="A PRIVATE STORY · 01"></label>
@@ -67,21 +54,29 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <label>ปรับจุดโฟกัสภาพแนวนอน</label><div class="slide"><input id="portraitX" type="range" min="0" max="100" value="50"><output id="portraitXOut">50%</output></div>
 <label>ปรับจุดโฟกัสภาพแนวตั้ง</label><div class="slide"><input id="portraitY" type="range" min="0" max="100" value="50"><output id="portraitYOut">50%</output></div>
 </div></details>
-<details><summary>❦ หัวเรื่องแบบไม่แย่งสายตา</summary><div class="detail">
-<label>รูปแบบหัวเรื่อง<select id="headerMode"><option value="compact">หัวเรื่องเล็ก (แนะนำ)</option><option value="normal">หัวเรื่องปกติ</option><option value="none">ซ่อนหัวเรื่อง</option></select></label>
-<label>ข้อความบรรทัดบน<input id="eyebrow" value="✿ A PRIVATE FILM / ROLEPLAY"></label>
-<label>ชื่อหัวเรื่อง<input id="title" value="The Quiet Afternoon"></label>
-<label>ข้อความรองหัวเรื่อง<input id="caption" value="บางช่วงเวลาที่เก็บไว้ในความทรงจำ"></label>
-<label>ขนาดชื่อหัวเรื่อง</label><div class="slide"><input id="titleSize" type="range" min="16" max="40" value="27"><output id="titleSizeOut">27px</output></div>
+<details open><summary>02 · รูปพื้นหลังกล่องชื่อ</summary><div class="detail">
+<p class="tip">จะใส่หรือไม่ใส่รูปก็ได้ ภาพที่ใส่จะมีม่านขาวนวลทับ เพื่อให้ชื่อตัวละครเด่น</p>
+<label>URL รูปในกล่องชื่อ (ไม่บังคับ)<input id="identityImage" type="url" placeholder="https://.../photo.jpg"></label>
+<p class="tip" id="identityImageStatus" aria-live="polite">ไม่ใส่รูปจะใช้พื้นชมพูครีม</p>
+<label>ความเข้มของภาพ</label><div class="slide"><input id="identityImageOpacity" type="range" min="0" max="100" value="70"><output id="identityImageOpacityOut">70%</output></div>
+<label>ความเบลอของภาพ</label><div class="slide"><input id="identityImageBlur" type="range" min="0" max="12" step=".5" value="2"><output id="identityImageBlurOut">2px</output></div>
+<label>ม่านสีขาวทับภาพ (ยิ่งมาก ภาพยิ่งจาง)</label><div class="slide"><input id="identityVeil" type="range" min="0" max="95" value="55"><output id="identityVeilOut">55%</output></div>
 </div></details>
-<details open><summary>✎ เนื้อเรื่องโรลเพลย์</summary><div class="detail">
+<details open><summary>03 · เนื้อเรื่องโรลเพลย์</summary><div class="detail">
 <p class="tip">คลิกพิมพ์ได้โดยตรง กด Enter เพื่อขึ้นย่อหน้าใหม่ เลือกข้อความแล้วกดตัวหนา/ตัวเอียงได้</p>
 <div class="toolbar"><button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button><button type="button" data-cmd="underline"><u>U</u></button><button type="button" data-cmd="removeFormat">Tx</button></div>
 <div id="storyEditor" class="editable" contenteditable="true" role="textbox" aria-multiline="true" aria-label="เนื้อหาโรลเพลย์"><p>ทริสเตียนวางหนังสือเล่มเล็กลงบนโต๊ะไม้ ก่อนจะหันไปมองแสงอาทิตย์ที่ลอดผ่านม่านสีครีมเข้ามาในห้อง บรรยากาศยามบ่ายสงบจนได้ยินเสียงลมอ่อน ๆ จากนอกหน้าต่าง</p><p><strong>“วันนี้อากาศดีจังเลยนะครับ”</strong></p><p>เขาเอ่ยด้วยรอยยิ้มบางเบา แล้วขยับเก้าอี้ให้คนตรงหน้าได้นั่งอย่างสะดวก</p></div>
 <label>ขนาดข้อความโรล</label><div class="slide"><input id="storySize" type="range" min="14" max="21" value="16"><output id="storySizeOut">16px</output></div>
 <label>ระยะบรรทัด</label><div class="slide"><input id="storyLine" type="range" min="1.5" max="2.5" step=".05" value="2"><output id="storyLineOut">2</output></div>
 </div></details>
-<details open><summary>☕ พื้นหลังชั้นนอกสุดและสีข้อความ</summary><div class="detail">
+<details><summary>04 · หัวเรื่อง</summary><div class="detail">
+<label>รูปแบบหัวเรื่อง<select id="headerMode"><option value="compact">หัวเรื่องเล็ก (แนะนำ)</option><option value="normal">หัวเรื่องปกติ</option><option value="none">ซ่อนหัวเรื่อง</option></select></label>
+<label>ข้อความบรรทัดบน<input id="eyebrow" value="✿ A PRIVATE FILM / ROLEPLAY"></label>
+<label>ชื่อหัวเรื่อง<input id="title" value="The Quiet Afternoon"></label>
+<label>ข้อความรองหัวเรื่อง<input id="caption" value="บางช่วงเวลาที่เก็บไว้ในความทรงจำ"></label>
+<label>ขนาดชื่อหัวเรื่อง</label><div class="slide"><input id="titleSize" type="range" min="16" max="40" value="27"><output id="titleSizeOut">27px</output></div>
+</div></details>
+<details><summary>05 · พื้นหลังชั้นนอก</summary><div class="detail">
 <p class="tip">เลือกสีเรียบ สีไล่เฉด หรือรูปภาพเป็นพื้นหลังด้านนอกของการ์ด</p>
 <label>รูปแบบพื้นหลัง<select id="outerMode"><option value="solid">สีพื้นเรียบ</option><option value="gradient">สีไล่เฉด</option><option value="image">รูปภาพ</option></select></label>
 <div class="two"><label>สีพื้นหลังชั้นนอก<input id="outerBg" type="color" value="#f2dfe7"></label><label>สีปลายทางไล่เฉด<input id="outerEnd" type="color" value="#f8e9ef"></label></div>
@@ -92,13 +87,14 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <label>เลื่อนภาพแนวตั้ง</label><div class="slide"><input id="outerY" type="range" min="0" max="100" value="50"><output id="outerYOut">50%</output></div>
 <label>ม่านสีครีมทับภาพ</label><div class="slide"><input id="outerOverlay" type="range" min="0" max="90" value="18"><output id="outerOverlayOut">18%</output></div>
 <div class="actions"><button type="button" data-outer-mode="solid">สีเรียบ</button><button type="button" data-outer-mode="gradient">ไล่เฉด</button><button type="button" data-outer-mode="image">รูปภาพ</button></div>
-<p class="tip">ใช้ลิงก์ภาพสาธารณะ JPG, PNG หรือ GIF</p><div class="two">
+<p class="tip">ใช้ลิงก์ภาพสาธารณะ JPG, PNG หรือ GIF</p></div></details>
+<details><summary>06 · สีพื้นการ์ดและตัวหนังสือ</summary><div class="detail"><div class="two">
 <label>สีพื้นหลังการ์ด<input id="paper" type="color" value="#fff9fb"></label>
 <label>พื้นหลังโรล<input id="inner" type="color" value="#fff3f7"></label>
 <label>สีข้อความ<input id="ink" type="color" value="#765866"></label>
 <label>สีเส้นและกรอบ<input id="rule" type="color" value="#ebd2dd"></label>
 </div></div></details>
-<details><summary>✧ ข้อความท้ายการ์ด</summary><div class="detail"><div class="two">
+<details><summary>07 · ข้อความท้ายการ์ด</summary><div class="detail"><div class="two">
 <label>ข้อความซ้าย<input id="footerLeft" value="TRISTIAN · PRIVATE SCENE"></label>
 <label>ข้อความขวา<input id="footerRight" value="TO BE CONTINUED ♡"></label>
 </div></div></details>
@@ -111,14 +107,14 @@ button.primary{background:#dcb59a;color:#2e211b;border-color:#dcb59a}
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
-const ids=['pinkTheme','identityDecor','lilyOpacity','decorImage','decorOpacity','decorFeather','decorBlur','decorSize','decorX','decorY','name','subtitle','meta','portrait','layout','frameStyle','portraitSize','portraitRatio','portraitX','portraitY','headerMode','eyebrow','title','caption','titleSize','storySize','storyLine','outerMode','outerBg','outerEnd','outerImage','outerImageSize','outerPreset','outerX','outerY','outerOverlay','paper','inner','ink','rule','footerLeft','footerRight'];
+const ids=["pinkTheme","identityImage","identityImageOpacity","identityImageBlur","identityVeil","name","subtitle","meta","portrait","layout","frameStyle","portraitSize","portraitRatio","portraitX","portraitY","headerMode","eyebrow","title","caption","titleSize","storySize","storyLine","outerMode","outerBg","outerEnd","outerImage","outerImageSize","outerPreset","outerX","outerY","outerOverlay","paper","inner","ink","rule","footerLeft","footerRight"];
 const defaults=Object.fromEntries(ids.map(id=>[id,$(id).value]));
 const initialStory=$('storyEditor').innerHTML;
 const storageKey='rosewood-roleplay-studio-v1';
 const esc=x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const safeURL=x=>/^https?:\/\/[^\s<>"']+$/i.test(x.trim())?x.trim():'';
 const safeColor=(x,fb)=>/^#[0-9a-f]{6}$/i.test(x)?x:fb;
-const stylesheet='<link rel="stylesheet" href="https://smemories145-cpu.github.io/Tristianloveyou/rose-roleplay-card.css?v=moonlitfade3">';
+const stylesheet='<link rel="stylesheet" href="https://smemories145-cpu.github.io/Tristianloveyou/rose-roleplay-card.css?v=identityphoto3">';
 function cleanStory(raw){
  const doc=new DOMParser().parseFromString('<main>'+raw+'</main>','text/html');
  const ok=new Set(['P','DIV','BR','STRONG','B','EM','I','U','BLOCKQUOTE','UL','OL','LI','SPAN']);
@@ -136,33 +132,27 @@ function card(){
  const header=['compact','normal','none'].includes($('headerMode').value)?$('headerMode').value:'compact';
  const frameStyle=['ornate','arch','cinematic','minimal'].includes($('frameStyle').value)?$('frameStyle').value:'minimal';
  const pinkTheme=$('pinkTheme').value==='soft'?'soft':'luxury';
- const identityDecor=['moonlit','none','monogram','custom'].includes($('identityDecor').value)?$('identityDecor').value:'moonlit';
+ const identityURL=safeURL($('identityImage').value);
  const outerMode=['solid','gradient','image'].includes($('outerMode').value)?$('outerMode').value:'solid';
  const bgURL=safeURL($('outerImage').value);
- const decorURL=safeURL($('decorImage').value);
  const outerBackground=';--rp-outer:'+safeColor($('outerBg').value,'#f2dfe7')+';--rp-outer-end:'+safeColor($('outerEnd').value,'#f8e9ef')+';--rp-outer-image:'+(bgURL?'url(&quot;'+esc(bgURL)+'&quot;)':'none')+';--rp-bg-x:'+num('outerX',0,100)+'%;--rp-bg-y:'+num('outerY',0,100)+'%;--rp-bg-overlay:'+(num('outerOverlay',0,90)/100)+';--rp-bg-size:'+($('outerImageSize').value==='contain'?'contain':'cover');
- const vars='--rp-paper:'+safeColor($('paper').value,'#fff9fb')+';--rp-inner:'+safeColor($('inner').value,'#fff3f7')+';--rp-ink:'+safeColor($('ink').value,'#765866')+';--rp-rule:'+safeColor($('rule').value,'#ebd2dd')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',180,480)+'px;--rp-aspect:'+(num('portraitRatio',55,135)/100)+';--rp-photo-x:'+num('portraitX',0,100)+'%;--rp-photo-y:'+num('portraitY',0,100)+'%;--rp-title-size:'+num('titleSize',16,40)+'px;--rp-lily-opacity:'+(num('lilyOpacity',10,100)/100)+';--rp-decor-opacity:'+(num('decorOpacity',0,100)/100)+';--rp-decor-feather:'+num('decorFeather',0,90)+'%;--rp-decor-blur:'+num('decorBlur',0,8)+'px;--rp-decor-width:'+num('decorSize',20,120)+'%;--rp-decor-x:'+num('decorX',0,100)+'%;--rp-decor-y:'+num('decorY',0,100)+'%'+outerBackground;
- const nameInitial=esc(($('name').value.trim().match(/[A-Za-zก-๙]/)||['R'])[0].toUpperCase());
+ const vars='--rp-paper:'+safeColor($('paper').value,'#fff9fb')+';--rp-inner:'+safeColor($('inner').value,'#fff3f7')+';--rp-ink:'+safeColor($('ink').value,'#765866')+';--rp-rule:'+safeColor($('rule').value,'#ebd2dd')+';--rp-font-size:'+num('storySize',14,21)+'px;--rp-line:'+num('storyLine',1.5,2.5)+';--rp-portrait:'+num('portraitSize',180,480)+'px;--rp-aspect:'+(num('portraitRatio',55,135)/100)+';--rp-photo-x:'+num('portraitX',0,100)+'%;--rp-photo-y:'+num('portraitY',0,100)+'%;--rp-title-size:'+num('titleSize',16,40)+'px;--rp-identity-opacity:'+(num('identityImageOpacity',0,100)/100)+';--rp-identity-blur:'+num('identityImageBlur',0,12)+'px;--rp-identity-veil:'+(num('identityVeil',0,95)/100)+outerBackground;
  const img=esc(safeURL($('portrait').value));
- const customDecor=identityDecor==='custom'&&decorURL?'<img class="rp-custom-decor" src="'+esc(decorURL)+'" alt="" aria-hidden="true">':'';
+ const identityBg=identityURL?'<div class="rp-identity-bg" aria-hidden="true"><img src="'+esc(identityURL)+'" alt=""><span class="rp-identity-veil"></span></div>':'';
  const backdrop=outerMode==='image'&&bgURL?'<div class="rp-outer-photo" aria-hidden="true"><img src="'+esc(bgURL)+'" alt=""><span class="rp-outer-veil"></span></div>':'';
- return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" data-frame="'+frameStyle+'" data-theme="'+pinkTheme+'" data-identity-decor="'+identityDecor+'" data-outer="'+outerMode+'" style="'+vars+'">'+backdrop+'<div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity" data-initial="'+nameInitial+'">'+customDecor+'<div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
+ return '<article class="rp-rose" data-layout="'+layout+'" data-header="'+header+'" data-frame="'+frameStyle+'" data-theme="'+pinkTheme+'" data-outer="'+outerMode+'" style="'+vars+'">'+backdrop+'<div class="rp-shell"><div class="rp-header"><div class="rp-eyebrow">'+get('eyebrow')+'</div><div class="rp-title">'+get('title')+'</div><div class="rp-subtitle">'+get('caption')+'</div></div><div class="rp-divider">❦</div><div class="rp-person"><div class="rp-photo-frame"><img class="rp-portrait" src="'+img+'" alt="Character portrait"></div><div class="rp-identity">'+identityBg+'<div class="rp-character">'+get('name')+'</div><div class="rp-character-thai">'+get('subtitle')+'</div><div class="rp-meta">'+get('meta')+'</div></div></div><div class="rp-story">'+cleanStory($('storyEditor').innerHTML)+'</div><div class="rp-footer"><span>'+get('footerLeft')+'</span><span>'+get('footerRight')+'</span></div></div></article>';
 }
 function exported(){return stylesheet+'<div style="display:block;width:100%;max-width:100%;margin:0 auto;">'+card()+'</div>'}
-let decorCheckToken=0;
-let lastDecorSource='';
-function checkDecorImage(){
- const status=$('decorImageStatus'),src=safeURL($('decorImage').value);
- if($('identityDecor').value!=='custom'){decorCheckToken++;lastDecorSource='';status.textContent='เลือก “ใส่รูปตกแต่งเอง” หรือวาง URL เพื่อใช้ภาพของคุณ';return}
- if(!src){decorCheckToken++;lastDecorSource='';status.textContent='กรุณาใส่ลิงก์รูปภาพโดยตรง เช่น .png, .webp หรือ .gif';return}
- if(lastDecorSource===src)return;
- lastDecorSource=src;
- const token=++decorCheckToken;
- status.textContent='กำลังตรวจสอบภาพตกแต่ง...';
- const picture=new Image();
- picture.onload=()=>{if(token===decorCheckToken)status.textContent='✓ ภาพตกแต่งโหลดสำเร็จ ปรับความจาง ขนาด และตำแหน่งได้เลย'};
- picture.onerror=()=>{if(token===decorCheckToken)status.textContent='⚠ โหลดภาพไม่ได้ ลองใช้ลิงก์รูปโดยตรงที่อนุญาตให้ฝังภาพ'};
- picture.src=src;
+let identityToken=0,lastIdentityURL='';
+function checkIdentityImage(){
+ const src=safeURL($('identityImage').value),status=$('identityImageStatus');
+ if(!src){identityToken++;lastIdentityURL='';status.textContent='ไม่ใส่รูปก็ได้ — ใช้พื้นชมพูครีมเรียบ ๆ';return}
+ if(src===lastIdentityURL)return;
+ lastIdentityURL=src;const token=++identityToken;status.textContent='กำลังตรวจรูป...';
+ const image=new Image();
+ image.onload=()=>{if(token===identityToken)status.textContent='✓ รูปโหลดสำเร็จ ปรับภาพและม่านสีขาวได้เลย'};
+ image.onerror=()=>{if(token===identityToken)status.textContent='⚠ รูปโหลดไม่ได้ ลอง URL รูปโดยตรงที่เปิดสาธารณะ'};
+ image.src=src;
 }
 let bgLoadCounter=0;
 let lastBgKey='';
@@ -184,16 +174,15 @@ function checkBackgroundImage(){
  picture.onerror=()=>{if(token===bgLoadCounter&&$('outerMode').value==='image')status.textContent='⚠ โหลดรูปไม่ได้ ลองลิงก์รูปภาพโดยตรง (.jpg/.png/.webp/.gif) ไม่ใช่หน้าบน Pinterest หรือเว็บที่บล็อกการฝังรูป'};
  picture.src=src;
 }
-function render(){for(const id of ['portraitSize','portraitRatio','portraitX','portraitY','titleSize','storySize','storyLine','lilyOpacity','decorOpacity','decorFeather','decorBlur','decorSize','decorX','decorY','outerX','outerY','outerOverlay'])$(id+'Out').textContent=$(id).value+({'portraitSize':'px','portraitRatio':'%','portraitX':'%','portraitY':'%','titleSize':'px','storySize':'px','storyLine':'','lilyOpacity':'%','decorOpacity':'%','decorFeather':'%','decorBlur':'px','decorSize':'%','decorX':'%','decorY':'%','outerX':'%','outerY':'%','outerOverlay':'%'}[id]);$('preview').innerHTML=card();$('out').value=exported();checkBackgroundImage();checkDecorImage()}
+function render(){
+ const units={portraitSize:'px',portraitRatio:'%',portraitX:'%',portraitY:'%',titleSize:'px',storySize:'px',storyLine:'',identityImageOpacity:'%',identityImageBlur:'px',identityVeil:'%',outerX:'%',outerY:'%',outerOverlay:'%'};
+ for(const [id,unit] of Object.entries(units))$(id+'Out').textContent=$(id).value+unit;
+ $('preview').innerHTML=card();$('out').value=exported();checkBackgroundImage();checkIdentityImage();
+}
 let saveHandle;
 function save(){try{localStorage.setItem(storageKey,JSON.stringify({fields:Object.fromEntries(ids.map(id=>[id,$(id).value])),story:cleanStory($('storyEditor').innerHTML)}));$('status').textContent='✓ บันทึกอัตโนมัติแล้ว'}catch(e){$('status').textContent='เบราว์เซอร์ไม่อนุญาตบันทึกข้อมูล'}}
 function update(){render();clearTimeout(saveHandle);saveHandle=setTimeout(save,350)}
 ids.forEach(id=>$(id).addEventListener('input',update));
-document.querySelectorAll('[data-feather-preset]').forEach(b=>b.addEventListener('click',()=>{$('decorFeather').value=b.dataset.featherPreset;update()}));
-$('decorImage').addEventListener('input',()=>{
- if(safeURL($('decorImage').value))$('identityDecor').value='custom';
- update();
-});
 $('outerImage').addEventListener('input',()=>{
  if(safeURL($('outerImage').value))$('outerMode').value='image';
  update();
