@@ -218,7 +218,7 @@ input[type=color]{height:37px;padding:4px;cursor:pointer}.type-grid{display:grid
 </div></details>
 <div class="controls"><button type="button" id="restore">คืนค่าเริ่มต้นทุกหมวด</button></div><p id="feedback" aria-live="polite">บันทึกอัตโนมัติในเบราว์เซอร์นี้</p>
 </section>
-<section class="panel preview-panel"><div class="copybar"><h2>02 / LIVE PREVIEW</h2><div class="controls"><button type="button" class="primary" id="copy">คัดลอกแบบฝังเว็บ</button><button type="button" id="copyCSS">HTML + CSS</button><button type="button" id="download">โหลด HTML</button></div></div><div id="preview"></div><p class="preview-note">แบบฝังเว็บจะคัดลอกสไตล์จากพรีวิวไว้กับแต่ละองค์ประกอบ ลดปัญหาธีมเว็บปลายทางทำให้กรอบและฟอนต์หลุด</p><label>โค้ดสำหรับนำไปวางในหน้าเว็บ</label><textarea id="code" readonly></textarea></section>
+<section class="panel preview-panel"><div class="copybar"><h2>02 / LIVE PREVIEW</h2><div class="controls"><button type="button" class="primary" id="copy">คัดลอกโค้ดสั้น</button><button type="button" id="copyEmbed">คัดลอกแบบฝังเว็บ</button><button type="button" id="copyCSS">HTML + CSS</button><button type="button" id="download">โหลด HTML</button></div></div><div id="preview"></div><p class="preview-note">โค้ดสั้นจะโหลด CSS และลายตกแต่งจาก GitHub Pages อัตโนมัติ ใช้ได้กับเว็บที่อนุญาตลิงก์ CSS ภายนอก หากเว็บปลายทางไม่รองรับ ให้เลือกปุ่มคัดลอกแบบฝังเว็บ</p><label>โค้ดสำหรับนำไปวางในหน้าเว็บ</label><textarea id="code" readonly></textarea></section>
 </main>
 <script>
 'use strict';
@@ -271,6 +271,13 @@ function sanitizeRich(html){
  const root=document.createElement('div');for(const node of Array.from(doc.querySelector('main').childNodes))root.appendChild(clean(node));return root.innerHTML;
 }
 function syncRich(){ $('description').value=sanitizeRich($('richEditor').innerHTML);changed()}
+const hostedCardCSS='https://smemories145-cpu.github.io/Tristianloveyou/rose-gold-card.css';
+function shortResult(){
+ const shortCard=content()
+   .replace(/<svg\b[\s\S]*?<\/svg>/g,'')
+   .replace(/class="room-ornament (left|right)"/g,'class="room-ornament $1 ornament-hosted"');
+ return '<link rel="stylesheet" href="'+hostedCardCSS+'"><div style="display:block;width:100%;text-align:center;margin:0 auto;">'+shortCard+'</div>';
+}
 function cssResult(){return font+'<style>'+cardCSS+'</style><div style="width:100%;max-width:100%;margin:0 auto;text-align:center;">'+content()+'</div>'}
 /* Copy computed, final styling into each DOM element. This survives hosts which strip <style>
    or load their own CSS after pasted markup. No JavaScript is required in the output. */
@@ -333,7 +340,7 @@ function embedResult(){
  }
  return font+'<div style="display:block;width:100%;max-width:100%;margin:0 auto;padding:0;text-align:center;">'+clone.outerHTML+'</div>';
 }
-function result(){return embedResult()}
+function result(){return shortResult()}
 let saveTimer;
 const displayUnits={ornamentSize:"px",ornamentOpacity:"%",ornamentGap:"px",photoWidth:"%",photoHeight:"px",photoX:"%",photoY:"%",roomFoilAngle:"°",roomFoilContrast:"%",houseSize:'px',roomSize:'px',thaiSize:'px',houseSpacing:'px',roomSpacing:'px',descSize:'px',descLeading:'',floralWidth:'%',floralHeight:'px',imageX:'%',imageY:'%',glowOpacity:'%',lightX:'%',lightY:'%',heroSoftness:'%',imageBrightness:'%',imageSaturation:'%',shadowDepth:'px',shadowBlur:'px',shadowOpacity:'%',photoShadow:'%'};
 function render(){Object.keys(displayUnits).forEach(id=>$(id+'Text').textContent=$(id).value+displayUnits[id]);$('preview').innerHTML=content();$('code').value=result()}
@@ -369,7 +376,8 @@ const photoPresets={
 document.querySelectorAll('[data-photopreset]').forEach(b=>b.addEventListener('click',()=>setBatch(photoPresets[b.dataset.photopreset])));
 $('restore').onclick=()=>{if(!confirm('คืนค่าฟอร์ม Rose Gold เป็นค่าเริ่มต้น?'))return;fields.forEach(id=>{$(id).value=defaults[id]});$('richEditor').innerHTML=initialRich;syncRich()};
 async function copyResult(value,button,label){try{await navigator.clipboard.writeText(value);button.textContent='✓ คัดลอกแล้ว';setTimeout(()=>button.textContent=label,1700)}catch(e){$('code').value=value;$('code').focus();$('code').select();$('feedback').textContent='เลือกโค้ดแล้ว กด Ctrl+C เพื่อคัดลอก'}}
-$('copy').onclick=()=>copyResult(embedResult(),$('copy'),'คัดลอกแบบฝังเว็บ');
+$('copy').onclick=()=>copyResult(shortResult(),$('copy'),'คัดลอกโค้ดสั้น');
+$('copyEmbed').onclick=()=>copyResult(embedResult(),$('copyEmbed'),'คัดลอกแบบฝังเว็บ');
 $('copyCSS').onclick=()=>copyResult(cssResult(),$('copyCSS'),'HTML + CSS');
 $('download').onclick=()=>{const b=new Blob(['<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>'+embedResult()+'</body></html>'],{type:'text/html;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='rose-gold-header.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)};
 
