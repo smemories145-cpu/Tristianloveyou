@@ -103,3 +103,12 @@
 .rp-rose[data-outer="image"] .rp-shell{background:rgba(255,249,251,.90)!important;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
 .rp-rose[data-outer="image"][data-theme="soft"] .rp-shell{background:rgba(255,248,251,.88)!important}
 @media(max-width:540px){.rp-rose[data-outer="image"]{padding:20px!important}}
+
+/* Robust image layer: render the background as a real HTML <img>, not a CSS variable URL.
+   This makes image loading visible in Live Preview and in the copied short HTML. */
+.rp-rose[data-outer="image"]{position:relative;isolation:isolate;background-image:none!important}
+.rp-rose .rp-outer-photo{display:none}
+.rp-rose[data-outer="image"] .rp-outer-photo{display:block;position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.rp-rose .rp-outer-photo img{display:block;width:100%;height:100%;object-fit:var(--rp-bg-size,cover);object-position:var(--rp-bg-x,50%) var(--rp-bg-y,50%);border:0;border-radius:0;max-width:none}
+.rp-rose .rp-outer-photo .rp-outer-veil{display:block;position:absolute;inset:0;background:rgba(255,249,251,var(--rp-bg-overlay,.18));pointer-events:none}
+.rp-rose[data-outer="image"] .rp-shell{z-index:1;position:relative}
