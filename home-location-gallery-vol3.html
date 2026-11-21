@@ -1,0 +1,122 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Little Home · Golden Hour Gallery Vol. 3</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+Thai:wght@400;500&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box}body{margin:0;background:#191716;color:#ede1d6;font:13px/1.65 'Noto Serif Thai',serif}header{background:linear-gradient(110deg,#342c28,#211b1a);border-bottom:1px solid #665345;padding:24px 20px}header .inner{max-width:1320px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}h1{font:500 29px/1.25 'Cormorant Garamond',Georgia,serif;letter-spacing:1px;margin:0;color:#f1dec7}header p{margin:2px 0 0;color:#c6ac9b;font-size:12px}a{color:#dfbdac;text-decoration:none}nav{display:flex;gap:14px;flex-wrap:wrap;font:12px 'DM Sans',sans-serif}main{max-width:1320px;margin:auto;padding:19px 14px 50px}.settings{border:1px solid #55473e;border-radius:12px;background:#292321;padding:17px;margin-bottom:18px}.settings h2{font:600 14px 'DM Sans',sans-serif;letter-spacing:1.2px;color:#d9c1a6;margin:0 0 12px}.formgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.formgrid label{display:block;color:#d2c1b6;font-size:11px}.formgrid input,.formgrid textarea{width:100%;margin-top:5px;background:#191716;color:#f4e9db;border:1px solid #67564b;border-radius:7px;padding:9px;font:12px/1.6 'Noto Serif Thai',serif}.formgrid textarea{resize:vertical;min-height:90px}.formgrid .wide{grid-column:span 2}.small-note{margin:12px 0 0;font-size:11px;color:#c3aca0}.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.design{min-width:0;background:#2a2421;border:1px solid #55453d;border-radius:12px;overflow:hidden}.designHead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-bottom:1px solid #55453d}.designHead strong{color:#f2ddc4;font:600 13px 'DM Sans',sans-serif}.designHead p{margin:2px 0 0;font-size:10px;color:#c1a99a}.actions{display:flex;gap:6px;flex-shrink:0}button{border:1px solid #a58a72;border-radius:6px;background:#5e4b3d;color:#fff1dd;padding:8px 10px;cursor:pointer;font:600 11px 'Noto Serif Thai',serif}button:hover{background:#785b47}.preview{padding:15px;background:#201c1b;overflow-x:hidden;min-height:390px}.toast{position:fixed;bottom:18px;right:18px;padding:11px 15px;background:#d1b393;color:#29201d;border-radius:9px;box-shadow:0 12px 25px #0007;z-index:10;display:none}.toast.show{display:block}@media(max-width:880px){.gallery{grid-template-columns:1fr}.formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.formgrid{grid-template-columns:1fr}.formgrid .wide{grid-column:auto}.preview{padding:6px}.designHead{flex-wrap:wrap}.designHead .actions{width:100%}h1{font-size:25px}}
+</style><style>
+/* Shared self-contained gallery card styles */
+.hgcard,.hgcard *{box-sizing:border-box}
+.hgcard{max-width:610px;width:100%;margin:0 auto;overflow:hidden;position:relative;font-family:'Cormorant Garamond',Georgia,serif}
+.hgcard .overline{text-transform:uppercase;font:600 10px/1.5 'DM Sans',Arial,sans-serif;letter-spacing:2.7px}
+.hgcard .housename{font:500 19px/1.25 'Cormorant Garamond',Georgia,serif;letter-spacing:3px;text-align:center;text-transform:uppercase}
+.hgcard .roomname{font:400 clamp(45px,10vw,72px)/1.17 'Great Vibes','Brush Script MT',cursive;text-align:center;overflow-wrap:anywhere}
+.hgcard .description{font:13px/1.95 'Noto Serif Thai',serif;overflow-wrap:anywhere}
+.hgcard .thainame{font:13px/1.8 'Noto Serif Thai',serif}
+.hgcard .frame-img{width:100%;display:block;object-fit:cover}
+.hgcard .foot{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font:600 10px/1.7 'DM Sans',sans-serif;letter-spacing:1.4px}
+.hgcard .thin-rule{height:1px;background:linear-gradient(90deg,transparent,currentColor,transparent);opacity:.45}
+/* 09 / Champagne Moonlight */
+.hg9{background:#342b28;color:#f6e9db;border:1px solid #9d836e;border-radius:17px;padding:12px;box-shadow:0 17px 40px #20130d4a}
+.hg9 .inner{border:1px solid #977f68;border-radius:10px;overflow:hidden;background:#342c29}
+.hg9 .hero{height:205px;background-size:cover;background-position:center;position:relative}
+.hg9 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#2a211dd9,transparent 75%)}
+.hg9 .heading{position:relative;margin:-48px 16px 0;text-align:center;padding:18px 12px 11px;background:linear-gradient(140deg,#45372fe8,#322925f3);border:1px solid #92745e;box-shadow:0 9px 22px #120e0d5b}
+.hg9 .housename{color:#e8ccb1}.hg9 .roomname{color:#fff0da;text-shadow:0 3px 15px #f8e1b033}
+.hg9 .thainame{color:#d5b8a9}.hg9 .body{padding:20px 25px 22px}
+.hg9 .roomphoto{height:185px;border:5px solid #5b4b40;box-shadow:0 5px 15px #1b110e65;border-radius:5px}
+.hg9 .description{margin:18px 0;color:#eadbd0}.hg9 .foot{border-top:1px solid #90745e;padding-top:13px;color:#d2ad86}
+/* 10 / Espresso Velvet */
+.hg10{background:radial-gradient(ellipse at 78% 20%,#79624b88,transparent 36%),radial-gradient(ellipse at 8% 82%,#694a423a,transparent 42%),#231d1b;color:#f6eadc;padding:27px;border:1px solid #685446;border-radius:17px;box-shadow:0 18px 42px #1f160e5c}
+.hg10 .edge{border:1px solid #7a6654;border-radius:11px;padding:21px 21px 17px;background:linear-gradient(140deg,#ffffff09,transparent 75%);box-shadow:inset 0 0 30px #d9b9940d}
+.hg10 .heading{text-align:center;padding:9px 0 20px}
+.hg10 .overline{color:#cdb594}.hg10 .housename{margin:13px 0 5px;color:#e7c7a6}
+.hg10 .roomname{color:#f5e5cf;text-shadow:0 2px 20px #f7cca349}
+.hg10 .flowermark{font:25px Georgia,serif;color:#d3b08a;opacity:.9;line-height:1}
+.hg10 .content{display:grid;grid-template-columns:40% 1fr;gap:17px;align-items:center;margin-top:14px;padding-top:18px;border-top:1px solid #806c59}
+.hg10 .roomphoto{height:205px;border:6px solid #695447;border-radius:90px 90px 7px 7px;box-shadow:0 6px 25px #0806068a}
+.hg10 .thainame{color:#dabbac}.hg10 .description{margin:11px 0 0;color:#eee0d3}
+.hg10 .foot{margin-top:19px;color:#ba9e83}
+/* 11 / Rose Gold Conservatory */
+.hg11{background:#eee4d9;color:#564d4b;border:1px solid #d5bdaf;border-radius:17px;box-shadow:0 14px 35px #75635830;padding:13px}
+.hg11 .inner{background:#fcf9f3;border:1px solid #e2cbbf;border-radius:11px;padding:14px 19px 20px}
+.hg11 .hero{height:145px;background-position:center;background-size:cover;border-radius:5px}
+.hg11 .heading{padding:16px 8px 13px;text-align:center;position:relative}
+.hg11 .heading:before,.hg11 .heading:after{content:"✦";position:absolute;top:55px;color:#c2a281;font:12px Georgia,serif}.hg11 .heading:before{left:4px}.hg11 .heading:after{right:4px}
+.hg11 .overline{color:#a78381}.hg11 .housename{color:#8f756c;margin:10px 0 3px}
+.hg11 .roomname{color:#9c686e;text-shadow:0 3px 15px #d8a4a63b}
+.hg11 .thainame{color:#997d7b}.hg11 .body{background:#f8f2eb;border:1px solid #e8d7c9;border-radius:6px;padding:13px}
+.hg11 .roomphoto{height:177px;border-radius:3px}
+.hg11 .description{margin:15px 5px;color:#685e59}.hg11 .foot{padding-top:11px;border-top:1px solid #dcc9bb;color:#967a75}
+/* 12 / Golden Hour Gallery */
+.hg12{background:radial-gradient(ellipse at 90% 4%,#f3d4ac4a,transparent 50%),linear-gradient(145deg,#564338,#292521 78%);padding:21px;border:1px solid #a08a70;border-radius:13px;color:#f5e9db;box-shadow:0 16px 38px #2b211b52}
+.hg12 .inner{border:1px solid #b6a088;padding:22px 22px 17px;position:relative;background:linear-gradient(165deg,#ffffff13,transparent 65%)}
+.hg12 .heading{position:relative;z-index:2;text-align:center;padding:2px 4px 19px}
+.hg12 .overline{color:#d3ba9b}.hg12 .housename{margin:13px 0 2px;color:#f6e0c7}
+.hg12 .roomname{color:#fff0d8;text-shadow:0 0 23px #f6d6a94a}
+.hg12 .hero{position:relative;height:175px;border:1px solid #ac927a;overflow:hidden}
+.hg12 .hero img{height:100%;filter:saturate(.78)}
+.hg12 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#31282558,transparent)}
+.hg12 .detail{display:grid;grid-template-columns:30% 1fr;gap:15px;align-items:start;margin-top:19px}
+.hg12 .roomphoto{height:133px;border:4px solid #776456;border-radius:80px 80px 2px 2px}
+.hg12 .thainame{color:#e5b9b3}
+.hg12 .description{margin:8px 0 0;color:#e6d7c9}
+.hg12 .foot{border-top:1px solid #a89177;margin-top:17px;padding-top:12px;color:#cfb599}
+@media(max-width:490px){.hg9 .body{padding:16px}.hg10{padding:13px}.hg10 .edge{padding:13px}.hg10 .content,.hg12 .detail{grid-template-columns:1fr}.hg10 .roomphoto,.hg12 .roomphoto{height:180px;max-width:240px;margin:auto}.hg11 .inner{padding:12px}.hg11 .heading:before,.hg11 .heading:after{display:none}.hg12{padding:12px}.hg12 .inner{padding:15px}.hgcard .roomname{font-size:clamp(43px,12vw,64px)}}
+@media(prefers-reduced-motion:no-preference){.hg9,.hg10,.hg11,.hg12{transition:box-shadow .3s ease,transform .3s ease}.hgcard:hover{transform:translateY(-2px);box-shadow:0 19px 42px #21150e59}}
+@media(prefers-reduced-motion:reduce){.hgcard{transition:none!important}}
+</style></head><body>
+<header><div class="inner"><div><h1>✦ The House in Golden Light · Vol. 3</h1><p>บ้านในแสงแชมเปญ · เงานุ่ม ๆ · ฟอนต์ตัวเขียนสำหรับชื่อห้อง</p></div><nav><a href="home-location-gallery.html">Vol. 1</a><a href="home-location-gallery-vol2.html">Vol. 2</a><a href="nocturne-generator.html">NOCTURNE ↗</a></nav></div></header>
+<main><section class="settings"><h2>EDIT YOUR HOUSE / ปรับข้อมูล</h2><div class="formgrid">
+<label>ชื่อบ้าน (บรรทัดบน)<input id="house" value="THE ROSEWOOD HOUSE"></label>
+<label>ชื่อห้อง (ตัวเขียนบรรทัดใหญ่)<input id="room" value="The Bedroom"></label>
+<label>ชื่อห้องภาษาไทย<input id="thai" value="ห้องนอน · พื้นที่ส่วนตัว"></label>
+<label>ตำแหน่ง / ชั้น<input id="floor" value="SECOND FLOOR"></label>
+<label>เลขห้อง<input id="number" value="01"></label>
+<label>URL รูปห้อง<input id="mainImage" value="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=85"></label>
+<label class="wide">URL รูปดอกไม้ / ภาพบรรยากาศด้านบน<input id="bgImage" value="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1200&q=85"></label>
+<label class="wide">คำบรรยาย<textarea id="description">ห้องนอนที่แสงแดดอุ่น ๆ สาดผ่านม่านบาง เฟอร์นิเจอร์สีไม้เข้มตัดกับผ้าปูเตียงสีครีม และดอกไม้สดในแจกันเล็ก ๆ ทำให้ทุกเช้าเริ่มต้นอย่างสงบ</textarea></label>
+<label>หมายเหตุ<textarea id="note">แสงยามเย็น · กลิ่นดอกไม้ · มุมพักผ่อน</textarea></label>
+</div><p class="small-note">แก้ครั้งเดียว พรีวิวทุกดีไซน์เปลี่ยนตาม · บันทึกฟอร์มอัตโนมัติในเบราว์เซอร์ · โค้ดแต่ละแบบมี CSS และลิงก์ฟอนต์ติดไปด้วย</p></section>
+<div class="gallery" id="gallery"></div></main><div class="toast" id="toast" role="status"></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const fields=['house','room','thai','floor','number','mainImage','bgImage','description','note'];
+const escapeHTML=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const validURL=s=>/^https:\/\/[^\s"'<>]+$/i.test(String(s).trim())?String(s).trim():'';
+const photoDefault='https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=85';
+const bgDefault='https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1200&q=85';
+const value=id=>$(id).value;
+const data=()=>Object.fromEntries(fields.map(k=>[k,escapeHTML(value(k))]));
+const savedKey='littlehome_location_vol3_draft_v1';
+const themeCSS="\n/* Shared self-contained gallery card styles */\n.hgcard,.hgcard *{box-sizing:border-box}\n.hgcard{max-width:610px;width:100%;margin:0 auto;overflow:hidden;position:relative;font-family:'Cormorant Garamond',Georgia,serif}\n.hgcard .overline{text-transform:uppercase;font:600 10px/1.5 'DM Sans',Arial,sans-serif;letter-spacing:2.7px}\n.hgcard .housename{font:500 19px/1.25 'Cormorant Garamond',Georgia,serif;letter-spacing:3px;text-align:center;text-transform:uppercase}\n.hgcard .roomname{font:400 clamp(45px,10vw,72px)/1.17 'Great Vibes','Brush Script MT',cursive;text-align:center;overflow-wrap:anywhere}\n.hgcard .description{font:13px/1.95 'Noto Serif Thai',serif;overflow-wrap:anywhere}\n.hgcard .thainame{font:13px/1.8 'Noto Serif Thai',serif}\n.hgcard .frame-img{width:100%;display:block;object-fit:cover}\n.hgcard .foot{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font:600 10px/1.7 'DM Sans',sans-serif;letter-spacing:1.4px}\n.hgcard .thin-rule{height:1px;background:linear-gradient(90deg,transparent,currentColor,transparent);opacity:.45}\n/* 09 / Champagne Moonlight */\n.hg9{background:#342b28;color:#f6e9db;border:1px solid #9d836e;border-radius:17px;padding:12px;box-shadow:0 17px 40px #20130d4a}\n.hg9 .inner{border:1px solid #977f68;border-radius:10px;overflow:hidden;background:#342c29}\n.hg9 .hero{height:205px;background-size:cover;background-position:center;position:relative}\n.hg9 .hero:after{content:\"\";position:absolute;inset:0;background:linear-gradient(0deg,#2a211dd9,transparent 75%)}\n.hg9 .heading{position:relative;margin:-48px 16px 0;text-align:center;padding:18px 12px 11px;background:linear-gradient(140deg,#45372fe8,#322925f3);border:1px solid #92745e;box-shadow:0 9px 22px #120e0d5b}\n.hg9 .housename{color:#e8ccb1}.hg9 .roomname{color:#fff0da;text-shadow:0 3px 15px #f8e1b033}\n.hg9 .thainame{color:#d5b8a9}.hg9 .body{padding:20px 25px 22px}\n.hg9 .roomphoto{height:185px;border:5px solid #5b4b40;box-shadow:0 5px 15px #1b110e65;border-radius:5px}\n.hg9 .description{margin:18px 0;color:#eadbd0}.hg9 .foot{border-top:1px solid #90745e;padding-top:13px;color:#d2ad86}\n/* 10 / Espresso Velvet */\n.hg10{background:radial-gradient(ellipse at 78% 20%,#79624b88,transparent 36%),radial-gradient(ellipse at 8% 82%,#694a423a,transparent 42%),#231d1b;color:#f6eadc;padding:27px;border:1px solid #685446;border-radius:17px;box-shadow:0 18px 42px #1f160e5c}\n.hg10 .edge{border:1px solid #7a6654;border-radius:11px;padding:21px 21px 17px;background:linear-gradient(140deg,#ffffff09,transparent 75%);box-shadow:inset 0 0 30px #d9b9940d}\n.hg10 .heading{text-align:center;padding:9px 0 20px}\n.hg10 .overline{color:#cdb594}.hg10 .housename{margin:13px 0 5px;color:#e7c7a6}\n.hg10 .roomname{color:#f5e5cf;text-shadow:0 2px 20px #f7cca349}\n.hg10 .flowermark{font:25px Georgia,serif;color:#d3b08a;opacity:.9;line-height:1}\n.hg10 .content{display:grid;grid-template-columns:40% 1fr;gap:17px;align-items:center;margin-top:14px;padding-top:18px;border-top:1px solid #806c59}\n.hg10 .roomphoto{height:205px;border:6px solid #695447;border-radius:90px 90px 7px 7px;box-shadow:0 6px 25px #0806068a}\n.hg10 .thainame{color:#dabbac}.hg10 .description{margin:11px 0 0;color:#eee0d3}\n.hg10 .foot{margin-top:19px;color:#ba9e83}\n/* 11 / Rose Gold Conservatory */\n.hg11{background:#eee4d9;color:#564d4b;border:1px solid #d5bdaf;border-radius:17px;box-shadow:0 14px 35px #75635830;padding:13px}\n.hg11 .inner{background:#fcf9f3;border:1px solid #e2cbbf;border-radius:11px;padding:14px 19px 20px}\n.hg11 .hero{height:145px;background-position:center;background-size:cover;border-radius:5px}\n.hg11 .heading{padding:16px 8px 13px;text-align:center;position:relative}\n.hg11 .heading:before,.hg11 .heading:after{content:\"✦\";position:absolute;top:55px;color:#c2a281;font:12px Georgia,serif}.hg11 .heading:before{left:4px}.hg11 .heading:after{right:4px}\n.hg11 .overline{color:#a78381}.hg11 .housename{color:#8f756c;margin:10px 0 3px}\n.hg11 .roomname{color:#9c686e;text-shadow:0 3px 15px #d8a4a63b}\n.hg11 .thainame{color:#997d7b}.hg11 .body{background:#f8f2eb;border:1px solid #e8d7c9;border-radius:6px;padding:13px}\n.hg11 .roomphoto{height:177px;border-radius:3px}\n.hg11 .description{margin:15px 5px;color:#685e59}.hg11 .foot{padding-top:11px;border-top:1px solid #dcc9bb;color:#967a75}\n/* 12 / Golden Hour Gallery */\n.hg12{background:radial-gradient(ellipse at 90% 4%,#f3d4ac4a,transparent 50%),linear-gradient(145deg,#564338,#292521 78%);padding:21px;border:1px solid #a08a70;border-radius:13px;color:#f5e9db;box-shadow:0 16px 38px #2b211b52}\n.hg12 .inner{border:1px solid #b6a088;padding:22px 22px 17px;position:relative;background:linear-gradient(165deg,#ffffff13,transparent 65%)}\n.hg12 .heading{position:relative;z-index:2;text-align:center;padding:2px 4px 19px}\n.hg12 .overline{color:#d3ba9b}.hg12 .housename{margin:13px 0 2px;color:#f6e0c7}\n.hg12 .roomname{color:#fff0d8;text-shadow:0 0 23px #f6d6a94a}\n.hg12 .hero{position:relative;height:175px;border:1px solid #ac927a;overflow:hidden}\n.hg12 .hero img{height:100%;filter:saturate(.78)}\n.hg12 .hero:after{content:\"\";position:absolute;inset:0;background:linear-gradient(90deg,#31282558,transparent)}\n.hg12 .detail{display:grid;grid-template-columns:30% 1fr;gap:15px;align-items:start;margin-top:19px}\n.hg12 .roomphoto{height:133px;border:4px solid #776456;border-radius:80px 80px 2px 2px}\n.hg12 .thainame{color:#e5b9b3}\n.hg12 .description{margin:8px 0 0;color:#e6d7c9}\n.hg12 .foot{border-top:1px solid #a89177;margin-top:17px;padding-top:12px;color:#cfb599}\n@media(max-width:490px){.hg9 .body{padding:16px}.hg10{padding:13px}.hg10 .edge{padding:13px}.hg10 .content,.hg12 .detail{grid-template-columns:1fr}.hg10 .roomphoto,.hg12 .roomphoto{height:180px;max-width:240px;margin:auto}.hg11 .inner{padding:12px}.hg11 .heading:before,.hg11 .heading:after{display:none}.hg12{padding:12px}.hg12 .inner{padding:15px}.hgcard .roomname{font-size:clamp(43px,12vw,64px)}}\n@media(prefers-reduced-motion:no-preference){.hg9,.hg10,.hg11,.hg12{transition:box-shadow .3s ease,transform .3s ease}.hgcard:hover{transform:translateY(-2px);box-shadow:0 19px 42px #21150e59}}\n@media(prefers-reduced-motion:reduce){.hgcard{transition:none!important}}\n";
+const fontLink='<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Noto+Serif+Thai:wght@400;500&display=swap" rel="stylesheet">';
+function make(i,d){
+ const p=escapeHTML(validURL(value('mainImage'))||photoDefault),bg=escapeHTML(validURL(value('bgImage'))||bgDefault);
+ const house=d.house,room=d.room,thai=d.thai,description=d.description,number=d.number,floor=d.floor,note=d.note;
+ if(i===9)return '<article class="hgcard hg9"><div class="inner"><div class="hero" style="background-image:url(&quot;'+bg+'&quot;)"></div><div class="heading"><div class="overline">THE HOME COLLECTION · '+number+'</div><div class="housename">'+house+'</div><div class="roomname">'+room+'</div><div class="thainame">'+thai+'</div></div><div class="body"><img class="frame-img roomphoto" alt="room" src="'+p+'"><div class="description">'+description+'</div><div class="foot"><span>✦ '+floor+'</span><span>CHAMPAGNE ARCHIVE</span></div></div></div></article>';
+ if(i===10)return '<article class="hgcard hg10"><div class="edge"><div class="heading"><div class="overline">A PRIVATE HOUSE · '+number+'</div><div class="housename">'+house+'</div><div class="roomname">'+room+'</div><div class="flowermark">❦</div></div><div class="content"><img class="frame-img roomphoto" alt="room" src="'+p+'"><div><div class="thainame">'+thai+'</div><div class="description">'+description+'</div></div></div><div class="foot"><span>'+floor+'</span><span>VELVET EDITION ✧</span></div></div></article>';
+ if(i===11)return '<article class="hgcard hg11"><div class="inner"><div class="hero" style="background-image:url(&quot;'+bg+'&quot;)"></div><div class="heading"><div class="overline">✿ HOUSE JOURNAL / '+number+'</div><div class="housename">'+house+'</div><div class="roomname">'+room+'</div><div class="thainame">'+thai+'</div></div><div class="body"><img class="frame-img roomphoto" alt="room" src="'+p+'"><div class="description">'+description+'</div><div class="foot"><span>'+floor+'</span><span>ROSE GOLD DAYS</span></div></div></div></article>';
+ return '<article class="hgcard hg12"><div class="inner"><div class="heading"><div class="overline">GOLDEN HOUR / ROOM '+number+'</div><div class="housename">'+house+'</div><div class="roomname">'+room+'</div></div><div class="hero"><img class="frame-img" alt="garden" src="'+bg+'"></div><div class="detail"><img class="frame-img roomphoto" alt="room" src="'+p+'"><div><div class="thainame">'+thai+'</div><div class="description">'+description+'</div></div></div><div class="foot"><span>'+floor+'</span><span>✦ '+note+'</span></div></div></article>';
+}
+const styles=[
+ {n:9,title:'Champagne Moonlight',description:'ดอกไม้แสงอุ่น + ชื่อห้องตัวเขียนซ้อนบนกระจกเข้ม'},
+ {n:10,title:'Espresso Velvet',description:'น้ำตาลเข้มสุดหรู + แสงฟุ้ง + รูปโค้งแบบแกลเลอรี'},
+ {n:11,title:'Rose Gold Conservatory',description:'ขาวครีมทองอมชมพู + ดอกไม้ + แสงนุ่ม'},
+ {n:12,title:'Golden Hour Gallery',description:'กรอบหรูเล่นแสงจากมุมบน + ภาพซ้อนสองระดับ'}
+];
+const snippet=n=>fontLink+'<style>'+themeCSS+'</style>'+make(n,data());
+const gallery=$('gallery');
+styles.forEach(item=>{
+ const card=document.createElement('section');card.className='design';
+ card.innerHTML='<div class="designHead"><div><strong>'+item.n+' · '+item.title+'</strong><p>'+item.description+'</p></div><div class="actions"><button type="button" data-copy="'+item.n+'">คัดลอก HTML</button><button type="button" data-download="'+item.n+'">โหลดไฟล์</button></div></div><div class="preview" data-preview="'+item.n+'"></div>';
+ gallery.appendChild(card);
+});
+function show(){document.querySelectorAll('[data-preview]').forEach(el=>el.innerHTML=make(Number(el.dataset.preview),data()))}
+function status(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(status.timer);status.timer=setTimeout(()=>t.classList.remove('show'),2400)}
+function copyFallback(s){const t=document.createElement('textarea');t.value=s;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();const ok=document.execCommand('copy');t.remove();if(!ok)throw Error('Copy failed')}
+async function copy(n){try{const code=snippet(n);if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(code);else copyFallback(code);status('✓ คัดลอกโค้ดแบบ '+n+' แล้ว')}catch(e){status('คัดลอกไม่สำเร็จ ลองดาวน์โหลดไฟล์แทน')}}
+function download(n){const blob=new Blob([snippet(n)],{type:'text/html;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='little-home-golden-hour-'+n+'.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),3000);status('✓ ดาวน์โหลดแบบ '+n+' แล้ว')}
+gallery.addEventListener('click',e=>{const c=e.target.closest('[data-copy]'),d=e.target.closest('[data-download]');if(c)copy(Number(c.dataset.copy));if(d)download(Number(d.dataset.download))});
+let timer;function save(){try{localStorage.setItem(savedKey,JSON.stringify(Object.fromEntries(fields.map(k=>[k,value(k)]))))}catch(e){}}
+fields.forEach(k=>$(k).addEventListener('input',()=>{show();clearTimeout(timer);timer=setTimeout(save,350)}));
+try{const old=JSON.parse(localStorage.getItem(savedKey)||'null');if(old&&typeof old==='object')fields.forEach(k=>{if(typeof old[k]==='string')$(k).value=old[k]})}catch(e){}
+show();window.addEventListener('pagehide',()=>{clearTimeout(timer);save()});
+</script></body></html>
