@@ -313,7 +313,7 @@ function sanitizeRich(html){
  const root=document.createElement('div');for(const node of Array.from(doc.querySelector('main').childNodes))root.appendChild(clean(node));return root.innerHTML;
 }
 function syncRich(){ $('description').value=sanitizeRich($('richEditor').innerHTML);changed()}
-const hostedCardCSS='https://smemories145-cpu.github.io/Tristianloveyou/rose-gold-card.css';
+const hostedCardCSS='https://smemories145-cpu.github.io/Tristianloveyou/rose-gold-card.css?v=width850-20261122';
 function shortResult(){
  const shortCard=content()
    .replace(/<svg\b[\s\S]*?<\/svg>/g,'')
